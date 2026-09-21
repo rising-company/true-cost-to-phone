@@ -206,6 +206,11 @@
     .chart-wrap { position: relative; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 6px; padding: 16px; box-shadow: var(--card-shadow); }
     .chart-wrap svg { width: 100%; height: auto; display: block; }
     .chart-wrap .grid { stroke: var(--border-subtle); }
+    .chart-wrap .grid.zero { stroke: var(--border-hover); }
+    .chip-remove { margin-top: 8px; font-size: 12px; padding: 4px 8px; text-transform: uppercase; letter-spacing: 0.1em; }
+    .row-compare { margin-left: auto; }
+    .row-compare.is-on { background: var(--accent-wash); border-color: var(--accent-line); color: var(--accent-ink); }
+    .tabs [role="tab"] b { font-weight: normal; color: var(--accent-ink); margin-left: 6px; }
     .chart-wrap .tick { font-family: "Share Tech Mono", monospace; font-size: 12px; fill: var(--text-label); }
     .chart-wrap .end-label { font-family: "Share Tech Mono", monospace; font-size: 12px; fill: var(--text-body); paint-order: stroke; stroke: var(--bg-surface); stroke-width: 4px; stroke-linejoin: round; }
     .chart-wrap .cursor { stroke: var(--text-label); stroke-dasharray: 3 3; }
@@ -357,6 +362,7 @@
       <div class="tabs" role="tablist" aria-label="View">
         <button type="button" role="tab" id="tab-routes" aria-controls="panel-routes" aria-selected="true">Routes</button>
         <button type="button" role="tab" id="tab-plans" aria-controls="panel-plans" aria-selected="false">Plans</button>
+        <button type="button" role="tab" id="tab-compare" aria-controls="panel-compare" aria-selected="false">Compare</button>
       </div>
     </div>
 
@@ -393,6 +399,20 @@
         </table>
       </details>
     </section>
+    </div>
+
+    <div id="panel-compare" role="tabpanel" aria-labelledby="tab-compare" hidden>
+      <section class="shell" aria-labelledby="compare-title">
+        <div class="results-head">
+          <div>
+            <h2 class="sec-title" id="compare-title">Compare routes</h2>
+            <p class="subtitle" id="compare-note"></p>
+          </div>
+          <button type="button" class="btn btn-ghost btn-sm" id="compare-clear">Clear</button>
+        </div>
+        <div id="route-compare"></div>
+        <div id="route-chart" class="chart"></div>
+      </section>
     </div>
 
     <div id="panel-plans" role="tabpanel" aria-labelledby="tab-plans" hidden>

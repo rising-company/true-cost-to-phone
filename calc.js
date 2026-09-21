@@ -303,3 +303,25 @@ export function comparePlans(data, planIds, input) {
   // Keep the caller's order so a chart's colors follow the pick order.
   return planIds.map((id) => out.find((c) => c.planId === id)).filter(Boolean);
 }
+
+/**
+ * Cumulative out-of-pocket for a scenario, month 0 through the term.
+ * Day one: fees, the phone you hand to a carrier (at its Apple value), and —
+ * on the buy-from-Apple route — the phones themselves net of Apple Trade In.
+ * Then each month: the plan (intro-aware) plus, on carrier routes, the
+ * financed phones net of credits spread over the term. Costco cards and
+ * stackable credits are taken on day one. Month `term` equals `total`.
+ */
+export function cashflow(row) {
+  const term = row.termMonths;
+  const byod = row.route === "byod";
+  const monthlyPhone = byod ? 0 : (row.phone - row.credits) / term;
+  const upfront = row.fees + row.tradeInValue + (byod ? row.phone - row.appleTradeIn - row.credits : 0) - (row.costcoValue || 0);
+  const out = [round2(upfront)];
+  for (let m = 1; m <= term; m++) {
+    const rate = row.planIntro && m <= row.planIntro.months ? row.planIntro.monthly : row.planMonthly;
+    out.push(round2(out[m - 1] + rate + monthlyPhone));
+  }
+  out[term] = row.total; // absorb rounding drift so the curve lands on the headline number
+  return out;
+}

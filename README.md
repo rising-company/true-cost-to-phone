@@ -46,10 +46,15 @@ An Xfinity trade-in credit field appears on a line whose trade-in Xfinity has no
 The route list can be filtered to one carrier; the filter shows every route for that
 carrier with its overall rank.
 
-## Two tabs
+## Three tabs
 
 - **Routes** — every (carrier, plan, route) combination priced for your situation, cheapest
   first, top three per carrier until you ask for all.
+- **Compare** — up to five routes picked with the Compare button on any row, side by side
+  (total, per month, day one, plan, phones, credits, Apple trade-in, fees, trade-in into the
+  deal, Costco, requirements, lock status) plus a month-by-month out-of-pocket chart: buying
+  from Apple pays the phone on day one, a carrier spreads it over the term. Picks are in the
+  URL as `cmp=`.
 - **Plans** — pick up to five plans across carriers and see them side by side (monthly,
   intro price, cost over the term, high-speed data, talk, fees, how the phone is bought,
   how many phone deals the plan qualifies for right now) plus a cumulative plan-cost chart

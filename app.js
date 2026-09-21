@@ -4,6 +4,7 @@
 
 import { buildScenarios, tierCredit } from "./calc.js";
 import { MAX_PLANS, defaultPlanIds, renderPicker, renderComparison, renderHeroGhost, renderSummaryChart } from "./plans.js";
+import { MAX_ROUTES, routeKey, renderCompare } from "./compare.js";
 
 const $ = (sel) => document.querySelector(sel);
 const usd = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
@@ -12,7 +13,7 @@ const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&l
 
 const XF_PROMO = "xf-tradein-1300";
 const DEFAULT_PHONE = "iphone-18-pro-256";
-const DEFAULTS = { switching: "1", costco: "0", tab: "routes", plans: "", carrier: "" };
+const DEFAULTS = { switching: "1", costco: "0", tab: "routes", plans: "", carrier: "", cmp: "" };
 const MAX_LINES = 5;
 const NONE = "-";
 
@@ -23,6 +24,8 @@ let selectedPlans = null; // null until the first render picks defaults
 let defaultPlans = [];
 let plansTouched = false; // untouched picks follow the defaults as the situation changes
 let carrierFilter = ""; // "" = every carrier
+let compareKeys = []; // routes picked for the Compare tab, in pick order
+let lastRows = [];
 const TOP_PER_CARRIER = 3;
 
 /** Rows to display: the cheapest few per carrier unless the reader asked for everything. Keeps global rank. */
@@ -57,8 +60,9 @@ function readState() {
     switching: (q.get("switching") ?? DEFAULTS.switching) !== "0",
     costco: q.get("costco") === "1",
     carrier: q.get("carrier") || "",
-    tab: q.get("tab") === "plans" ? "plans" : "routes",
+    tab: ["plans", "compare"].includes(q.get("tab")) ? q.get("tab") : "routes",
     plans: (q.get("plans") || "").split(",").filter(Boolean),
+    cmp: (q.get("cmp") || "").split(",").filter(Boolean),
   };
 }
 
@@ -69,7 +73,8 @@ function writeState(s) {
   if (!s.switching) q.set("switching", "0");
   if (s.costco) q.set("costco", "1");
   if (carrierFilter) q.set("carrier", carrierFilter);
-  if (tab === "plans") q.set("tab", "plans");
+  if (tab !== "routes") q.set("tab", tab);
+  if (compareKeys.length) q.set("cmp", compareKeys.join(","));
   if (plansTouched && selectedPlans && selectedPlans.join(",") !== defaultPlans.join(",")) q.set("plans", selectedPlans.join(","));
   const qs = q.toString();
   history.replaceState(null, "", qs ? `?${qs}` : location.pathname);
@@ -251,6 +256,7 @@ function renderRows(allRows) {
           <div class="total">${usd.format(r.total)}</div>
           <div class="subtitle">${usd2.format(r.perMonth)}/mo · ${r.termMonths} mo</div>
           <div class="delta">${delta > 0 ? `+${usd.format(delta)} vs cheapest` : "cheapest"}</div>
+          <button type="button" class="chip row-compare${compareKeys.includes(routeKey(r)) ? " is-on" : ""}" data-compare="${esc(routeKey(r))}" aria-pressed="${compareKeys.includes(routeKey(r))}" ${!compareKeys.includes(routeKey(r)) && compareKeys.length >= MAX_ROUTES ? "disabled" : ""}>${compareKeys.includes(routeKey(r)) ? "Comparing" : "Compare"}</button>
         </div>
       </article>`;
     })
@@ -307,10 +313,14 @@ function render() {
     minutes: "unlimited",
   });
 
+  lastRows = rows;
+  compareKeys = compareKeys.filter((k) => rows.some((r) => routeKey(r) === k)); // a pick can vanish when the situation changes
   renderSummary(rows);
   renderSummaryChart(rows);
   renderHeroGhost(rows);
   renderRows(rows);
+  renderCompare(rows, compareKeys);
+  $("#tab-compare").innerHTML = `Compare${compareKeys.length ? `<b>${compareKeys.length}</b>` : ""}`;
   defaultPlans = defaultPlanIds(rows);
   if (!selectedPlans || !plansTouched) selectedPlans = defaultPlans;
   renderPlansTab(state);
@@ -336,7 +346,7 @@ function renderPlansTab(state) {
 
 function selectTab(next) {
   tab = next;
-  for (const name of ["routes", "plans"]) {
+  for (const name of ["routes", "plans", "compare"]) {
     $(`#tab-${name}`).setAttribute("aria-selected", String(name === tab));
     $(`#panel-${name}`).hidden = name !== tab;
   }
@@ -362,9 +372,26 @@ async function main() {
   }
   renderStatic();
   render();
+  compareKeys = initial.cmp.slice(0, MAX_ROUTES);
+  if (compareKeys.length) render();
   selectTab(initial.tab);
   $("#tab-routes").addEventListener("click", () => selectTab("routes"));
   $("#tab-plans").addEventListener("click", () => selectTab("plans"));
+  $("#tab-compare").addEventListener("click", () => selectTab("compare"));
+  $("#rows").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-compare]");
+    if (!b || b.disabled) return;
+    const k = b.dataset.compare;
+    compareKeys = compareKeys.includes(k) ? compareKeys.filter((x) => x !== k) : [...compareKeys, k].slice(0, MAX_ROUTES);
+    render();
+  });
+  $("#route-compare").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-remove]");
+    if (!b) return;
+    compareKeys = compareKeys.filter((x) => x !== b.dataset.remove);
+    render();
+  });
+  $("#compare-clear").addEventListener("click", () => { compareKeys = []; render(); });
   $("#carrier-filter").addEventListener("click", (e) => {
     const chip = e.target.closest("[data-carrier]");
     if (!chip) return;

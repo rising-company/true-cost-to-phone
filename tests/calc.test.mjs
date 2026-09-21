@@ -3,7 +3,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
-import { buildScenarios, tierCredit, planTotal, comparePlans } from "../calc.js";
+import { buildScenarios, tierCredit, planTotal, comparePlans, cashflow } from "../calc.js";
 
 const data = JSON.parse(readFileSync(new URL("../data/pricing.json", import.meta.url), "utf8"));
 
@@ -337,4 +337,29 @@ test("Costco: T-Mobile shop card and Visa per line, connection charge waived; AT
   const noSwitch = find(buildScenarios(data, { ...baseInput, tradeInId: null, costco: true, switching: false }), "tmobile", "tmo-beyond-2", "byod");
   assert.equal(noSwitch.costcoValue, 0, "the $75 needs a new line");
   assert.equal(find(on, "tello", "tello-unl-unl", "byod").costcoValue, 0);
+});
+
+test("cashflow: cumulative out-of-pocket by month; upfront differs by route, month 36 equals the total", () => {
+  const rows = buildScenarios(data, baseInput);
+  const apple = find(rows, "tello", "tello-unl-unl", "byod");
+  const cf = cashflow(apple);
+  assert.equal(cf.length, 37);
+  assert.equal(cf[0], 1199 - 195, "Apple route pays the phone up front, less the Apple trade-in");
+  assert.equal(cf[1], 1004 + 25);
+  assert.equal(cf[36], apple.total);
+
+  const promo = find(rows, "tmobile", "tmo-beyond-2", "tmo-ID260835");
+  const pf = cashflow(promo);
+  assert.equal(pf[0], 35 + 195, "carrier route: connection charge and the surrendered phone on day one");
+  assert.equal(pf[1], +(35 + 195 + 100 + (1199 - 930) / 36).toFixed(2), "then plan plus the financed phone net of credits");
+  assert.equal(pf[36], promo.total);
+
+  const xf = find(rows, "xfinity", "xf-select", "byod");
+  const xc = cashflow(xf);
+  assert.equal(xc[12], xc[0], "free first year: nothing accrues for 12 months");
+  assert.equal(xc[36], xf.total);
+
+  const costco = find(buildScenarios(data, { ...baseInput, tradeInId: null, costco: true }), "tmobile", "tmo-beyond-2", "tmo-ID260824");
+  assert.equal(cashflow(costco)[0], 0 - 400, "Costco cards counted on day one");
+  assert.equal(cashflow(costco)[36], costco.total);
 });
