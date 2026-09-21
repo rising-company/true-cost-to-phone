@@ -117,6 +117,15 @@ The calculator already takes these as inputs; the page just pins them for now.
 - T-Mobile Essentials 2.0 at 2 and 5 lines and Essentials Saver beyond 2 lines are not
   published on the plan page (T-Mobile shows an "Essentials 4 Line Offer" there instead).
 
+## Contributing
+
+Everything the page shows comes from `data/pricing.json`, and each entry names its source.
+If a price has moved, a promotion is missing, your carrier is not here, or a checkout showed
+you a trade-in credit the carrier does not publish, open a pull request or an issue at
+<https://github.com/rising-company/true-cost-to-phone>. Keep `meta.crawledAt` honest, note
+where a number came from, and run `node --test tests/` — the tests pin the arithmetic and a
+few facts worth not losing (T-Mobile's tiers, Xfinity's one-line intro, the Costco rules).
+
 ## Tests
 
 `node --test tests/` — zero-dependency, matching the other static tools in this workspace

@@ -200,6 +200,10 @@
     .sources a:hover { color: var(--accent-ink); }
     .sources a::before { content: "+"; color: var(--accent-ink); margin-right: 10px; }
 
+    .contribute { margin-top: 48px; padding: 24px; background: var(--bg-inset); border: 1px solid var(--border-subtle); border-radius: 6px; max-width: 72ch; }
+    .contribute .section-label { margin-bottom: 12px; }
+    .contribute .body { margin-bottom: 20px; }
+
     .site-footer .shell { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; }
 
     /* ── Buy me a coffee — a quiet tab on the right edge ── */
@@ -375,6 +379,15 @@
         <h2 class="sec-title">Where the numbers come from</h2>
         <p class="body" style="max-width:72ch;margin-bottom:24px">Prices and promotion terms were read from the carriers' own pages on the crawl date and saved to <a href="data/pricing.json" style="color:var(--accent-ink);text-decoration:none">data/pricing.json</a>. Carrier offers change weekly; check the source before you buy.</p>
         <div class="sources" id="sources-list"></div>
+
+        <div class="contribute">
+          <div class="section-label">// Make it more useful</div>
+          <p class="body">Every number on this page is one file. If a price has moved, a promotion is missing, your carrier is not here, or a checkout showed you a trade-in credit the carrier does not publish, open a pull request or an issue — the data is plain JSON and each entry names its source. Fixes reach everyone who uses the tool.</p>
+          <div class="btn-row">
+            <a class="btn btn-secondary" href="https://github.com/rising-company/true-cost-to-phone/blob/main/data/pricing.json" target="_blank" rel="noopener noreferrer">Edit the data</a>
+            <a class="btn btn-ghost" href="https://github.com/rising-company/true-cost-to-phone/issues/new" target="_blank" rel="noopener noreferrer">Report a change</a>
+          </div>
+        </div>
       </div>
     </section>
   </main>
