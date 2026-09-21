@@ -174,37 +174,11 @@ function segments(row) {
   ];
 }
 
-/** The hero: the range across carriers for the current situation, and the proof strip under it. */
-function renderHero(rows, items) {
+/** The hero's trust line: term, the spread across carriers for the current situation, and the crawl date. */
+function renderHero(rows) {
   const hero = heroSummary(rows);
-  const models = [...new Set(items.filter((li) => li.phoneId).map((li) => data.phones.find((p) => p.id === li.phoneId)?.model))];
-  const subject = models.length === 1 ? `The same ${models[0]}` : models.length ? "The same phones" : "No new phone";
-  const term = data.meta.defaultTermMonths;
-  const trust = `${term} months · taxes excluded · prices updated ${data.meta.crawledAt}`;
-  if (!hero) {
-    $("#hero-title").innerHTML = `${esc(subject)}, <span class="hero-range" id="hero-range"><i>no route fits</i></span>`;
-    $("#trust").textContent = trust;
-    $("#proof").innerHTML = `<div class="proof-empty">No plan fits the current filters. Change the line count or trade-ins above.</div>`;
-    return;
-  }
-  const range = hero.carriers.length > 1
-    ? `${usd.format(hero.cheapest.total)} <i>to</i> ${usd.format(hero.priciest.total)}`
-    : usd.format(hero.cheapest.total);
-  $("#hero-title").innerHTML = `${esc(subject)}, <span class="hero-range" id="hero-range">${range}</span>`;
-  $("#trust").innerHTML = hero.spread > 0 ? `<b>${usd.format(hero.spread)} apart</b> · ${esc(trust)}` : esc(trust);
-  const max = Math.max(1, ...hero.carriers.map((r) => r.total));
-  $("#proof").innerHTML = hero.carriers
-    .map((r) => {
-      const on = carrierFilter === r.carrierId;
-      const bar = segments(r).map((s) => `<span style="--seg:${s.seg}; width:${((100 * s.value) / max).toFixed(2)}%" title="${esc(s.label)}: ${usd.format(s.value)}"></span>`).join("");
-      return `<button type="button" class="proof-item${r === hero.cheapest ? " is-best" : ""}" data-carrier="${r.carrierId}" aria-pressed="${on}" title="Show every ${esc(r.carrierName)} route">
-        <span class="proof-name">${esc(r.carrierName)}${r === hero.cheapest ? '<span class="sr-only"> — cheapest</span>' : ""}</span>
-        <span class="proof-total">${usd.format(r.total)}<small>${usd.format(r.perMonth)}/mo</small></span>
-        <span class="proof-bar" aria-hidden="true">${bar}</span>
-        <span class="proof-route">${esc(r.planName)} · ${esc(r.routeName)}</span>
-      </button>`;
-    })
-    .join("");
+  const trust = `${data.meta.defaultTermMonths} months · taxes excluded · prices updated ${data.meta.crawledAt}`;
+  $("#trust").innerHTML = hero && hero.spread > 0 ? `<b>${usd.format(hero.spread)} apart</b> · ${esc(trust)}` : esc(trust);
 }
 
 function renderSummary(rows) {
@@ -350,7 +324,7 @@ function render() {
   compareKeys = compareKeys.filter((k) => rows.some((r) => routeKey(r) === k)); // a pick can vanish when the situation changes
   renderSummary(rows);
   renderSummaryChart(rows);
-  renderHero(rows, items);
+  renderHero(rows);
   renderRows(rows);
   renderCompare(rows, compareKeys);
   $("#tab-compare").innerHTML = `Compare${compareKeys.length ? `<b>${compareKeys.length}</b>` : ""}`;
@@ -429,14 +403,6 @@ async function main() {
     if (!chip) return;
     carrierFilter = chip.dataset.carrier;
     render();
-  });
-  $("#proof").addEventListener("click", (e) => {
-    const item = e.target.closest("[data-carrier]");
-    if (!item) return;
-    carrierFilter = carrierFilter === item.dataset.carrier ? "" : item.dataset.carrier; // a second press clears it
-    selectTab("routes");
-    render();
-    $("#results-title").scrollIntoView({ behavior: "smooth", block: "start" });
   });
   $("#show-all").addEventListener("click", () => {
     showAll = !showAll;

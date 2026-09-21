@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>True Cost to Phone</title>
-  <meta name="description" content="What an iPhone 18 Pro really costs over 36 months — wireless plan, phone, fees and the trade-in you hand over — across Tello, Mint Mobile, T-Mobile, AT&T and Xfinity Mobile.">
+  <meta name="description" content="What an iPhone 18 Pro really costs over 36 months — wireless plan, phone, fees and the trade-in you hand over — across Tello, Mint Mobile, T-Mobile, AT&T, Verizon and Xfinity Mobile.">
   <link rel="icon" type="image/svg+xml" href="https://design-system.rising.company/branding/favicon.svg">
   <link rel="apple-touch-icon" sizes="180x180" href="https://design-system.rising.company/branding/apple-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,47 +30,18 @@
     main { flex: 1; position: relative; z-index: 1; }
 
     /* ── Hero ──
-       The page's premise, proven on sight: the range between the cheapest and priciest
-       route to the same phone, re-rendered from the current situation, and under it a
-       proof strip — the cheapest route per carrier, cheapest first, each a legible
-       stacked bar. A carrier in the strip is a shortcut into the routes filter. */
-    .hero { position: relative; z-index: 1; padding: 64px 0 0; }
-    .hero-title .hero-range { color: var(--accent-ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
-    .hero-title .hero-range i { font-style: normal; color: var(--text-label); font-weight: 500; }
+       The pain point, plainly: finding the best upgrade path is unnecessarily
+       painful because every carrier prices the same phone a different way. No
+       numbers up here; the comparison starts below the fold. */
+    .hero { position: relative; z-index: 1; padding: 64px 0 48px; }
+    .hero .hero-title { max-width: 22ch; }
     .hero .lede { max-width: 56ch; }
     .hero-trust {
       font-family: "Share Tech Mono", monospace; font-size: 12px; letter-spacing: 0.15em;
       text-transform: uppercase; color: var(--text-label); margin-top: 24px;
     }
     .hero-trust b { font-weight: normal; color: var(--accent-ink); }
-    .proof {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0 24px;
-      margin: 40px 0 48px; padding: 20px 0 0; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);
-    }
-    .proof-item {
-      display: flex; flex-direction: column; gap: 6px; text-align: left; min-width: 0;
-      padding: 4px 8px 20px; margin: 0 -8px; border: 0; border-radius: 4px; background: none; color: inherit; cursor: pointer;
-      font: inherit; transition: background 0.2s;
-    }
-    .proof-item:hover { background: var(--bg-surface-hover); }
-    .proof-item:focus-visible { outline: 1px solid var(--accent-ink); outline-offset: 2px; }
-    .proof-item[aria-pressed="true"] { background: var(--accent-wash); box-shadow: inset 0 0 0 1px var(--accent-line); }
-    .proof-name {
-      font-family: "Share Tech Mono", monospace; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-label);
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-    .proof-item.is-best .proof-name { color: var(--accent-ink); }
     .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-    .proof-total {
-      font-family: "Rajdhani", sans-serif; font-weight: 700; font-size: 28px; line-height: 1.1; letter-spacing: 1px;
-      color: var(--text-heading); font-variant-numeric: tabular-nums;
-    }
-    .proof-total small { font-family: "Share Tech Mono", monospace; font-size: 12px; letter-spacing: 0.06em; color: var(--text-subtle); margin-left: 8px; }
-    .proof-item.is-best .proof-total { color: var(--accent-ink); }
-    .proof-bar { display: flex; height: 8px; gap: 2px; width: 100%; margin-top: 4px; }
-    .proof-bar span { display: block; height: 100%; border-radius: 2px; background: var(--seg); min-width: 2px; }
-    .proof-route { font-size: 13px; font-weight: 500; color: var(--text-muted); line-height: 1.3; }
-    .proof-empty { grid-column: 1 / -1; padding-bottom: 20px; font-size: 15px; color: var(--text-muted); }
 
     /* ── Controls ── */
     .controls { margin-bottom: 32px; }
@@ -304,8 +275,7 @@
     .reveal:nth-child(5) { animation-delay: 360ms; }
 
     @media (max-width: 768px) {
-      .hero { padding: 48px 0 0; }
-      .proof { margin: 32px 0 40px; }
+      .hero { padding: 48px 0 40px; }
       .row { grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 20px; }
       .row > * { min-width: 0; }
       .rank { padding-top: 0; }
@@ -343,11 +313,10 @@
   <main>
     <section class="shell hero reveal" aria-labelledby="hero-title">
       <div class="eyebrow">// Rising Company</div>
-      <h1 class="hero-title" id="hero-title">The same iPhone 18 Pro, <span class="hero-range" id="hero-range"></span></h1>
-      <p class="lede">36 months of plan, phone, fees and the trade-in you hand over — across five carriers.</p>
+      <h1 class="hero-title" id="hero-title">Upgrading your iPhone shouldn't take a spreadsheet.</h1>
+      <p class="lede">Bill credits, trade-in tiers, activation fees, intro-year prices — every carrier prices the same phone a different way. This adds it all up over 36 months, so the cheapest way to your next iPhone is just the top row.</p>
       <div class="hero-trust" id="trust">36 months · taxes excluded · prices updated 2026-09-21</div>
     </section>
-    <div class="shell reveal"><div class="proof" id="proof" role="group" aria-label="Cheapest route per carrier"></div></div>
 
     <section class="shell controls reveal" aria-labelledby="controls-label">
       <div class="section-label" id="controls-label">// Your situation</div>
