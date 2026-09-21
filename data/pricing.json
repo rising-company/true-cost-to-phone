@@ -1,0 +1,1188 @@
+{
+  "meta": {
+    "crawledAt": "2026-09-21",
+    "currency": "USD",
+    "defaultTermMonths": 36,
+    "notes": [
+      "Taxes and regulatory fees are excluded everywhere; every carrier bills them on top.",
+      "One retail price per phone. Apple, T-Mobile and AT&T list the same figure (carriers show it as $x.99); Xfinity does not publish one, so Apple's is used everywhere.",
+      "T-Mobile prices include the $5/line AutoPay discount. AT&T prices are after the AutoPay + paperless billing discount. Xfinity prices include the $10/mo Xfinity Internet customer discount and require residential Xfinity Internet.",
+      "Bill-credit promotions pay out monthly over the term. Leaving early forfeits the remaining credits and the device balance is due.",
+      "Trade-in value counts as a cost: when a promotion takes your old phone, its Apple Trade In estimate is added to the total so every route is compared on the same footing.",
+      "Mint Mobile is priced on its 12-month prepaid plans (the cheapest term). New customers pay $15/mo for the first 12 months on any plan ($180 upfront), then the regular 12-month rate. 3- and 6-month terms cost more per month and are not modeled."
+    ],
+    "sources": {
+      "tello": "https://tello.com/buy/custom_plans",
+      "tmobile-press": "https://www.t-mobile.com/news/devices/iphone-18-pro-iphone-duo-apple-watch-release",
+      "tmobile-plans": "https://www.t-mobile.com/cell-phone-plans",
+      "tmobile-iphone": "https://www.t-mobile.com/cell-phone/apple-iphone-18-pro",
+      "att-press": "https://about.att.com/story/2026/iphone-18-lineup.html",
+      "att-plans": "https://www.att.com/plans/unlimited-data-plans/",
+      "att-iphone": "https://www.att.com/buy/phones/apple-iphone-18-pro.html",
+      "xfinity-deals": "https://www.xfinity.com/learn/deals/mobile/apple",
+      "xfinity-plans": "https://www.xfinity.com/mobile/plan",
+      "apple-tradein": "https://www.apple.com/shop/trade-in",
+      "apple-iphone": "https://www.apple.com/shop/buy-iphone/iphone-18-pro",
+      "xfinity-checkout": "https://www.xfinity.com/mobile/shop/phone/iphone-18-pro-apple",
+      "tmobile-iphone-max": "https://www.t-mobile.com/cell-phone/apple-iphone-18-pro-max",
+      "att-iphone-max": "https://www.att.com/buy/phones/apple-iphone-18-pro-max.html",
+      "mint": "https://www.mintmobile.com/plans/"
+    }
+  },
+  "phones": [
+    {
+      "id": "iphone-18-pro-256",
+      "model": "iPhone 18 Pro",
+      "storageGb": 256,
+      "retail": 1199
+    },
+    {
+      "id": "iphone-18-pro-512",
+      "model": "iPhone 18 Pro",
+      "storageGb": 512,
+      "retail": 1399
+    },
+    {
+      "id": "iphone-18-pro-1tb",
+      "model": "iPhone 18 Pro",
+      "storageGb": 1024,
+      "retail": 1799
+    },
+    {
+      "id": "iphone-18-pro-2tb",
+      "model": "iPhone 18 Pro",
+      "storageGb": 2048,
+      "retail": 2399
+    },
+    {
+      "id": "iphone-18-pro-max-256",
+      "model": "iPhone 18 Pro Max",
+      "storageGb": 256,
+      "retail": 1299
+    },
+    {
+      "id": "iphone-18-pro-max-512",
+      "model": "iPhone 18 Pro Max",
+      "storageGb": 512,
+      "retail": 1499
+    },
+    {
+      "id": "iphone-18-pro-max-1tb",
+      "model": "iPhone 18 Pro Max",
+      "storageGb": 1024,
+      "retail": 1899
+    },
+    {
+      "id": "iphone-18-pro-max-2tb",
+      "model": "iPhone 18 Pro Max",
+      "storageGb": 2048,
+      "retail": 2499
+    }
+  ],
+  "tradeIns": [
+    {
+      "id": "iphone-17-pro-max",
+      "name": "iPhone 17 Pro Max",
+      "appleValue": 885
+    },
+    {
+      "id": "iphone-17-pro",
+      "name": "iPhone 17 Pro",
+      "appleValue": 785
+    },
+    {
+      "id": "iphone-air",
+      "name": "iPhone Air",
+      "appleValue": 585
+    },
+    {
+      "id": "iphone-17",
+      "name": "iPhone 17",
+      "appleValue": 585
+    },
+    {
+      "id": "iphone-16-pro-max",
+      "name": "iPhone 16 Pro Max",
+      "appleValue": 610
+    },
+    {
+      "id": "iphone-16-pro",
+      "name": "iPhone 16 Pro",
+      "appleValue": 510
+    },
+    {
+      "id": "iphone-16-plus",
+      "name": "iPhone 16 Plus",
+      "appleValue": 430
+    },
+    {
+      "id": "iphone-16",
+      "name": "iPhone 16",
+      "appleValue": 430
+    },
+    {
+      "id": "iphone-16e",
+      "name": "iPhone 16e",
+      "appleValue": 270
+    },
+    {
+      "id": "iphone-15-pro-max",
+      "name": "iPhone 15 Pro Max",
+      "appleValue": 455
+    },
+    {
+      "id": "iphone-15-pro",
+      "name": "iPhone 15 Pro",
+      "appleValue": 370
+    },
+    {
+      "id": "iphone-15-plus",
+      "name": "iPhone 15 Plus",
+      "appleValue": 315
+    },
+    {
+      "id": "iphone-15",
+      "name": "iPhone 15",
+      "appleValue": 305
+    },
+    {
+      "id": "iphone-14-pro-max",
+      "name": "iPhone 14 Pro Max",
+      "appleValue": 360
+    },
+    {
+      "id": "iphone-14-pro",
+      "name": "iPhone 14 Pro",
+      "appleValue": 285
+    },
+    {
+      "id": "iphone-14-plus",
+      "name": "iPhone 14 Plus",
+      "appleValue": 210
+    },
+    {
+      "id": "iphone-14",
+      "name": "iPhone 14",
+      "appleValue": 195
+    },
+    {
+      "id": "iphone-se-3",
+      "name": "iPhone SE (3rd generation)",
+      "appleValue": 75
+    },
+    {
+      "id": "iphone-13-pro-max",
+      "name": "iPhone 13 Pro Max",
+      "appleValue": 320
+    },
+    {
+      "id": "iphone-13-pro",
+      "name": "iPhone 13 Pro",
+      "appleValue": 255
+    },
+    {
+      "id": "iphone-13",
+      "name": "iPhone 13",
+      "appleValue": 175
+    },
+    {
+      "id": "iphone-13-mini",
+      "name": "iPhone 13 mini",
+      "appleValue": 145
+    },
+    {
+      "id": "iphone-12-pro-max",
+      "name": "iPhone 12 Pro Max",
+      "appleValue": 210
+    },
+    {
+      "id": "iphone-12-pro",
+      "name": "iPhone 12 Pro",
+      "appleValue": 165
+    },
+    {
+      "id": "iphone-12",
+      "name": "iPhone 12",
+      "appleValue": 120
+    },
+    {
+      "id": "iphone-12-mini",
+      "name": "iPhone 12 mini",
+      "appleValue": 80
+    },
+    {
+      "id": "iphone-se-2",
+      "name": "iPhone SE (2nd generation)",
+      "appleValue": 40
+    },
+    {
+      "id": "iphone-11-pro-max",
+      "name": "iPhone 11 Pro Max",
+      "appleValue": 140
+    },
+    {
+      "id": "iphone-11-pro",
+      "name": "iPhone 11 Pro",
+      "appleValue": 125
+    },
+    {
+      "id": "iphone-11",
+      "name": "iPhone 11",
+      "appleValue": 100
+    },
+    {
+      "id": "iphone-xs-max",
+      "name": "iPhone XS Max",
+      "appleValue": 85
+    },
+    {
+      "id": "iphone-xs",
+      "name": "iPhone XS",
+      "appleValue": 60
+    },
+    {
+      "id": "iphone-xr",
+      "name": "iPhone XR",
+      "appleValue": 75
+    },
+    {
+      "id": "iphone-x",
+      "name": "iPhone X",
+      "appleValue": 50
+    },
+    {
+      "id": "iphone-8-plus",
+      "name": "iPhone 8 Plus",
+      "appleValue": 35
+    }
+  ],
+  "carriers": [
+    {
+      "id": "tello",
+      "name": "Tello",
+      "kind": "mvno",
+      "network": "T-Mobile",
+      "phoneSource": "apple",
+      "requires": [],
+      "fees": {
+        "perLineOneTime": 0,
+        "label": "No activation fee"
+      },
+      "plans": [
+        {
+          "id": "tello-300-0",
+          "name": "300 min · no data",
+          "dataGb": 0,
+          "premiumDataGb": 0,
+          "minutes": 300,
+          "monthly": {
+            "1": 5
+          }
+        },
+        {
+          "id": "tello-0-2",
+          "name": "2 GB · no minutes",
+          "dataGb": 2,
+          "premiumDataGb": 2,
+          "minutes": 0,
+          "monthly": {
+            "1": 6
+          }
+        },
+        {
+          "id": "tello-300-2",
+          "name": "2 GB · 300 min",
+          "dataGb": 2,
+          "premiumDataGb": 2,
+          "minutes": 300,
+          "monthly": {
+            "1": 8
+          }
+        },
+        {
+          "id": "tello-unl-0",
+          "name": "Unlimited talk & text · no data",
+          "dataGb": 0,
+          "premiumDataGb": 0,
+          "minutes": "unlimited",
+          "monthly": {
+            "1": 8
+          }
+        },
+        {
+          "id": "tello-unl-2",
+          "name": "2 GB · unlimited talk",
+          "dataGb": 2,
+          "premiumDataGb": 2,
+          "minutes": "unlimited",
+          "monthly": {
+            "1": 10
+          }
+        },
+        {
+          "id": "tello-0-10",
+          "name": "10 GB · no minutes",
+          "dataGb": 10,
+          "premiumDataGb": 10,
+          "minutes": 0,
+          "monthly": {
+            "1": 13
+          }
+        },
+        {
+          "id": "tello-300-10",
+          "name": "10 GB · 300 min",
+          "dataGb": 10,
+          "premiumDataGb": 10,
+          "minutes": 300,
+          "monthly": {
+            "1": 14
+          }
+        },
+        {
+          "id": "tello-unl-10",
+          "name": "10 GB · unlimited talk",
+          "dataGb": 10,
+          "premiumDataGb": 10,
+          "minutes": "unlimited",
+          "monthly": {
+            "1": 15
+          }
+        },
+        {
+          "id": "tello-0-20",
+          "name": "20 GB · no minutes",
+          "dataGb": 20,
+          "premiumDataGb": 20,
+          "minutes": 0,
+          "monthly": {
+            "1": 18
+          }
+        },
+        {
+          "id": "tello-300-20",
+          "name": "20 GB · 300 min",
+          "dataGb": 20,
+          "premiumDataGb": 20,
+          "minutes": 300,
+          "monthly": {
+            "1": 19
+          }
+        },
+        {
+          "id": "tello-unl-20",
+          "name": "20 GB · unlimited talk",
+          "dataGb": 20,
+          "premiumDataGb": 20,
+          "minutes": "unlimited",
+          "monthly": {
+            "1": 20
+          }
+        },
+        {
+          "id": "tello-0-unl",
+          "name": "Unlimited data · no minutes",
+          "dataGb": "unlimited",
+          "premiumDataGb": 50,
+          "minutes": 0,
+          "monthly": {
+            "1": 25
+          }
+        },
+        {
+          "id": "tello-300-unl",
+          "name": "Unlimited data · 300 min",
+          "dataGb": "unlimited",
+          "premiumDataGb": 50,
+          "minutes": 300,
+          "monthly": {
+            "1": 25
+          }
+        },
+        {
+          "id": "tello-unl-unl",
+          "name": "Unlimited",
+          "dataGb": "unlimited",
+          "premiumDataGb": 50,
+          "minutes": "unlimited",
+          "monthly": {
+            "1": 25
+          },
+          "notes": "50 GB at full 5G speed, then reduced. 10 GB hotspot."
+        }
+      ],
+      "promos": []
+    },
+    {
+      "id": "mint",
+      "name": "Mint Mobile",
+      "kind": "mvno",
+      "network": "T-Mobile",
+      "phoneSource": "apple",
+      "requires": [],
+      "fees": {
+        "perLineOneTime": 0,
+        "label": "No activation fee"
+      },
+      "plans": [
+        {
+          "id": "mint-6gb-12",
+          "name": "6 GB · 12-month",
+          "dataGb": 6,
+          "premiumDataGb": 6,
+          "minutes": "unlimited",
+          "monthly": {
+            "1": 15
+          },
+          "intro": {
+            "months": 12,
+            "monthly": {
+              "1": 15
+            },
+            "requires": {
+              "newLine": true
+            }
+          },
+          "notes": "Prepaid 12 months ($180) · hotspot from plan data"
+        },
+        {
+          "id": "mint-17gb-12",
+          "name": "17 GB · 12-month",
+          "dataGb": 17,
+          "premiumDataGb": 17,
+          "minutes": "unlimited",
+          "monthly": {
+            "1": 20
+          },
+          "intro": {
+            "months": 12,
+            "monthly": {
+              "1": 15
+            },
+            "requires": {
+              "newLine": true
+            }
+          },
+          "notes": "Prepaid 12 months ($240 after the intro year) · hotspot from plan data"
+        },
+        {
+          "id": "mint-23gb-12",
+          "name": "23 GB · 12-month",
+          "dataGb": 23,
+          "premiumDataGb": 23,
+          "minutes": "unlimited",
+          "monthly": {
+            "1": 25
+          },
+          "intro": {
+            "months": 12,
+            "monthly": {
+              "1": 15
+            },
+            "requires": {
+              "newLine": true
+            }
+          },
+          "notes": "Prepaid 12 months ($300 after the intro year) · hotspot from plan data"
+        },
+        {
+          "id": "mint-unlimited-12",
+          "name": "Unlimited · 12-month",
+          "dataGb": "unlimited",
+          "premiumDataGb": 50,
+          "minutes": "unlimited",
+          "monthly": {
+            "1": 30
+          },
+          "intro": {
+            "months": 12,
+            "monthly": {
+              "1": 15
+            },
+            "requires": {
+              "newLine": true
+            }
+          },
+          "notes": "Prepaid 12 months ($360 after the intro year) · may slow past 50 GB when busy · 20 GB hotspot · SD video"
+        }
+      ],
+      "promos": []
+    },
+    {
+      "id": "tmobile",
+      "name": "T-Mobile",
+      "kind": "carrier",
+      "network": "T-Mobile",
+      "phoneSource": "carrier",
+      "requires": [],
+      "fees": {
+        "perLineOneTime": 35,
+        "label": "$35 device connection charge"
+      },
+      "plans": [
+        {
+          "id": "tmo-beyond-2",
+          "name": "Experience Beyond 2.0",
+          "dataGb": "unlimited",
+          "premiumDataGb": "unlimited",
+          "minutes": "unlimited",
+          "monthly": {
+            "1": 100,
+            "2": 170,
+            "3": 170,
+            "4": 215,
+            "5": 260,
+            "6": 305,
+            "7": 350,
+            "8": 395
+          },
+          "notes": "Unlimited premium data · unlimited hotspot · Netflix, Hulu on Us · 5-year price guarantee"
+        },
+        {
+          "id": "tmo-more-2",
+          "name": "Experience More 2.0",
+          "dataGb": "unlimited",
+          "premiumDataGb": "unlimited",
+          "minutes": "unlimited",
+          "monthly": {
+            "1": 85
+          },
+          "notes": "Unlimited premium data · 60 GB hotspot · Netflix on Us"
+        },
+        {
+          "id": "tmo-essentials-2",
+          "name": "Essentials 2.0",
+          "dataGb": "unlimited",
+          "premiumDataGb": 50,
+          "minutes": "unlimited",
+          "monthly": {
+            "1": 60
+          },
+          "notes": "50 GB premium data, then deprioritized · SD video"
+        },
+        {
+          "id": "tmo-essentials-saver-2",
+          "name": "Essentials Saver 2.0",
+          "dataGb": "unlimited",
+          "premiumDataGb": 50,
+          "minutes": "unlimited",
+          "monthly": {
+            "1": 50
+          },
+          "notes": "50 GB premium data · not eligible for iPhone 18 Pro promotions"
+        }
+      ],
+      "promos": [
+        {
+          "id": "tmo-ID260835",
+          "name": "iPhone 18 Pro on Us — any-condition trade-in",
+          "sourceKey": "tmobile-iphone",
+          "plans": [
+            "tmo-beyond-2"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "requires": {
+            "tradeIn": true,
+            "tradeInCondition": "any",
+            "newLine": false,
+            "portIn": false
+          },
+          "tiers": [
+            {
+              "credit": 1200,
+              "devices": [
+                "iphone-17",
+                "iphone-17-pro",
+                "iphone-17-pro-max",
+                "iphone-air",
+                "iphone-16",
+                "iphone-16-plus",
+                "iphone-16-pro",
+                "iphone-16-pro-max",
+                "iphone-16e",
+                "iphone-15-pro",
+                "iphone-15-pro-max"
+              ]
+            },
+            {
+              "credit": 930,
+              "devices": [
+                "iphone-15",
+                "iphone-15-plus",
+                "iphone-14",
+                "iphone-14-plus",
+                "iphone-14-pro",
+                "iphone-14-pro-max",
+                "iphone-13-pro",
+                "iphone-13-pro-max"
+              ]
+            },
+            {
+              "credit": 500,
+              "otherwise": true
+            }
+          ]
+        },
+        {
+          "id": "tmo-ID260824",
+          "name": "iPhone 18 Pro on Us — new line and port-in, no trade-in",
+          "sourceKey": "tmobile-iphone",
+          "plans": [
+            "tmo-beyond-2"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "requires": {
+            "tradeIn": false,
+            "newLine": true,
+            "portIn": true
+          },
+          "tiers": [
+            {
+              "credit": 1200,
+              "otherwise": true
+            }
+          ]
+        },
+        {
+          "id": "tmo-ID260838",
+          "name": "Up to $930 off — trade-in, Experience More or Beyond",
+          "sourceKey": "tmobile-iphone",
+          "plans": [
+            "tmo-more-2",
+            "tmo-beyond-2"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "requires": {
+            "tradeIn": true,
+            "tradeInCondition": "good",
+            "newLine": false,
+            "portIn": false
+          },
+          "tiers": [
+            {
+              "credit": 930,
+              "devices": [
+                "iphone-17-pro-max",
+                "iphone-17-pro",
+                "iphone-17",
+                "iphone-air",
+                "iphone-16-pro-max",
+                "iphone-16-pro",
+                "iphone-16-plus",
+                "iphone-16e",
+                "iphone-16",
+                "iphone-15-pro-max",
+                "iphone-15-pro"
+              ]
+            },
+            {
+              "credit": 730,
+              "devices": [
+                "iphone-15-plus",
+                "iphone-15",
+                "iphone-14-pro-max",
+                "iphone-14-pro",
+                "iphone-14-plus",
+                "iphone-14",
+                "iphone-13-pro-max",
+                "iphone-13-pro"
+              ]
+            },
+            {
+              "credit": 400,
+              "otherwise": true
+            }
+          ]
+        },
+        {
+          "id": "tmo-more-port",
+          "name": "Up to $930 off — new line and port-in, no trade-in",
+          "sourceKey": "tmobile-iphone",
+          "plans": [
+            "tmo-more-2",
+            "tmo-beyond-2"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "requires": {
+            "tradeIn": false,
+            "newLine": true,
+            "portIn": true
+          },
+          "tiers": [
+            {
+              "credit": 930,
+              "otherwise": true
+            }
+          ]
+        },
+        {
+          "id": "tmo-ID260832",
+          "name": "Up to $730 off — new line plus trade-in, most plans",
+          "sourceKey": "tmobile-iphone",
+          "plans": [
+            "tmo-beyond-2",
+            "tmo-more-2",
+            "tmo-essentials-2"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "requires": {
+            "tradeIn": true,
+            "tradeInCondition": "good",
+            "newLine": true,
+            "portIn": false
+          },
+          "tiers": [
+            {
+              "credit": 730,
+              "devices": [
+                "iphone-15-pro",
+                "iphone-15-pro-max",
+                "iphone-16",
+                "iphone-16-plus",
+                "iphone-16-pro",
+                "iphone-16-pro-max",
+                "iphone-16e",
+                "iphone-17",
+                "iphone-17-pro",
+                "iphone-17-pro-max",
+                "iphone-air"
+              ]
+            },
+            {
+              "credit": 530,
+              "devices": [
+                "iphone-13-pro",
+                "iphone-13-pro-max",
+                "iphone-14",
+                "iphone-14-plus",
+                "iphone-14-pro",
+                "iphone-14-pro-max",
+                "iphone-15",
+                "iphone-15-plus"
+              ]
+            },
+            {
+              "credit": 300,
+              "otherwise": true
+            }
+          ]
+        },
+        {
+          "id": "tmo-ID260803",
+          "name": "Up to $300 off — trade-in, most plans",
+          "sourceKey": "tmobile-iphone",
+          "plans": [
+            "tmo-beyond-2",
+            "tmo-more-2",
+            "tmo-essentials-2"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "requires": {
+            "tradeIn": true,
+            "tradeInCondition": "good",
+            "newLine": false,
+            "portIn": false
+          },
+          "tiers": [
+            {
+              "credit": 300,
+              "devices": [
+                "iphone-13-pro",
+                "iphone-13-pro-max",
+                "iphone-14",
+                "iphone-14-plus",
+                "iphone-14-pro",
+                "iphone-14-pro-max",
+                "iphone-15",
+                "iphone-15-plus",
+                "iphone-15-pro",
+                "iphone-16e"
+              ]
+            },
+            {
+              "credit": 150,
+              "otherwise": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "att",
+      "name": "AT&T",
+      "kind": "carrier",
+      "network": "AT&T",
+      "phoneSource": "carrier",
+      "requires": [],
+      "fees": {
+        "perLineOneTime": 35,
+        "label": "$35 activation fee"
+      },
+      "plans": [
+        {
+          "id": "att-elite-2",
+          "name": "Elite 2.0",
+          "dataGb": "unlimited",
+          "premiumDataGb": "unlimited",
+          "minutes": "unlimited",
+          "monthly": {
+            "1": 110,
+            "4": 280
+          },
+          "notes": "Unlimited premium data · 250 GB hotspot · tablet and watch line included"
+        },
+        {
+          "id": "att-premium-2",
+          "name": "Premium 2.0",
+          "dataGb": "unlimited",
+          "premiumDataGb": "unlimited",
+          "minutes": "unlimited",
+          "monthly": {
+            "1": 90,
+            "4": 200
+          },
+          "notes": "Unlimited premium data · 100 GB hotspot"
+        },
+        {
+          "id": "att-extra-2",
+          "name": "Extra 2.0",
+          "dataGb": "unlimited",
+          "premiumDataGb": 100,
+          "minutes": "unlimited",
+          "monthly": {
+            "1": 70,
+            "4": 160
+          },
+          "notes": "100 GB high-speed data · 50 GB hotspot"
+        },
+        {
+          "id": "att-value-2",
+          "name": "Value 2.0",
+          "dataGb": "unlimited",
+          "premiumDataGb": 5,
+          "minutes": "unlimited",
+          "monthly": {
+            "1": 50,
+            "4": 120
+          },
+          "notes": "5 GB high-speed data · 3 GB hotspot"
+        }
+      ],
+      "promos": [
+        {
+          "id": "att-tradein-1200",
+          "name": "Up to $1,200 off — iPhone 14 or newer trade-in, any condition",
+          "sourceKey": "att-iphone",
+          "plans": [
+            "att-premium-2",
+            "att-elite-2"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "requires": {
+            "tradeIn": true,
+            "tradeInCondition": "any",
+            "newLine": false,
+            "portIn": false
+          },
+          "tiers": [
+            {
+              "credit": 1200,
+              "devices": [
+                "iphone-14",
+                "iphone-14-plus",
+                "iphone-14-pro",
+                "iphone-14-pro-max",
+                "iphone-15",
+                "iphone-15-plus",
+                "iphone-15-pro",
+                "iphone-15-pro-max",
+                "iphone-16",
+                "iphone-16-plus",
+                "iphone-16-pro",
+                "iphone-16-pro-max",
+                "iphone-air",
+                "iphone-17",
+                "iphone-17-pro",
+                "iphone-17-pro-max"
+              ]
+            },
+            {
+              "credit": 350,
+              "otherwise": true
+            }
+          ]
+        },
+        {
+          "id": "att-tradein-930",
+          "name": "Up to $930 off — iPhone 14 or newer trade-in, any condition",
+          "sourceKey": "att-iphone",
+          "plans": [
+            "att-extra-2"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "requires": {
+            "tradeIn": true,
+            "tradeInCondition": "any",
+            "newLine": false,
+            "portIn": false
+          },
+          "tiers": [
+            {
+              "credit": 930,
+              "devices": [
+                "iphone-14",
+                "iphone-14-plus",
+                "iphone-14-pro",
+                "iphone-14-pro-max",
+                "iphone-15",
+                "iphone-15-plus",
+                "iphone-15-pro",
+                "iphone-15-pro-max",
+                "iphone-16",
+                "iphone-16-plus",
+                "iphone-16-pro",
+                "iphone-16-pro-max",
+                "iphone-air",
+                "iphone-17",
+                "iphone-17-pro",
+                "iphone-17-pro-max"
+              ]
+            },
+            {
+              "credit": 350,
+              "otherwise": true
+            }
+          ]
+        },
+        {
+          "id": "att-tradein-500",
+          "name": "Up to $500 off — iPhone 14 or newer trade-in, any condition",
+          "sourceKey": "att-iphone",
+          "plans": [
+            "att-value-2"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "requires": {
+            "tradeIn": true,
+            "tradeInCondition": "any",
+            "newLine": false,
+            "portIn": false
+          },
+          "tiers": [
+            {
+              "credit": 500,
+              "devices": [
+                "iphone-14",
+                "iphone-14-plus",
+                "iphone-14-pro",
+                "iphone-14-pro-max",
+                "iphone-15",
+                "iphone-15-plus",
+                "iphone-15-pro",
+                "iphone-15-pro-max",
+                "iphone-16",
+                "iphone-16-plus",
+                "iphone-16-pro",
+                "iphone-16-pro-max",
+                "iphone-air",
+                "iphone-17",
+                "iphone-17-pro",
+                "iphone-17-pro-max"
+              ]
+            },
+            {
+              "credit": 350,
+              "otherwise": true
+            }
+          ]
+        },
+        {
+          "id": "att-online-200",
+          "name": "$200 off — online order, new line",
+          "sourceKey": "att-press",
+          "plans": [
+            "att-elite-2",
+            "att-premium-2",
+            "att-extra-2",
+            "att-value-2"
+          ],
+          "termMonths": 36,
+          "stackable": true,
+          "appliesToByod": true,
+          "requires": {
+            "tradeIn": false,
+            "newLine": true,
+            "portIn": false
+          },
+          "tiers": [
+            {
+              "credit": 200,
+              "otherwise": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "xfinity",
+      "name": "Xfinity Mobile",
+      "kind": "mvno",
+      "network": "Verizon",
+      "phoneSource": "carrier",
+      "requires": [
+        "Xfinity Internet"
+      ],
+      "fees": {
+        "perLineOneTime": 0,
+        "label": "No activation fee published"
+      },
+      "plans": [
+        {
+          "id": "xf-plus",
+          "name": "Mobile Plus",
+          "dataGb": "unlimited",
+          "premiumDataGb": "unlimited",
+          "minutes": "unlimited",
+          "monthly": {
+            "1": 45
+          },
+          "intro": {
+            "months": 12,
+            "monthly": {
+              "1": 15
+            },
+            "requires": {
+              "newLine": true
+            }
+          },
+          "notes": "Unlimited high-speed data · 50 GB hotspot · lifetime device protection · unlocks the phone deals"
+        },
+        {
+          "id": "xf-select",
+          "name": "Mobile Select",
+          "dataGb": "unlimited",
+          "premiumDataGb": 50,
+          "minutes": "unlimited",
+          "monthly": {
+            "1": 30
+          },
+          "intro": {
+            "months": 12,
+            "monthly": {
+              "1": 0
+            },
+            "requires": {
+              "newLine": true
+            }
+          },
+          "notes": "Slowed after 50 GB during congestion · 15 GB hotspot · not eligible for the iPhone deals"
+        }
+      ],
+      "promos": [
+        {
+          "id": "xf-tradein-1300",
+          "name": "iPhone on us — trade-in credits up to $1,300",
+          "sourceKey": "xfinity-deals",
+          "plans": [
+            "xf-plus"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "endsOn": "2026-10-08",
+          "requires": {
+            "tradeIn": true,
+            "tradeInCondition": "qualifying",
+            "newLine": false,
+            "portIn": false
+          },
+          "tiers": [
+            {
+              "credit": 1300,
+              "devices": [
+                "iphone-15-pro",
+                "iphone-15-pro-max",
+                "iphone-16",
+                "iphone-16-plus",
+                "iphone-16-pro",
+                "iphone-16-pro-max",
+                "iphone-air",
+                "iphone-17",
+                "iphone-17-pro",
+                "iphone-17-pro-max"
+              ],
+              "note": "Full promo credit for iPhone 15 Pro and anything newer or higher. Observed at checkout 2026-09-21 (new Mobile Plus line with trade-in)."
+            },
+            {
+              "credit": 700,
+              "devices": [
+                "iphone-13-pro-max",
+                "iphone-14-pro",
+                "iphone-14-pro-max",
+                "iphone-15-plus",
+                "pixel-9"
+              ],
+              "note": "Observed at checkout 2026-09-21."
+            },
+            {
+              "credit": 600,
+              "devices": [
+                "iphone-13-mini",
+                "iphone-13",
+                "iphone-13-pro",
+                "iphone-14",
+                "iphone-14-plus",
+                "iphone-15"
+              ],
+              "note": "Observed at checkout 2026-09-21."
+            },
+            {
+              "credit": 500,
+              "devices": [
+                "iphone-12"
+              ],
+              "note": "Observed at checkout 2026-09-21."
+            },
+            {
+              "credit": 1300,
+              "otherwise": true,
+              "verified": false,
+              "note": "Xfinity publishes only the ceiling; other devices show their credit at checkout. Adjust it in Assumptions."
+            }
+          ],
+          "note": "Credits are paid only while the line stays on Mobile Plus; Mobile Select does not qualify."
+        },
+        {
+          "id": "xf-port-400",
+          "name": "$400 off — new line with number transfer, no trade-in",
+          "sourceKey": "xfinity-deals",
+          "plans": [
+            "xf-plus"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "endsOn": "2026-10-08",
+          "requires": {
+            "tradeIn": false,
+            "newLine": true,
+            "portIn": true
+          },
+          "tiers": [
+            {
+              "credit": 400,
+              "otherwise": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

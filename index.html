@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="daylight">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>True Cost to Phone</title>
+  <meta name="description" content="What an iPhone 18 Pro really costs over 36 months — wireless plan, phone, fees and the trade-in you hand over — across Tello, Mint Mobile, T-Mobile, AT&T and Xfinity Mobile.">
+  <link rel="icon" type="image/svg+xml" href="https://design-system.rising.company/branding/favicon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://design-system.rising.company/branding/apple-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;500;700&display=swap">
+  <link rel="stylesheet" href="https://design-system.rising.company/rising.css">
+  <style>
+    /* ── Page tokens ──
+       Everything visual comes from rising.css. This block adds only what the tool
+       needs on top: the four cost-segment colors (validated for CVD on the Daylight
+       surface), the layout, and the result rows. */
+    :root {
+      --seg-plan: #0b7a4e;
+      --seg-phone: #1f5fbf;
+      --seg-fees: #c46a12;
+      --seg-tradein: #8a3f9e;
+    }
+
+    body { display: flex; flex-direction: column; min-height: 100vh; }
+    main { flex: 1; position: relative; z-index: 1; }
+
+    /* ── Hero ── */
+    .hero { padding: 64px 0 40px; }
+    .hero-trust {
+      font-family: "Share Tech Mono", monospace; font-size: 12px; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--text-label); margin-top: 24px;
+    }
+
+    /* ── Controls ── */
+    .controls { margin-bottom: 32px; }
+    .controls .section-label { margin-bottom: 16px; }
+    .control-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    select.input {
+      appearance: none; -webkit-appearance: none; cursor: pointer; padding-right: 40px;
+      background-image: linear-gradient(45deg, transparent 50%, var(--text-label) 50%), linear-gradient(135deg, var(--text-label) 50%, transparent 50%);
+      background-position: calc(100% - 20px) 50%, calc(100% - 15px) 50%;
+      background-size: 5px 5px, 5px 5px; background-repeat: no-repeat;
+    }
+    .toggle { display: flex; align-items: center; gap: 12px; cursor: pointer; min-height: 48px; }
+    .toggle input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+    .toggle-track {
+      position: relative; flex-shrink: 0; width: 40px; height: 22px; border-radius: 11px;
+      background: var(--bg-inset); border: 1px solid var(--border);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .toggle-track::after {
+      content: ""; position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%;
+      background: var(--text-label); transition: transform 0.2s, background 0.2s;
+    }
+    .toggle input:checked + .toggle-track { background: var(--accent); border-color: var(--accent); }
+    .toggle input:checked + .toggle-track::after { background: var(--accent-on); transform: translateX(18px); }
+    .toggle input:focus-visible + .toggle-track { outline: 1px solid var(--accent-ink); outline-offset: 3px; }
+    .toggle-text { font-size: 15px; font-weight: 500; color: var(--text-body); line-height: 1.3; }
+    .toggle-text small { display: block; font-size: 13px; color: var(--text-muted); }
+    .field-help.is-warning { color: var(--warning-ink); }
+    .field[hidden], .rows-more [hidden] { display: none; } /* .field's display:flex would otherwise beat [hidden] */
+
+    /* ── Best-per-carrier strip ── */
+    .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 32px; }
+    .summary .card { padding: 20px 24px; display: flex; flex-direction: column; gap: 8px; }
+    .summary .stat-label { display: flex; justify-content: space-between; gap: 8px; }
+    .summary .big {
+      font-family: "Rajdhani", sans-serif; font-weight: 700; font-size: 32px; line-height: 1.1;
+      letter-spacing: 1px; color: var(--text-heading); font-variant-numeric: tabular-nums;
+    }
+    .summary .big small { font-family: "Share Tech Mono", monospace; font-size: 13px; letter-spacing: 0.06em; color: var(--text-subtle); margin-left: 8px; }
+    .summary .route { font-size: 14px; font-weight: 500; color: var(--text-muted); line-height: 1.4; }
+    .summary .card.is-best { border-color: var(--accent-line); background: var(--accent-wash); }
+
+    /* ── Results ── */
+    .results-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px 24px; flex-wrap: wrap; margin-bottom: 16px; }
+    .results-head .subtitle { margin-top: 6px; }
+    .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-family: "Share Tech Mono", monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-label); }
+    .legend span::before, .row-legend span::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 8px; vertical-align: 0; background: var(--seg, var(--text-label)); }
+    .rows { display: flex; flex-direction: column; gap: 12px; }
+    .row {
+      display: grid; grid-template-columns: 48px 1fr auto; gap: 8px 24px; align-items: start;
+      padding: 20px 24px;
+    }
+    .row::before { opacity: 0; }
+    .row.is-best { border-color: var(--accent-line); }
+    .row.is-best::before { opacity: 1; }
+    .rank { font-family: "Share Tech Mono", monospace; font-size: 17px; letter-spacing: 0.06em; color: var(--text-label); padding-top: 4px; }
+    .row.is-best .rank { color: var(--accent-ink); }
+    .row-body { min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+    .row-body .card-tag { display: flex; flex-wrap: wrap; gap: 4px 10px; }
+    .row-body .card-tag .plan-monthly { color: var(--text-subtle); }
+    .row-title { font-size: 18px; font-weight: 700; letter-spacing: 0.5px; color: var(--text-heading); line-height: 1.25; }
+    .badges { display: flex; flex-wrap: wrap; gap: 8px; }
+    .badge.is-warning { color: var(--warning-ink); background: var(--warning-wash); border-color: var(--warning-line); }
+    .badge.is-accent { color: var(--accent-ink); background: var(--accent-wash); border-color: var(--accent-line); }
+    .bar { display: flex; height: 10px; gap: 2px; width: 100%; max-width: 560px; }
+    .bar span { display: block; height: 100%; border-radius: 2px; background: var(--seg); min-width: 2px; }
+    .bar span:first-child { border-radius: 4px 2px 2px 4px; }
+    .bar span:last-child { border-radius: 2px 4px 4px 2px; }
+    .row-legend { display: flex; flex-wrap: wrap; gap: 4px 18px; font-family: "Share Tech Mono", monospace; font-size: 12px; letter-spacing: 0.06em; color: var(--text-subtle); font-variant-numeric: tabular-nums; }
+    .row-legend b { font-weight: normal; color: var(--text-body); }
+    .row-legend .is-zero { color: var(--text-label); }
+    .row-total { text-align: right; display: flex; flex-direction: column; gap: 4px; align-items: flex-end; }
+    .row-total .total {
+      font-family: "Rajdhani", sans-serif; font-weight: 700; font-size: 28px; line-height: 1.1;
+      letter-spacing: 1px; color: var(--text-heading); font-variant-numeric: tabular-nums; white-space: nowrap;
+    }
+    .row-total .subtitle { white-space: nowrap; }
+    .row-total .delta { font-family: "Share Tech Mono", monospace; font-size: 12px; letter-spacing: 0.06em; color: var(--text-label); white-space: nowrap; }
+    .row-notes { font-size: 14px; font-weight: 500; color: var(--text-muted); line-height: 1.5; }
+    .row-notes a { color: var(--accent-ink); text-decoration: none; }
+    .row-notes a:hover { text-decoration: underline; }
+    .rows-more { display: flex; justify-content: center; margin-top: 24px; }
+    .table-view { margin-top: 24px; }
+    .table-view summary { cursor: pointer; }
+    table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 14px; font-weight: 500; color: var(--text-body); }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    th { font-family: "Share Tech Mono", monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-label); font-weight: normal; }
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+    /* ── Tabs ── */
+    .tabs { display: flex; gap: 24px; border-bottom: 1px solid var(--border); margin-bottom: 32px; }
+    .tabs [role="tab"] {
+      font-family: "Share Tech Mono", monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-label); background: none; border: 0; border-bottom: 1px solid transparent; margin-bottom: -1px;
+      padding: 10px 2px 12px; cursor: pointer; transition: color 0.2s, border-color 0.2s;
+    }
+    .tabs [role="tab"]:hover { color: var(--accent-ink); }
+    .tabs [role="tab"][aria-selected="true"] { color: var(--text-heading); border-bottom-color: var(--accent-ink); }
+    [role="tabpanel"][hidden] { display: none; }
+
+    /* ── Plans tab ── */
+    .picker { display: flex; flex-direction: column; gap: 16px; }
+    .picker-group { display: flex; flex-direction: column; gap: 8px; }
+    .picker-net { color: var(--text-dim); letter-spacing: 0.06em; text-transform: none; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: "Share Tech Mono", monospace; font-size: 12px; letter-spacing: 0.05em;
+      color: var(--text-body); background: transparent; border: 1px solid var(--border); border-radius: 3px;
+      padding: 7px 10px; cursor: pointer; transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+    .chip b { font-weight: normal; color: var(--text-subtle); }
+    .chip:hover { border-color: var(--border-hover); background: var(--bg-surface-hover); }
+    .chip.is-on { background: var(--accent-wash); border-color: var(--accent-line); color: var(--accent-ink); }
+    .chip.is-on b { color: var(--accent-ink); }
+    .chip[disabled] { color: var(--text-label); border-color: var(--border-subtle); cursor: not-allowed; background: transparent; }
+    .chip-dot { width: 8px; height: 8px; border-radius: 2px; background: var(--series, var(--border)); flex-shrink: 0; }
+    .series-dot { display: inline-block; width: 8px; height: 8px; border-radius: 2px; background: var(--series); margin-right: 8px; vertical-align: 0; }
+    .compare-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-surface); box-shadow: var(--card-shadow); }
+    .compare { margin: 0; min-width: 640px; }
+    .compare th, .compare td { padding: 12px 16px; border-bottom: 1px solid var(--border); vertical-align: top; min-width: 160px; }
+    .compare thead th { vertical-align: bottom; }
+    .compare tbody th { font-family: "Share Tech Mono", monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-label); font-weight: normal; white-space: nowrap; min-width: 0; position: sticky; left: 0; background: var(--bg-surface); }
+    .compare tbody tr:last-child th, .compare tbody tr:last-child td { border-bottom: 0; }
+    .compare td { font-size: 15px; font-weight: 500; color: var(--text-body); line-height: 1.5; }
+    .compare td b { font-weight: 700; color: var(--text-heading); font-size: 17px; }
+    .compare .delta { display: block; font-family: "Share Tech Mono", monospace; font-size: 12px; letter-spacing: 0.06em; color: var(--text-label); margin-top: 2px; }
+    .compare-plan { font-family: "Rajdhani", sans-serif; font-size: 17px; font-weight: 700; color: var(--text-heading); letter-spacing: 0.5px; text-transform: none; margin-top: 4px; }
+    .chart { margin-top: 32px; }
+    .chart-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 24px; margin-bottom: 12px; }
+    .chart-wrap { position: relative; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 6px; padding: 16px; box-shadow: var(--card-shadow); }
+    .chart-wrap svg { width: 100%; height: auto; display: block; }
+    .chart-wrap .grid { stroke: var(--border-subtle); }
+    .chart-wrap .tick { font-family: "Share Tech Mono", monospace; font-size: 12px; fill: var(--text-label); }
+    .chart-wrap .end-label { font-family: "Share Tech Mono", monospace; font-size: 12px; fill: var(--text-body); paint-order: stroke; stroke: var(--bg-surface); stroke-width: 4px; stroke-linejoin: round; }
+    .chart-wrap .cursor { stroke: var(--text-label); stroke-dasharray: 3 3; }
+    .chart-tip { position: absolute; pointer-events: none; background: color-mix(in srgb, var(--bg-base) 92%, transparent); border: 1px solid var(--accent-line); border-radius: 4px; padding: 8px 12px; min-width: 200px; }
+    .chart-tip .stat-label { margin-bottom: 6px; }
+    .tip-row { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+    .tip-row b { margin-left: auto; font-family: "Share Tech Mono", monospace; font-size: 12px; font-weight: normal; color: var(--text-body); }
+
+    /* ── Method / sources ── */
+    .band { padding-block: 64px; }
+    .band .sec-title { margin-bottom: 16px; }
+    .formula {
+      font-family: "Share Tech Mono", monospace; font-size: 13px; letter-spacing: 0.04em; line-height: 1.9;
+      color: var(--text-body); background: var(--bg-surface); border: 1px solid var(--border); border-radius: 6px;
+      padding: 20px 24px; overflow-x: auto; white-space: pre; margin: 16px 0 24px;
+    }
+    .notes { display: flex; flex-direction: column; gap: 10px; max-width: 72ch; }
+    .notes li { font-size: 15px; font-weight: 500; line-height: 1.6; color: var(--text-muted); list-style: none; }
+    .notes li::before { content: "+"; color: var(--accent-ink); margin-right: 10px; font-family: "Share Tech Mono", monospace; }
+    .sources { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+    .sources a { font-family: "Share Tech Mono", monospace; font-size: 12px; letter-spacing: 0.05em; color: var(--text-subtle); text-decoration: none; word-break: break-all; line-height: 1.6; transition: color 0.2s; }
+    .sources a:hover { color: var(--accent-ink); }
+    .sources a::before { content: "+"; color: var(--accent-ink); margin-right: 10px; }
+
+    .site-footer .shell { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; }
+
+    /* ── Load reveal — the page's one entrance ── */
+    @keyframes reveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    .reveal { animation: reveal 0.6s ease both; }
+    .reveal:nth-child(2) { animation-delay: 90ms; }
+    .reveal:nth-child(3) { animation-delay: 180ms; }
+    .reveal:nth-child(4) { animation-delay: 270ms; }
+    .reveal:nth-child(5) { animation-delay: 360ms; }
+
+    @media (max-width: 768px) {
+      .hero { padding: 48px 0 32px; }
+      .row { grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 20px; }
+      .row > * { min-width: 0; }
+      .rank { padding-top: 0; }
+      .row-total { flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; text-align: left; }
+      .band { padding-block: 48px; }
+    }
+    @media (prefers-reduced-motion: reduce) { .reveal { animation: none; } }
+  </style>
+</head>
+<body>
+  <div class="atmosphere"></div>
+
+  <nav class="nav">
+    <div class="shell nav-inner">
+      <a class="wordmark" href="./">True Cost to Phone</a>
+      <div class="nav-links">
+        <a href="#method">Method</a>
+        <a href="#sources">Sources</a>
+        <a class="rising-backlink" href="https://rising.company" target="_blank" rel="noopener noreferrer">rising.company</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="shell hero reveal">
+      <div class="eyebrow">// Rising Company</div>
+      <h1 class="hero-title">True Cost to Phone</h1>
+      <p class="lede">What an iPhone 18 Pro really costs over 36 months — the plan, the phone, the fees, and the trade-in you hand over — across Tello, Mint Mobile, T-Mobile, AT&amp;T and Xfinity Mobile.</p>
+      <div class="hero-trust" id="trust">36 months · taxes excluded · prices crawled 2026-09-21</div>
+    </section>
+
+    <section class="shell controls reveal" aria-labelledby="controls-label">
+      <div class="section-label" id="controls-label">// Your situation</div>
+      <form class="control-grid" id="controls" autocomplete="off">
+        <div class="field">
+          <label class="field-label" for="phone">Phone</label>
+          <select class="input" id="phone" name="phone"></select>
+          <p class="field-help">iPhone 18 Pro and Pro Max. Same sticker price at Apple and the carriers.</p>
+        </div>
+        <div class="field">
+          <label class="field-label" for="tradein">Phone you would trade in</label>
+          <select class="input" id="tradein" name="tradein"></select>
+          <p class="field-help" id="tradein-help"></p>
+        </div>
+        <div class="field">
+          <span class="field-label">Switching carriers</span>
+          <label class="toggle">
+            <input type="checkbox" id="switching" name="switching" checked>
+            <span class="toggle-track" aria-hidden="true"></span>
+            <span class="toggle-text">New line, number ported in<small>Unlocks port-in deals and first-year intro prices</small></span>
+          </label>
+        </div>
+        <div class="field" id="xf-field" hidden>
+          <label class="field-label" for="xf">Xfinity trade-in credit</label>
+          <input class="input" id="xf" name="xf" type="number" inputmode="numeric" min="0" max="1300" step="10">
+          <p class="field-help is-warning" id="xf-help"></p>
+        </div>
+      </form>
+    </section>
+
+    <div class="shell reveal">
+      <div class="tabs" role="tablist" aria-label="View">
+        <button type="button" role="tab" id="tab-routes" aria-controls="panel-routes" aria-selected="true">Routes</button>
+        <button type="button" role="tab" id="tab-plans" aria-controls="panel-plans" aria-selected="false">Plans</button>
+      </div>
+    </div>
+
+    <div id="panel-routes" role="tabpanel" aria-labelledby="tab-routes">
+    <section class="shell reveal" aria-label="Best route per carrier">
+      <div class="section-label" style="margin-bottom:16px">// Cheapest route per carrier</div>
+      <div class="summary" id="summary"></div>
+    </section>
+
+    <section class="shell reveal" aria-labelledby="results-title">
+      <div class="results-head">
+        <div>
+          <h2 class="sec-title" id="results-title">Every combination</h2>
+          <p class="subtitle" id="results-sub"></p>
+        </div>
+        <div class="legend" aria-hidden="true">
+          <span style="--seg: var(--seg-plan)">Plan</span>
+          <span style="--seg: var(--seg-phone)">Phone after credits</span>
+          <span style="--seg: var(--seg-fees)">One-time fees</span>
+          <span style="--seg: var(--seg-tradein)">Trade-in into the deal</span>
+        </div>
+      </div>
+      <div class="rows" id="rows" aria-live="polite"></div>
+      <div class="rows-more"><button class="btn btn-secondary" id="show-all" type="button" aria-controls="rows" aria-expanded="false" hidden></button></div>
+      <details class="table-view">
+        <summary class="section-label">// Table view</summary>
+        <table id="table">
+          <thead>
+            <tr><th>#</th><th>Carrier</th><th>Plan</th><th>Route</th><th class="num">Plan</th><th class="num">Phone</th><th class="num">Fees</th><th class="num">Trade-in</th><th class="num">Total</th><th class="num">Per mo.</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </details>
+    </section>
+    </div>
+
+    <div id="panel-plans" role="tabpanel" aria-labelledby="tab-plans" hidden>
+      <section class="shell" aria-labelledby="plans-title">
+        <div class="results-head">
+          <div>
+            <h2 class="sec-title" id="plans-title">Compare plans</h2>
+            <p class="subtitle" id="picker-note"></p>
+          </div>
+        </div>
+        <div class="section-label" style="margin-bottom:12px">// Pick up to five</div>
+        <div id="plan-picker" class="picker"></div>
+      </section>
+      <section class="shell" style="margin-top:32px" aria-label="Plan comparison">
+        <div id="plan-compare"></div>
+        <div id="plan-chart" class="chart"></div>
+      </section>
+    </div>
+
+    <section class="band band-inset" id="method" style="margin-top:64px">
+      <div class="shell">
+        <div class="eyebrow">// Method</div>
+        <h2 class="sec-title">One formula, every route</h2>
+        <p class="body" style="max-width:72ch">A promotion that gives you a phone "on us" usually takes a phone you own and asks for a plan you might not otherwise buy. So every route is priced as everything you pay over the term. A phone handed to a carrier for bill credits counts as extra out-of-pocket at what Apple would have paid for it; buying from Apple simply takes that Apple Trade In value off the price.</p>
+        <pre class="formula">total = monthly plan × 36
+      + phone price − promo credits        (buying from Apple: − Apple Trade In instead)
+      + one-time fees                       (activation · device connection)
+      + trade-in into the deal              (Apple Trade In estimate of the phone the carrier takes)</pre>
+        <ul class="notes" id="notes"></ul>
+      </div>
+    </section>
+
+    <section class="band" id="sources">
+      <div class="shell">
+        <div class="eyebrow">// Sources</div>
+        <h2 class="sec-title">Where the numbers come from</h2>
+        <p class="body" style="max-width:72ch;margin-bottom:24px">Prices and promotion terms were read from the carriers' own pages on the crawl date and saved to <a href="data/pricing.json" style="color:var(--accent-ink);text-decoration:none">data/pricing.json</a>. Carrier offers change weekly; check the source before you buy.</p>
+        <div class="sources" id="sources-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell">
+      <span>// True Cost to Phone · data 2026-09-21</span>
+      <a class="rising-backlink" href="https://rising.company" target="_blank" rel="noopener noreferrer">rising.company</a>
+    </div>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
