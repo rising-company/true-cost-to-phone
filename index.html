@@ -202,6 +202,22 @@
 
     .site-footer .shell { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; }
 
+    /* ── Buy me a coffee — a quiet tab on the right edge ── */
+    .coffee {
+      position: fixed; right: 0; top: 50%; z-index: 50;
+      writing-mode: vertical-rl; transform: translateY(-50%) rotate(180deg);
+      font-family: "Share Tech Mono", monospace; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--text-label); background: var(--bg-surface); text-decoration: none; white-space: nowrap;
+      border: 1px solid var(--border); border-left: 0; border-radius: 0 4px 4px 0; /* rotated: reads as flush right edge */
+      padding: 14px 8px; box-shadow: var(--card-shadow);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .coffee::before { content: "+ "; color: var(--accent-ink); }
+    .coffee:hover { color: var(--accent-ink); border-color: var(--border-hover); }
+    @media (max-width: 768px) {
+      .coffee { top: auto; bottom: 16px; right: 16px; writing-mode: horizontal-tb; transform: none; border-left: 1px solid var(--border); border-radius: 4px; padding: 8px 12px; }
+    }
+
     /* ── Load reveal — the page's one entrance ── */
     @keyframes reveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
     .reveal { animation: reveal 0.6s ease both; }
@@ -230,6 +246,7 @@
       <div class="nav-links">
         <a href="#method">Method</a>
         <a href="#sources">Sources</a>
+        <a href="https://github.com/rising-company/true-cost-to-phone" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a class="rising-backlink" href="https://rising.company" target="_blank" rel="noopener noreferrer">rising.company</a>
       </div>
     </div>
@@ -368,6 +385,8 @@
       <a class="rising-backlink" href="https://rising.company" target="_blank" rel="noopener noreferrer">rising.company</a>
     </div>
   </footer>
+
+  <a class="coffee" href="https://buymeacoffee.com/risingcompany" target="_blank" rel="noopener noreferrer">Buy me a coffee</a>
 
   <script type="module" src="app.js"></script>
 </body>
