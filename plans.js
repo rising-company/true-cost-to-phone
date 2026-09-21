@@ -6,6 +6,7 @@ import { comparePlans } from "./calc.js";
 
 const $ = (sel) => document.querySelector(sel);
 const usd = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+const usd2 = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
 export const MAX_PLANS = 5;
@@ -27,7 +28,7 @@ export function defaultPlanIds(rows) {
   return ids.slice(0, MAX_PLANS);
 }
 
-export function renderPicker(data, selected, onToggle) {
+export function renderPicker(data, selected, onToggle, lines = 1) {
   const full = selected.length >= MAX_PLANS;
   $("#plan-picker").innerHTML = data.carriers
     .map(
@@ -37,8 +38,9 @@ export function renderPicker(data, selected, onToggle) {
           .map((p) => {
             const on = selected.includes(p.id);
             const idx = selected.indexOf(p.id);
-            return `<button type="button" class="chip${on ? " is-on" : ""}" data-plan="${p.id}" aria-pressed="${on}" ${!on && full ? "disabled" : ""}
-              style="${on ? `--series:${SERIES[idx]}` : ""}"><span class="chip-dot" aria-hidden="true"></span>${esc(p.name)} <b>${usd.format(p.monthly["1"])}/mo</b></button>`;
+            const price = p.monthly[String(lines)];
+            return `<button type="button" class="chip${on ? " is-on" : ""}" data-plan="${p.id}" aria-pressed="${on}" ${(!on && full) || price == null ? "disabled" : ""}
+              style="${on ? `--series:${SERIES[idx]}` : ""}"><span class="chip-dot" aria-hidden="true"></span>${esc(p.name)} <b>${price == null ? `no ${lines}-line price` : `${usd.format(price)}/mo`}</b></button>`;
           })
           .join("")}</div>
       </div>`,
@@ -69,7 +71,7 @@ export function renderComparison(data, selected, input) {
       .join("")}</tr></thead>
     <tbody>
       ${row("Network", (c) => esc(c.network))}
-      ${row("Monthly", (c) => `${usd.format(c.monthly)}/mo`)}
+      ${row(cmp[0].lines > 1 ? `Monthly · ${cmp[0].lines} lines` : "Monthly", (c) => `${usd.format(c.monthly)}/mo${c.lines > 1 ? `<span class="delta">${usd2.format(c.perLine)}/line</span>` : ""}`)}
       ${row("Intro price", (c) => (c.intro ? `${usd.format(c.intro.monthly)}/mo × ${c.intro.months}` : "—"))}
       ${row(`Plan over ${cmp[0].termMonths} mo`, (c) => `<b>${usd.format(c.total)}</b>${c.total > cheapest ? `<span class="delta">+${usd.format(c.total - cheapest)}</span>` : `<span class="delta">cheapest</span>`}`)}
       ${row("High-speed data", (c) => dataLabel(c.premiumDataGb))}

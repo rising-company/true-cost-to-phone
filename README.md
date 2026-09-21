@@ -24,6 +24,13 @@ Every (carrier, plan, route) combination is priced: the "buy from Apple with tra
 bring your own" route on every plan, plus each promotion the plan qualifies for. Sorted
 cheapest first.
 
+## Lines and phones
+
+**Lines** (1–5) prices the plan as an account total for that many lines. **New phones** is how
+many of those lines get the new phone, each with the same trade-in; one-time fees are per
+line regardless. T-Mobile promotions credit at most four devices per account. Xfinity's
+first-year price covers one line; Mint's $15 intro year applies per line.
+
 ## Two tabs
 
 - **Routes** — every (carrier, plan, route) combination priced for your situation, cheapest
@@ -54,9 +61,11 @@ What's in it:
   Apple, T-Mobile and AT&T list the same figure (carriers show it as $x.99); Xfinity does
   not publish one, so Apple's is used everywhere.
 - `tradeIns` — Apple's full iPhone trade-in table ("up to" values).
-- `carriers[].plans` — `monthly` is keyed by **line count** (`"1"`, `"2"`, …). A plan with
-  no price for the requested line count is skipped rather than guessed. `premiumDataGb` and
-  `minutes` let the calculator filter by usage.
+- `carriers[].plans` — `monthly` is the account total keyed by **line count** (`"1"`…`"5"`,
+  T-Mobile Beyond to `"8"`). T-Mobile and AT&T totals were read from their plan pages per
+  line count; Xfinity, Tello and Mint charge the same per line. A plan with no price for the
+  requested count is skipped rather than guessed. `premiumDataGb` and `minutes` let the
+  calculator filter by usage.
 - `carriers[].promos` — per-plan eligibility, `requires` (trade-in / new line / port-in),
   bill-credit term, and trade-in **tiers** keyed by device id, with an `otherwise` tier
   for anything not listed. `stackable` promos (AT&T's $200 online credit) add on top of a
@@ -90,8 +99,10 @@ The calculator already takes these as inputs; the page just pins them for now.
 - Choose the trade-in device — present on the page today, backed by Apple's full table.
 - Monthly data and minutes needed (`minDataGb`, `minutes`) so Tello's smaller plans and
   AT&T Value 2.0 come into play.
-- Multi-line pricing (`lines`) — T-Mobile Beyond 2.0 carries 1–8 lines, AT&T 1 and 4;
-  the rest need crawling.
+- Different phones or trade-ins per line; today every new phone is the same model with
+  the same trade-in.
+- T-Mobile Essentials 2.0 at 2 and 5 lines and Essentials Saver beyond 2 lines are not
+  published on the plan page (T-Mobile shows an "Essentials 4 Line Offer" there instead).
 
 ## Tests
 

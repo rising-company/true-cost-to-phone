@@ -5,13 +5,17 @@
 //
 // A scenario is one (carrier, plan, route) combination priced over the term:
 //
-//   total = plan × term
-//         + phone − credits            (carrier credits never exceed the phone;
+//   total = plan × term                 (account total for the line count)
+//         + phones × (phone − credits)  (carrier credits never exceed the phone;
 //                                        buying from Apple takes Apple Trade In
 //                                        off the price instead)
 //         + one-time fees × lines
-//         + trade-in into the deal      (Apple Trade In estimate of the phone a
+//         + phones × trade-in into deal (Apple Trade In estimate of the phone a
 //                                        carrier promo takes from you)
+//
+// `lines` is how many lines the plan carries; `phones` is how many of them get
+// the new phone (each with the same trade-in). A promo's `maxDevices` caps how
+// many of those phones earn credits.
 //
 // The last line is what makes "on us" honest: a phone handed to a carrier for
 // bill credits is extra out-of-pocket at what Apple would have paid for it.
@@ -85,6 +89,7 @@ function requirementsFor(carrier, plan, promo, input) {
 export function buildScenarios(data, input) {
   const termMonths = input.termMonths ?? data.meta.defaultTermMonths ?? 36;
   const lines = input.lines ?? 1;
+  const phones = Math.max(1, Math.min(lines, input.phones ?? lines));
   const phone = data.phones.find((p) => p.id === input.phoneId);
   const tradeIn = data.tradeIns.find((t) => t.id === input.tradeInId);
   if (!phone) throw new Error(`unknown phone ${input.phoneId}`);
@@ -108,10 +113,13 @@ export function buildScenarios(data, input) {
 
       const push = ({ route, routeName, promo, credit, stacked, unverified, surrendered }) => {
         const byod = route === "byod";
-        const phoneCost = phone.retail; // same sticker everywhere — see meta.notes
-        const appleTradeIn = byod ? Math.min(tradeIn?.appleValue || 0, phoneCost) : 0;
-        const credits = Math.min(round2(credit + stacked), phoneCost - appleTradeIn);
-        const tradeInValue = surrendered ? tradeIn?.appleValue || 0 : 0;
+        const each = phone.retail; // same sticker everywhere — see meta.notes
+        const creditedPhones = Math.min(phones, promo?.maxDevices ?? phones);
+        const phoneCost = round2(each * phones);
+        const appleTradeIn = byod ? round2(Math.min(tradeIn?.appleValue || 0, each) * phones) : 0;
+        // Main promo credit per credited phone, stackable credit per line; never more than the phones cost.
+        const credits = Math.min(round2(credit * creditedPhones + stacked * lines), phoneCost - appleTradeIn);
+        const tradeInValue = surrendered ? round2((tradeIn?.appleValue || 0) * phones) : 0;
         const total = round2(plan$ + phoneCost - appleTradeIn - credits + fees + tradeInValue);
         rows.push({
           carrierId: carrier.id,
@@ -120,6 +128,7 @@ export function buildScenarios(data, input) {
           planId: plan.id,
           planName: plan.name,
           planMonthly: plan.monthly[String(lines)],
+          perLine: round2(plan.monthly[String(lines)] / lines),
           planIntro: intro,
           planNotes: plan.notes || "",
           route,
@@ -129,11 +138,13 @@ export function buildScenarios(data, input) {
           sourceKey: promo?.sourceKey || null,
           termMonths,
           lines,
+          phones,
+          creditedPhones,
           plan: plan$,
           phone: phoneCost,
           appleTradeIn,
           credits,
-          stacked,
+          stacked: round2(stacked * lines),
           phoneNet: round2(phoneCost - appleTradeIn - credits),
           fees,
           feesLabel: carrier.fees?.label || "",
@@ -207,6 +218,8 @@ export function comparePlans(data, planIds, input) {
         carrierName: carrier.name,
         network: carrier.network,
         monthly,
+        lines,
+        perLine: round2(monthly / lines),
         intro,
         total: cumulative[termMonths],
         cumulative,

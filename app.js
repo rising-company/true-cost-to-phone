@@ -11,7 +11,8 @@ const usd2 = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD"
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
 const XF_PROMO = "xf-tradein-1300";
-const DEFAULTS = { phone: "iphone-18-pro-256", tradein: "", switching: "1", xf: "1300", tab: "routes", plans: "" };
+const DEFAULTS = { phone: "iphone-18-pro-256", tradein: "", switching: "1", xf: "1300", tab: "routes", plans: "", lines: "1", phones: "" };
+const MAX_LINES = 5;
 
 let data;
 let showAll = false;
@@ -40,6 +41,8 @@ function readState() {
     tradein: q.get("tradein") || DEFAULTS.tradein,
     switching: (q.get("switching") ?? DEFAULTS.switching) !== "0",
     xf: Number(q.get("xf") ?? DEFAULTS.xf),
+    lines: Math.max(1, Math.min(MAX_LINES, Number(q.get("lines")) || 1)),
+    phones: Number(q.get("phones")) || null,
     tab: q.get("tab") === "plans" ? "plans" : "routes",
     plans: (q.get("plans") || "").split(",").filter(Boolean),
   };
@@ -51,6 +54,8 @@ function writeState(s) {
   if (s.tradein !== DEFAULTS.tradein) q.set("tradein", s.tradein);
   if (!s.switching) q.set("switching", "0");
   if (String(s.xf) !== DEFAULTS.xf) q.set("xf", String(s.xf));
+  if (s.lines !== 1) q.set("lines", String(s.lines));
+  if (s.lines !== 1 && s.phones !== s.lines) q.set("phones", String(s.phones));
   if (tab === "plans") q.set("tab", "plans");
   if (selectedPlans && selectedPlans.join(",") !== defaultPlans.join(",")) q.set("plans", selectedPlans.join(","));
   const qs = q.toString();
@@ -76,10 +81,24 @@ function populateControls(state) {
 
   $("#switching").checked = state.switching;
   $("#xf").value = state.xf;
+  $("#lines").value = String(state.lines);
+  syncPhones(state.lines, state.phones ?? state.lines);
+}
+
+/** New-phones options follow the line count; the pick tracks the count unless the reader changed it. */
+function syncPhones(lines, want) {
+  const sel = $("#phones");
+  const prev = Number(sel.value) || null;
+  sel.innerHTML = Array.from({ length: lines }, (_, i) => `<option value="${i + 1}">${i + 1} of ${lines}</option>`).join("");
+  const next = want ?? (prev && prev < lines && sel.dataset.touched ? prev : lines);
+  sel.value = String(Math.max(1, Math.min(lines, next)));
+  $("#phones-field").hidden = lines === 1;
 }
 
 function inputFromControls() {
   return {
+    lines: Number($("#lines").value) || 1,
+    phones: Number($("#phones").value) || 1,
     phone: $("#phone").value,
     tradein: $("#tradein").value,
     switching: $("#switching").checked,
@@ -88,14 +107,15 @@ function inputFromControls() {
 }
 
 function planPriceLabel(r) {
-  if (!r.planIntro) return `${usd.format(r.planMonthly)}/mo`;
-  return `${usd.format(r.planIntro.monthly)}/mo × ${r.planIntro.months}, then ${usd.format(r.planMonthly)}/mo`;
+  const forLines = r.lines > 1 ? ` for ${r.lines} lines (${usd2.format(r.perLine)}/line)` : "";
+  if (!r.planIntro) return `${usd.format(r.planMonthly)}/mo${forLines}`;
+  return `${usd.format(r.planIntro.monthly)}/mo × ${r.planIntro.months}, then ${usd.format(r.planMonthly)}/mo${forLines}`;
 }
 
 function segments(row) {
   return [
     { key: "plan", label: "Plan", value: row.plan, seg: "var(--seg-plan)" },
-    { key: "phone", label: "Phone", value: row.phoneNet, seg: "var(--seg-phone)" },
+    { key: "phone", label: row.phones > 1 ? `Phones ×${row.phones}` : "Phone", value: row.phoneNet, seg: "var(--seg-phone)" },
     { key: "fees", label: "Fees", value: row.fees, seg: "var(--seg-fees)" },
     { key: "tradein", label: "Trade-in to deal", value: row.tradeInValue, seg: "var(--seg-tradein)" },
   ];
@@ -144,10 +164,12 @@ function renderRows(rows, state) {
       ].join("");
       const notes = [];
       if (r.planIntro) notes.push(`Plan is ${usd.format(r.planIntro.monthly)}/mo for the first ${r.planIntro.months} months as a new customer, then ${usd.format(r.planMonthly)}/mo — ${usd.format(r.plan)} over ${r.termMonths} months.`);
-      if (r.route !== "byod" && r.tradeInValue > 0) notes.push(`Hands your ${esc(r.tradeInName)} to the carrier — that is ${usd.format(r.tradeInValue)} out of pocket, what Apple would have paid for it.`);
-      if (r.route === "byod" && r.appleTradeIn > 0) notes.push(`Trades your ${esc(tradeIn.name)} in to Apple for ${usd.format(r.appleTradeIn)} off the phone.`);
+      const plural = r.phones > 1 ? ` ×${r.phones}` : "";
+      if (r.route !== "byod" && r.tradeInValue > 0) notes.push(`Hands your ${esc(r.tradeInName)}${plural} to the carrier — that is ${usd.format(r.tradeInValue)} out of pocket, what Apple would have paid.`);
+      if (r.route === "byod" && r.appleTradeIn > 0) notes.push(`Trades your ${esc(tradeIn.name)}${plural} in to Apple for ${usd.format(r.appleTradeIn)} off the phones.`);
       if (r.simUnlocked) notes.push("Apple sells it unlocked — switch carriers any time, no payoff to leave.");
-      if (r.stacked > 0) notes.push(`Includes the ${usd.format(r.stacked)} online new-line credit.`);
+      if (r.stacked > 0) notes.push(`Includes the ${usd.format(r.stacked)} online new-line credit${r.lines > 1 ? ` (${r.lines} lines)` : ""}.`);
+      if (r.phones > r.creditedPhones) notes.push(`Credits cover ${r.creditedPhones} phones (carrier limit); the other ${r.phones - r.creditedPhones} pay full price.`);
       if (r.planNotes) notes.push(esc(r.planNotes));
       const src = r.sourceKey && data.meta.sources[r.sourceKey];
       if (src) notes.push(`<a href="${esc(src)}" target="_blank" rel="noopener noreferrer">Offer terms ↗</a>`);
@@ -187,6 +209,8 @@ function renderRows(rows, state) {
 }
 
 function render() {
+  const lines = Number($("#lines").value) || 1;
+  if (Number($("#phones").options.length) !== lines) syncPhones(lines);
   const state = inputFromControls();
   writeState(state);
   const tradeIn = data.tradeIns.find((t) => t.id === state.tradein);
@@ -207,7 +231,8 @@ function render() {
   const rows = buildScenarios(data, {
     phoneId: state.phone,
     tradeInId: state.tradein || null,
-    lines: 1,
+    lines: state.lines,
+    phones: state.phones,
     termMonths: data.meta.defaultTermMonths,
     switching: state.switching,
     minDataGb: 50,
@@ -221,15 +246,21 @@ function render() {
   if (!selectedPlans) selectedPlans = defaultPlans;
   renderPlansTab(state);
   const phone = data.phones.find((p) => p.id === state.phone);
-  $("#results-sub").textContent = `${rows.length} routes · ${phone.model} ${storageLabel(phone.storageGb)} · 1 line · unlimited talk, 50 GB+ data · sorted by ${data.meta.defaultTermMonths}-month total`;
+  const linesText = state.lines === 1 ? "1 line" : `${state.lines} lines · ${state.phones} new phone${state.phones === 1 ? "" : "s"}`;
+  $("#results-sub").textContent = `${rows.length} routes · ${phone.model} ${storageLabel(phone.storageGb)} · ${linesText} · unlimited talk, 50 GB+ data · sorted by ${data.meta.defaultTermMonths}-month total`;
 }
 
 function renderPlansTab(state) {
-  const input = { lines: 1, termMonths: data.meta.defaultTermMonths, switching: state.switching, tradeInId: state.tradein || null };
+  const input = { lines: state.lines, termMonths: data.meta.defaultTermMonths, switching: state.switching, tradeInId: state.tradein || null };
+  // A pick with no price at this line count can't be compared — drop it rather than show it disabled.
+  const priced = (id) => data.carriers.some((c) => c.plans.some((p) => p.id === id && p.monthly[String(state.lines)] != null));
+  selectedPlans = selectedPlans.filter(priced);
+  if (selectedPlans.length === 0) selectedPlans = defaultPlans;
+  writeState(state);
   renderPicker(data, selectedPlans, (id) => {
     selectedPlans = selectedPlans.includes(id) ? selectedPlans.filter((p) => p !== id) : [...selectedPlans, id].slice(0, MAX_PLANS);
     render();
-  });
+  }, state.lines);
   renderComparison(data, selectedPlans, input);
 }
 
@@ -261,6 +292,7 @@ async function main() {
   selectTab(initial.tab);
   $("#tab-routes").addEventListener("click", () => selectTab("routes"));
   $("#tab-plans").addEventListener("click", () => selectTab("plans"));
+  $("#phones").addEventListener("change", () => { $("#phones").dataset.touched = "1"; });
   $("#show-all").addEventListener("click", () => {
     showAll = !showAll;
     render();

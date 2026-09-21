@@ -123,7 +123,8 @@ test("plans below the data / minutes floor and plans without a price for the lin
   assert.equal(find(rows, "att", "att-value-2", "byod"), undefined, "5 GB premium data is below a 50 GB floor");
   const four = buildScenarios(data, { ...baseInput, lines: 4 });
   assert.equal(find(four, "tmobile", "tmo-beyond-2", "byod").plan, 215 * 36);
-  assert.equal(find(four, "tmobile", "tmo-more-2", "byod"), undefined, "no 4-line price captured yet");
+  assert.equal(find(four, "tmobile", "tmo-more-2", "byod").plan, 170 * 36);
+  assert.equal(find(four, "tmobile", "tmo-essentials-saver-2", "byod"), undefined, "Saver is only priced at 1 and 2 lines");
   assert.equal(planTotal({ monthly: { "1": 10 } }, { lines: 2, termMonths: 36, switching: false }), null);
 });
 
@@ -194,7 +195,7 @@ test("comparePlans: per-plan facts and a cumulative cost series over the term", 
   assert.equal(xf.cumulative[12], 0);
   assert.equal(xf.cumulative[13], 30);
   assert.equal(xf.cumulative[36], 720);
-  assert.equal(xf.fee, 0);
+  assert.equal(xf.fee, 25);
   assert.equal(xf.promoCount, 0, "Select unlocks no phone deals");
   const tmo = cmp.find((c) => c.planId === "tmo-beyond-2");
   assert.equal(tmo.fee, 35);
@@ -203,4 +204,53 @@ test("comparePlans: per-plan facts and a cumulative cost series over the term", 
   assert.equal(comparePlans(data, ["tmo-beyond-2"], { ...baseInput, tradeInId: null, switching: false })[0].promoCount, 0);
   assert.equal(cmp.find((c) => c.planId === "tello-unl-unl").premiumDataGb, 50);
   assert.deepEqual(comparePlans(data, ["nope"], baseInput), []);
+});
+
+test("multi-line: plan priced for the line count, fees per line, phone/credits/trade-in per new phone", () => {
+  const three = buildScenarios(data, { ...baseInput, lines: 3, phones: 3 });
+  const tmo = find(three, "tmobile", "tmo-beyond-2", "tmo-ID260835");
+  assert.equal(tmo.plan, 170 * 36, "Beyond 2.0 is $170/mo for 3 lines with AutoPay");
+  assert.equal(tmo.planMonthly, 170);
+  assert.equal(tmo.perLine, +(170 / 3).toFixed(2));
+  assert.equal(tmo.phone, 3 * 1199);
+  assert.equal(tmo.credits, 3 * 930);
+  assert.equal(tmo.fees, 3 * 35);
+  assert.equal(tmo.tradeInValue, 3 * 195);
+  assert.equal(tmo.total, 170 * 36 + 3 * (1199 - 930) + 105 + 585);
+
+  const onePhone = find(buildScenarios(data, { ...baseInput, lines: 3, phones: 1 }), "tmobile", "tmo-beyond-2", "tmo-ID260835");
+  assert.equal(onePhone.phone, 1199);
+  assert.equal(onePhone.credits, 930);
+  assert.equal(onePhone.tradeInValue, 195);
+  assert.equal(onePhone.fees, 105, "connection charge is per line, not per phone");
+
+  const att = find(three, "att", "att-premium-2", "att-tradein-1200");
+  assert.equal(att.plan, 65 * 3 * 36, "AT&T Premium 2.0 is $65/line at 3 lines");
+  assert.equal(att.stacked, 3 * 200, "online new-line credit is per line");
+
+  const xf = find(three, "xfinity", "xf-select", "byod");
+  assert.equal(xf.plan, (0 + 30 * 2) * 12 + 30 * 3 * 24, "Xfinity's free year covers one Select line only");
+  assert.equal(xf.fees, 3 * 25);
+
+  const mint = find(three, "mint", "mint-unlimited-12", "byod");
+  assert.equal(mint.plan, 15 * 3 * 12 + 30 * 3 * 24, "Mint family lines cost the same as single lines");
+  assert.equal(find(three, "tello", "tello-unl-unl", "byod").plan, 25 * 3 * 36);
+});
+
+test("multi-line: T-Mobile credits stop at four discounted devices per account", () => {
+  const five = buildScenarios(data, { ...baseInput, lines: 5, phones: 5 });
+  const tmo = find(five, "tmobile", "tmo-beyond-2", "tmo-ID260835");
+  assert.equal(tmo.credits, 4 * 930);
+  assert.equal(tmo.phone, 5 * 1199);
+  assert.equal(tmo.creditedPhones, 4);
+  assert.equal(find(five, "tmobile", "tmo-beyond-2", "byod").appleTradeIn, 5 * 195, "Apple trades every phone in");
+});
+
+test("comparePlans reports the line count and per-line price", () => {
+  const cmp = comparePlans(data, ["tmo-beyond-2", "att-premium-2"], { ...baseInput, lines: 4 });
+  assert.equal(cmp[0].monthly, 215);
+  assert.equal(cmp[0].lines, 4);
+  assert.equal(cmp[0].perLine, 53.75);
+  assert.equal(cmp[1].monthly, 200);
+  assert.equal(cmp[0].cumulative[36], 215 * 36);
 });

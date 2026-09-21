@@ -246,6 +246,18 @@
           <p class="field-help" id="tradein-help"></p>
         </div>
         <div class="field">
+          <label class="field-label" for="lines">Lines</label>
+          <select class="input" id="lines" name="lines">
+            <option value="1">1 line</option><option value="2">2 lines</option><option value="3">3 lines</option><option value="4">4 lines</option><option value="5">5 lines</option>
+          </select>
+          <p class="field-help">Plan prices are account totals for this many lines. Plans without a published price for the count are left out.</p>
+        </div>
+        <div class="field" id="phones-field" hidden>
+          <label class="field-label" for="phones">New phones</label>
+          <select class="input" id="phones" name="phones"></select>
+          <p class="field-help">How many of those lines get the new phone — each with the same trade-in. Fees are per line either way.</p>
+        </div>
+        <div class="field">
           <span class="field-label">Switching carriers</span>
           <label class="toggle">
             <input type="checkbox" id="switching" name="switching" checked>
