@@ -148,3 +148,19 @@ function renderChart(cmp) {
   hit.addEventListener("pointermove", show);
   hit.addEventListener("pointerleave", () => { cursor.setAttribute("visibility", "hidden"); tip.hidden = true; });
 }
+
+/** The hero's ghost chart: the given plans' cumulative cost, unlabeled, over a month grid. */
+export function renderHeroGhost(data, planIds, input) {
+  const host = $("#hero-ghost");
+  if (!host) return;
+  const cmp = comparePlans(data, planIds, input);
+  const W = 1000, H = 320;
+  const term = cmp[0]?.termMonths || 36;
+  const maxY = Math.max(1, ...cmp.map((c) => c.total));
+  const x = (m) => (W * m) / term;
+  const y = (v) => H - 24 - (H - 48) * (v / maxY);
+  const months = Array.from({ length: term + 1 }, (_, m) => `<line class="month${m % 12 === 0 ? " q" : ""}" x1="${x(m).toFixed(1)}" x2="${x(m).toFixed(1)}" y1="0" y2="${H}"/>`).join("");
+  const path = (c) => c.cumulative.map((v, m) => `${m === 0 ? "M" : "L"}${x(m).toFixed(1)},${y(v).toFixed(1)}`).join(" ");
+  const curves = cmp.map((c, i) => `<path class="curve" stroke="${SERIES[i]}" d="${path(c)}"/>`).join("");
+  host.innerHTML = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${months}${curves}</svg>`;
+}
