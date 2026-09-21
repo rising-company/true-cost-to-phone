@@ -299,7 +299,6 @@
     @media (max-width: 768px) {
       .compare-tray { left: 16px; right: 16px; bottom: 16px; transform: translateY(8px); justify-content: space-between; }
       .compare-tray.is-on { transform: none; }
-      .compare-tray.is-on ~ .coffee-dock { visibility: hidden; opacity: 0; } /* the tray takes the bottom edge while it is up */
     }
 
     /* ── Buy me a coffee — a quiet tab on the right edge ── */
@@ -322,11 +321,18 @@
     }
     .coffee::before { content: "+ "; color: var(--accent-ink); }
     .coffee:hover { color: var(--accent-ink); border-color: var(--border-hover); }
+    /* Phones have no spare edge: the dock goes, and the ask sits in the flow instead —
+       a quiet line after the results, plus the link in the menu. */
+    .coffee-inline { display: none; }
     @media (max-width: 768px) {
-      .coffee-dock { top: auto; bottom: 16px; right: 16px; transform: none; animation-name: coffee-in-mobile, coffee-nudge-mobile; }
-      @keyframes coffee-in-mobile { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-      @keyframes coffee-nudge-mobile { 0%, 100% { transform: none; } 40% { transform: translateX(-6px); } }
-      .coffee { writing-mode: horizontal-tb; transform: none; border-left: 1px solid var(--border); border-radius: 4px; padding: 8px 12px; }
+      .coffee-dock { display: none; }
+      .coffee-inline {
+        display: flex; justify-content: center; margin: 32px 0 8px;
+        font-family: "Share Tech Mono", monospace; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase;
+      }
+      .coffee-inline a { color: var(--text-label); text-decoration: none; padding: 12px 16px; border: 1px solid var(--border); border-radius: 4px; transition: color 0.2s, border-color 0.2s; }
+      .coffee-inline a::before { content: "+ "; color: var(--accent-ink); }
+      .coffee-inline a:hover { color: var(--accent-ink); border-color: var(--border-hover); }
     }
 
     /* ── Load reveal — the page's one entrance ── */
@@ -458,6 +464,7 @@
       </div>
       <div class="rows" id="rows" aria-live="polite"></div>
       <div class="rows-more"><button class="btn btn-secondary" id="show-all" type="button" aria-controls="rows" aria-expanded="false" hidden></button></div>
+      <p class="coffee-inline"><a href="https://buymeacoffee.com/risingcompany" target="_blank" rel="noopener noreferrer">Buy me a coffee</a></p>
       <details class="table-view">
         <summary class="section-label">// Table view</summary>
         <table id="table">
