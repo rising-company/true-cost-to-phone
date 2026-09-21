@@ -27,6 +27,9 @@ let carrierFilter = ""; // "" = every carrier
 let compareKeys = []; // routes picked for the Compare tab, in pick order
 let lastRows = [];
 const TOP_PER_CARRIER = 3;
+const PHONE = matchMedia("(max-width: 768px)"); // phones get gradual exposure: fewer rows, folded detail
+const compact = () => PHONE.matches;
+const topPerCarrier = () => (compact() ? 2 : TOP_PER_CARRIER);
 
 /** Rows to display: the cheapest few per carrier unless the reader asked for everything. Keeps global rank. */
 function visibleRows(rows) {
@@ -37,7 +40,7 @@ function visibleRows(rows) {
     .filter((r) => {
       const n = seen.get(r.carrierId) || 0;
       seen.set(r.carrierId, n + 1);
-      return n < TOP_PER_CARRIER;
+      return n < topPerCarrier();
     });
 }
 
@@ -185,7 +188,8 @@ function renderSummary(rows) {
   const best = new Map();
   for (const r of rows) if (!best.has(r.carrierId)) best.set(r.carrierId, r);
   const cheapest = rows[0];
-  $("#summary").innerHTML = data.carriers
+  const order = [...data.carriers].sort((a, b) => (best.get(a.id)?.total ?? Infinity) - (best.get(b.id)?.total ?? Infinity)); // cheapest first
+  $("#summary").innerHTML = order
     .map((c) => {
       const r = best.get(c.id);
       if (!r) return `<div class="card"><div class="stat-label">${esc(c.name)}</div><div class="route">No plan fits the current filters.</div></div>`;
@@ -256,8 +260,9 @@ function renderRows(allRows) {
           <div class="row-title">${esc(r.routeName)}</div>
           <div class="badges">${badges}</div>
           <div class="bar" role="img" aria-label="${segs.map((s) => `${s.label} ${usd.format(s.value)}`).join(", ")}" style="width:${Math.max(30, (r.total / max) * 100)}%">${bar}</div>
-          <div class="row-legend">${legend}</div>
-          ${notes.length ? `<div class="row-notes">${notes.join(" ")}</div>` : ""}
+          ${compact()
+            ? `<details class="row-more"><summary>Breakdown</summary><div class="row-legend">${legend}</div>${notes.length ? `<div class="row-notes">${notes.join(" ")}</div>` : ""}</details>`
+            : `<div class="row-legend">${legend}</div>${notes.length ? `<div class="row-notes">${notes.join(" ")}</div>` : ""}`}
         </div>
         <div class="row-total">
           <div class="total">${usd.format(r.total)}</div>
@@ -272,7 +277,7 @@ function renderRows(allRows) {
   const hidden = rows.length - shown.length;
   const more = $("#show-all");
   more.hidden = !!carrierFilter || (rows.length <= shown.length && !showAll);
-  more.textContent = showAll ? `Show top ${TOP_PER_CARRIER} per carrier` : `Show all ${rows.length} routes · ${hidden} hidden`;
+  more.textContent = showAll ? `Show top ${topPerCarrier()} per carrier` : `Show all ${rows.length} routes · ${hidden} hidden`;
   more.setAttribute("aria-expanded", String(showAll));
 
   $("#table tbody").innerHTML = allRows
@@ -366,6 +371,11 @@ function wireMenu() {
   document.addEventListener("click", (e) => { if (!nav.contains(e.target)) setOpen(false); });
 }
 
+/** Folds are closed on phones and open (summary hidden) on desktop. */
+function applyFolds() {
+  for (const d of document.querySelectorAll("details.fold")) d.open = !compact();
+}
+
 /** The compare tray: up while two or more routes are picked and the Routes tab is showing. */
 function renderTray() {
   const on = tab === "routes" && compareKeys.length >= 2;
@@ -386,6 +396,8 @@ function selectTab(next) {
 
 function renderStatic() {
   $("#notes").innerHTML = data.meta.notes.map((n) => `<li>${esc(n)}</li>`).join("");
+  $("#notes-count").textContent = `${data.meta.notes.length} notes`;
+  $("#sources-count").textContent = `${Object.keys(data.meta.sources).length} pages`;
   $("#sources-list").innerHTML = Object.entries(data.meta.sources)
     .map(([k, url]) => `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(url.replace(/^https?:\/\/(www\.)?/, ""))}</a>`)
     .join("");
@@ -401,7 +413,9 @@ async function main() {
     selectedPlans = initial.plans.filter((id) => data.carriers.some((c) => c.plans.some((p) => p.id === id))).slice(0, MAX_PLANS);
   }
   renderStatic();
+  applyFolds();
   render();
+  PHONE.addEventListener("change", () => { applyFolds(); render(); });
   compareKeys = initial.cmp.slice(0, MAX_ROUTES);
   if (compareKeys.length) render();
   selectTab(initial.tab);

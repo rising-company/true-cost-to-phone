@@ -77,6 +77,23 @@
     .hero-trust b { font-weight: normal; color: var(--accent-ink); }
     .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
+    /* ── Folds ──
+       Gradual exposure on phones. A <details class="fold"> is open on desktop (its summary
+       hidden, the content just sits there) and closed on phones, where app.js drops the
+       `open` attribute. The fold's summary reads like a section label with a count. */
+    .fold > summary { display: none; cursor: pointer; list-style: none; }
+    .fold > summary::-webkit-details-marker { display: none; }
+    .fold > summary .fold-hint { color: var(--text-subtle); margin-left: 8px; }
+    .fold > summary .fold-hint::before { content: "· "; }
+    .fold > summary::after { content: "+"; color: var(--accent-ink); margin-left: 8px; }
+    .fold[open] > summary::after { content: "−"; }
+    @media (max-width: 768px) {
+      .fold > summary { display: block; padding: 14px 0; margin-bottom: 24px; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); }
+      .fold[open] > summary { border-bottom: 0; margin-bottom: 0; }
+      .fold > summary:focus-visible { outline: 1px solid var(--accent-ink); outline-offset: 2px; }
+      .fold > .card, .fold > .notes, .fold > .sources { margin-top: 16px; }
+    }
+
     /* ── Controls ── */
     .controls { margin-bottom: 32px; }
     .controls .section-label { margin-bottom: 16px; }
@@ -117,7 +134,7 @@
     .field[hidden], .rows-more [hidden] { display: none; } /* .field's display:flex would otherwise beat [hidden] */
 
     /* ── Best-per-carrier strip ── */
-    .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(176px, 1fr)); gap: 16px; margin-bottom: 16px; }
+    .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 16px; } /* six carriers fit one row in the 984px shell */
     .summary .card { padding: 20px 24px; display: flex; flex-direction: column; gap: 8px; }
     .summary .stat-label { display: flex; justify-content: space-between; gap: 8px; }
     .summary .big {
@@ -345,6 +362,22 @@
 
     @media (max-width: 768px) {
       .hero { padding: 48px 0 40px; }
+      /* Cheapest per carrier: two to a row, the total is the card. */
+      .summary { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .summary .card { padding: 14px 16px; gap: 4px; }
+      .summary .stat-label { flex-direction: column; gap: 0; }
+      .summary .big { font-size: 24px; }
+      .summary .big small { font-size: 12px; }
+      .summary .route { font-size: 12px; }
+      /* Route cards: the breakdown and notes fold under a line; the badges, bar and total stay. */
+      .row-more > summary { font-family: "Share Tech Mono", monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-label); cursor: pointer; list-style: none; padding: 4px 0; }
+      .row-more > summary::-webkit-details-marker { display: none; }
+      .row-more > summary::after { content: "+"; color: var(--accent-ink); margin-left: 8px; }
+      .row-more[open] > summary::after { content: "−"; }
+      .row-more > summary:focus-visible { outline: 1px solid var(--accent-ink); outline-offset: 2px; }
+      .row-more[open] > summary { margin-bottom: 10px; }
+      .row-more .row-notes { margin-top: 10px; }
+      .results-head .legend { display: none; } /* each card's breakdown names its colors */
       /* Phones: a narrower, wrapping label column so more than one plan fits beside it. */
       .compare th, .compare td { padding: 10px 12px; min-width: 150px; }
       .compare tbody th, .compare thead th:first-child { width: 100px; max-width: 100px; padding-inline: 10px; letter-spacing: 0.06em; white-space: normal; line-height: 1.5; }
@@ -445,7 +478,10 @@
     <section class="shell reveal" aria-label="Best route per carrier">
       <div class="section-label" style="margin-bottom:16px">// Cheapest route per carrier</div>
       <div class="summary" id="summary"></div>
-      <div class="summary-chart card" id="summary-chart" aria-label="Cheapest route per carrier, cost breakdown"></div>
+      <details class="fold" open>
+        <summary class="section-label">// Side by side<span class="fold-hint">cost breakdown</span></summary>
+        <div class="summary-chart card" id="summary-chart" aria-label="Cheapest route per carrier, cost breakdown"></div>
+      </details>
     </section>
 
     <section class="shell reveal" aria-labelledby="results-title">
@@ -517,7 +553,10 @@
       + phone price − promo credits        (buying from Apple: − Apple Trade In instead)
       + one-time fees                       (activation · device connection)
       + trade-in into the deal              (Apple Trade In estimate of the phone the carrier takes)</pre>
-        <ul class="notes" id="notes"></ul>
+        <details class="fold" open>
+          <summary class="section-label">// The fine print<span class="fold-hint" id="notes-count"></span></summary>
+          <ul class="notes" id="notes"></ul>
+        </details>
       </div>
     </section>
 
@@ -526,7 +565,10 @@
         <div class="eyebrow">// Sources</div>
         <h2 class="sec-title">Where the numbers come from</h2>
         <p class="body" style="max-width:72ch;margin-bottom:24px">Prices and promotion terms were read from the carriers' own pages on the crawl date and saved to <a href="data/pricing.json" style="color:var(--accent-ink);text-decoration:none">data/pricing.json</a>. Carrier offers change weekly; check the source before you buy.</p>
-        <div class="sources" id="sources-list"></div>
+        <details class="fold" open>
+          <summary class="section-label">// Pages read<span class="fold-hint" id="sources-count"></span></summary>
+          <div class="sources" id="sources-list"></div>
+        </details>
 
         <div class="contribute">
           <div class="section-label">// Make it more useful</div>
