@@ -80,6 +80,32 @@ function requirementsFor(carrier, plan, promo, input) {
   return out;
 }
 
+/**
+ * Costco member benefits for a route: value counted against the total, and
+ * whether the carrier's one-time fee is waived. `financed` is the number of
+ * lines buying a phone through the carrier on this route.
+ */
+function costcoFor(carrier, plan, { byod, financed, lines, input }) {
+  const c = carrier.costco;
+  if (!input.costco || !c) return { value: 0, items: [], feeWaived: false, replaces: [] };
+  const tier = plan.monthly?.["1"] ?? 0; // plan floor is quoted as the single-line price
+  const items = [];
+  for (const o of c.offers) {
+    const r = o.requires || {};
+    if (r.minPlanMonthly && tier < r.minPlanMonthly) continue;
+    if ((r.portIn || r.newLine) && !input.switching) continue;
+    const count = o.perLine === "financed" ? financed : Math.max(0, lines - financed);
+    const n = Math.min(count, o.maxPerAccount ?? count);
+    if (n > 0) items.push({ id: o.id, name: o.name, value: o.value * n, count: n });
+  }
+  return {
+    value: round2(items.reduce((s, i) => s + i.value, 0)),
+    items,
+    feeWaived: !!c.feeWaivedWithFinancedPhone && financed > 0 && !byod,
+    replaces: financed > 0 && !byod ? c.replaces || [] : [],
+  };
+}
+
 /** Normalize the input into one entry per line: { phone, tradeIn } objects or nulls. */
 function lineItemsFor(data, input) {
   const lines = input.lines ?? 1;
@@ -87,14 +113,14 @@ function lineItemsFor(data, input) {
   const byTrade = (id) => (id ? data.tradeIns.find((t) => t.id === id) || null : null);
   let items;
   if (input.lineItems) {
-    items = input.lineItems.slice(0, lines).map((li) => ({ phone: byPhone(li?.phoneId), tradeIn: byPhone(li?.phoneId) ? byTrade(li?.tradeInId) : null }));
+    items = input.lineItems.slice(0, lines).map((li) => ({ phone: byPhone(li?.phoneId), tradeIn: byPhone(li?.phoneId) ? byTrade(li?.tradeInId) : null, xfCredit: li?.xfCredit ?? null }));
   } else {
     // Legacy shape: one phone model and trade-in, on the first `phones` lines.
     const phones = Math.max(1, Math.min(lines, input.phones ?? lines));
     const phone = byPhone(input.phoneId);
     if (!phone) throw new Error(`unknown phone ${input.phoneId}`);
     const tradeIn = byTrade(input.tradeInId);
-    items = Array.from({ length: phones }, () => ({ phone, tradeIn }));
+    items = Array.from({ length: phones }, () => ({ phone, tradeIn, xfCredit: input.overrides?.[Object.keys(input.overrides || {})[0]] ?? null }));
   }
   while (items.length < lines) items.push({ phone: null, tradeIn: null });
   return items;
@@ -132,8 +158,6 @@ export function buildScenarios(data, input) {
       const eligible = carrier.promos.filter((p) => promoEligible(p, plan.id, { ...input, tradeInId: anyTradeIn ? "any" : null }));
       const stackables = eligible.filter((p) => p.stackable);
       const mains = eligible.filter((p) => !p.stackable);
-      const stackedPerLine = (byod) =>
-        stackables.filter((p) => !byod || p.appliesToByod).reduce((sum, p) => sum + tierCredit(p, null), 0);
 
       const push = ({ route, routeName, promo, unverified }) => {
         const byod = route === "byod";
@@ -151,7 +175,7 @@ export function buildScenarios(data, input) {
           const tier = needsTrade ? (li.tradeIn ? tierFor(promo, li.tradeIn.id) : null) : tierFor(promo, null);
           let credit = 0;
           if (tier && credited < maxCredited) {
-            credit = Math.min(tier.verified === false ? overrides[promo.id] ?? tier.credit : tier.credit, retail);
+            credit = Math.min(tier.verified === false ? li.xfCredit ?? overrides[promo.id] ?? tier.credit : tier.credit, retail);
             credited++;
           } else if (tier) {
             creditCapped = true;
@@ -162,10 +186,12 @@ export function buildScenarios(data, input) {
         });
         const phoneCost = round2(lineDetails.reduce((s, l) => s + l.retail, 0));
         const appleTradeIn = round2(lineDetails.reduce((s, l) => s + l.appleTradeIn, 0));
-        const stacked = round2(stackedPerLine(byod) * lines);
+        const costco = costcoFor(carrier, plan, { byod, financed: byod ? 0 : phones, lines, input });
+        const stacked = round2(stackables.filter((p) => (!byod || p.appliesToByod) && !costco.replaces.includes(p.id)).reduce((sum, p) => sum + tierCredit(p, null), 0) * lines);
         const credits = Math.min(round2(lineDetails.reduce((s, l) => s + l.credit, 0) + stacked), phoneCost - appleTradeIn);
         const tradeInValue = round2(lineDetails.reduce((s, l) => s + l.tradeInValue, 0));
-        const total = round2(plan$ + phoneCost - appleTradeIn - credits + fees + tradeInValue);
+        const routeFees = costco.feeWaived ? 0 : fees;
+        const total = round2(plan$ + phoneCost - appleTradeIn - credits + routeFees + tradeInValue - costco.value);
         const surrenderedNames = lineDetails.filter((l) => l.tradeInName).map((l) => l.tradeInName);
         rows.push({
           carrierId: carrier.id,
@@ -194,8 +220,12 @@ export function buildScenarios(data, input) {
           credits,
           stacked,
           phoneNet: round2(phoneCost - appleTradeIn - credits),
-          fees,
+          fees: routeFees,
+          feesWaived: costco.feeWaived,
           feesLabel: carrier.fees?.label || "",
+          costcoValue: costco.value,
+          costcoItems: costco.items,
+          costcoSourceKey: costco.value ? carrier.costco.sourceKey : null,
           tradeInValue,
           tradeInName: surrenderedNames.length ? [...new Set(surrenderedNames)].join(", ") : null,
           tradeInCondition: promo?.requires?.tradeInCondition || null,

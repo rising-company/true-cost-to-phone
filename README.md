@@ -32,8 +32,19 @@ own trade-in; a line without a qualifying trade-in pays full price on that route
 fees are per line regardless. T-Mobile promotions credit at most four devices per account.
 Xfinity's first-year price covers one line; Mint's $15 intro year applies per line.
 
-The **Extra savings** card holds account-level toggles — today just "switching carriers"
-(new line + port-in, which unlocks port-in deals and intro prices).
+The **Extra savings** card holds account-level toggles:
+
+- **Switching carriers** — new line + port-in, which unlocks port-in deals and intro prices.
+- **Costco member** — buy through Costco. T-Mobile: $150 Shop Card per financed phone on an
+  $85+ plan, $250 prepaid Visa per financed phone on a new $100+ account with port-in (max 4),
+  $75 Shop Card per new line without a financed phone, device connection charge waived.
+  AT&T: $250 bill credits + $100 Shop Card per ported line with a financed phone (replaces
+  the $200 online credit), activation waived; bring-your-own does not qualify. Cards are
+  counted at face value. Costco sells no Xfinity, Tello or Mint plans.
+
+An Xfinity trade-in credit field appears on a line whose trade-in Xfinity has not priced.
+The route list can be filtered to one carrier; the filter shows every route for that
+carrier with its overall rank.
 
 ## Two tabs
 

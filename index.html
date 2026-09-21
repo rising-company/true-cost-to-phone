@@ -68,7 +68,9 @@
     }
     .line-id { font-family: "Share Tech Mono", monospace; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-label); padding-top: 14px; }
     .line-id b { display: block; font-size: 17px; letter-spacing: 0.06em; color: var(--accent-ink); font-weight: normal; margin-top: 2px; }
-    @media (max-width: 768px) { .line { grid-template-columns: 1fr; gap: 12px; padding: 16px; } .line-id { padding-top: 0; } }
+    .line .field-xf { grid-column: 2 / -1; }
+    .carrier-filter { margin-top: 12px; }
+    @media (max-width: 768px) { .line { grid-template-columns: 1fr; gap: 12px; padding: 16px; } .line-id { padding-top: 0; } .line .field-xf { grid-column: auto; } }
     .field[hidden], .rows-more [hidden] { display: none; } /* .field's display:flex would otherwise beat [hidden] */
 
     /* ── Best-per-carrier strip ── */
@@ -252,11 +254,6 @@
             </select>
             <p class="field-help">Plan prices are account totals for this many lines. Plans without a published price for the count are left out.</p>
           </div>
-          <div class="field" id="xf-field" hidden>
-            <label class="field-label" for="xf">Xfinity trade-in credit</label>
-            <input class="input" id="xf" name="xf" type="number" inputmode="numeric" min="0" max="1300" step="10">
-            <p class="field-help is-warning" id="xf-help"></p>
-          </div>
         </div>
         <div class="lines" id="line-items"></div>
       </form>
@@ -271,6 +268,14 @@
             <input type="checkbox" id="switching" name="switching" checked form="controls">
             <span class="toggle-track" aria-hidden="true"></span>
             <span class="toggle-text">New line, number ported in<small>Unlocks port-in deals and first-year intro prices</small></span>
+          </label>
+        </div>
+        <div class="field">
+          <span class="field-label">Costco member</span>
+          <label class="toggle">
+            <input type="checkbox" id="costco" name="costco" form="controls">
+            <span class="toggle-track" aria-hidden="true"></span>
+            <span class="toggle-text">Buy through Costco<small>Shop Cards, prepaid Visa and waived fees at T-Mobile and AT&amp;T</small></span>
           </label>
         </div>
       </div>
@@ -294,6 +299,7 @@
         <div>
           <h2 class="sec-title" id="results-title">Every combination</h2>
           <p class="subtitle" id="results-sub"></p>
+          <div class="chips carrier-filter" id="carrier-filter" role="group" aria-label="Carrier"></div>
         </div>
         <div class="legend" aria-hidden="true">
           <span style="--seg: var(--seg-plan)">Plan</span>

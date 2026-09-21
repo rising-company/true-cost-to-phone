@@ -12,7 +12,8 @@
       "Mint Mobile is priced on its 12-month prepaid plans (the cheapest term). New customers pay $15/mo for the first 12 months on any plan ($180 upfront), then the regular 12-month rate. 3- and 6-month terms cost more per month and are not modeled.",
       "Multi-line: plan prices are account totals per line count with AutoPay. T-Mobile and AT&T were read from their plan pages for 1–5 lines (T-Mobile Beyond to 8; Essentials 2.0 is shown only at 1, 3 and 4 lines, Essentials Saver at 1 and 2). Xfinity, Tello and Mint charge the same per line, so those totals are per-line price × lines.",
       "Xfinity's first-year price applies to one line per account; extra lines pay the regular rate. Mint's $15 new-customer year is applied to every line (family lines are priced like single 12-month lines).",
-      "T-Mobile promotions cover at most four discounted devices per account; phones beyond that pay full price."
+      "T-Mobile promotions cover at most four discounted devices per account; phones beyond that pay full price.",
+      "Costco: member benefits read from Costco's AT&T and T-Mobile showcases on 2026-09-21. Shop Cards and prepaid Visa cards are counted at face value against the total. Costco sells no Xfinity, Tello or Mint plans."
     ],
     "sources": {
       "tello": "https://tello.com/buy/custom_plans",
@@ -30,7 +31,9 @@
       "tmobile-iphone-max": "https://www.t-mobile.com/cell-phone/apple-iphone-18-pro-max",
       "att-iphone-max": "https://www.att.com/buy/phones/apple-iphone-18-pro-max.html",
       "mint": "https://www.mintmobile.com/plans/",
-      "att-plans-lines": "https://www.att.com/plans/unlimited-data-plans/"
+      "att-plans-lines": "https://www.att.com/plans/unlimited-data-plans/",
+      "costco-att": "https://www.costco.com/f/-/att-brand-showcase",
+      "costco-tmobile": "https://www.costco.com/f/-/t-mobile-brand-showcase"
     }
   },
   "phones": [
@@ -916,7 +919,46 @@
           ],
           "maxDevices": 4
         }
-      ]
+      ],
+      "costco": {
+        "sourceKey": "costco-tmobile",
+        "feeWaivedWithFinancedPhone": true,
+        "note": "Costco member benefits stack on T-Mobile's own promotions. Device connection charge is waived on financed phones bought through Costco.",
+        "offers": [
+          {
+            "id": "tmo-costco-shopcard-150",
+            "name": "$150 Costco Shop Card",
+            "value": 150,
+            "perLine": "financed",
+            "maxPerAccount": 12,
+            "requires": {
+              "minPlanMonthly": 85
+            }
+          },
+          {
+            "id": "tmo-costco-visa-250",
+            "name": "$250 prepaid Visa",
+            "value": 250,
+            "perLine": "financed",
+            "maxPerAccount": 4,
+            "requires": {
+              "minPlanMonthly": 100,
+              "portIn": true
+            }
+          },
+          {
+            "id": "tmo-costco-shopcard-75",
+            "name": "$75 Costco Shop Card",
+            "value": 75,
+            "perLine": "unfinanced",
+            "maxPerAccount": 12,
+            "requires": {
+              "minPlanMonthly": 85,
+              "newLine": true
+            }
+          }
+        ]
+      }
     },
     {
       "id": "att",
@@ -1147,7 +1189,38 @@
             }
           ]
         }
-      ]
+      ],
+      "costco": {
+        "sourceKey": "costco-att",
+        "feeWaivedWithFinancedPhone": true,
+        "replaces": [
+          "att-online-200"
+        ],
+        "endsOn": "2026-11-15",
+        "note": "Costco's $350 replaces AT&T's online $200 credit on financed phones; bring-your-own does not qualify. Activation fee waived.",
+        "offers": [
+          {
+            "id": "att-costco-credit-250",
+            "name": "$250 bill credits",
+            "value": 250,
+            "perLine": "financed",
+            "requires": {
+              "minPlanMonthly": 50,
+              "portIn": true
+            }
+          },
+          {
+            "id": "att-costco-shopcard-100",
+            "name": "$100 Costco Shop Card",
+            "value": 100,
+            "perLine": "financed",
+            "requires": {
+              "minPlanMonthly": 50,
+              "portIn": true
+            }
+          }
+        ]
+      }
     },
     {
       "id": "xfinity",

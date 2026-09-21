@@ -303,3 +303,38 @@ test("per-line: a trade-in promo drops out when no line trades in; no new phones
   assert.equal(t.routeName, "No new phone");
   assert.equal(find(planOnly, "tmobile", "tmo-beyond-2", "tmo-ID260824"), undefined, "nothing to credit");
 });
+
+test("per-line Xfinity override: only that line's unlisted trade-in uses it", () => {
+  const input = { ...baseInput, phoneId: undefined, tradeInId: undefined, lines: 2, overrides: {},
+    lineItems: [{ phoneId: "iphone-18-pro-256", tradeInId: "iphone-14" }, { phoneId: "iphone-18-pro-256", tradeInId: "iphone-11", xfCredit: 300 }] };
+  const row = find(buildScenarios(data, input), "xfinity", "xf-plus", "xf-tradein-1300");
+  assert.deepEqual(row.lineDetails.map((l) => l.credit), [600, 300]);
+  assert.equal(row.unverified, true);
+  const noOverride = find(buildScenarios(data, { ...input, lineItems: [{ phoneId: "iphone-18-pro-256", tradeInId: "iphone-11" }] }), "xfinity", "xf-plus", "xf-tradein-1300");
+  assert.equal(noOverride.lineDetails[0].credit, 1199, "no override → the published ceiling, capped at the phone");
+});
+
+test("Costco: T-Mobile shop card and Visa per line, connection charge waived; AT&T credits replace the online offer", () => {
+  const on = buildScenarios(data, { ...baseInput, tradeInId: null, costco: true });
+  const off = buildScenarios(data, { ...baseInput, tradeInId: null });
+  const tmo = find(on, "tmobile", "tmo-beyond-2", "tmo-ID260824");
+  assert.equal(tmo.costcoValue, 150 + 250, "financed phone on Beyond, ported: $150 shop card + $250 Visa");
+  assert.equal(tmo.fees, 0, "device connection charge waived through Costco");
+  assert.equal(tmo.total, find(off, "tmobile", "tmo-beyond-2", "tmo-ID260824").total - 400 - 35);
+  assert.equal(find(on, "tmobile", "tmo-more-2", "tmo-more-port").costcoValue, 150, "More 2.0 is below the $100 Visa floor");
+  assert.equal(find(on, "tmobile", "tmo-essentials-2", "byod").costcoValue, 0, "Essentials is below the $85 floor");
+  assert.equal(find(on, "tmobile", "tmo-beyond-2", "byod").costcoValue, 75, "bring your own on a new $85+ line: $75 shop card");
+  assert.equal(find(on, "tmobile", "tmo-beyond-2", "byod").fees, 35, "no financed phone, no waiver");
+
+  const withTrade = buildScenarios(data, { ...baseInput, costco: true });
+  const att = find(withTrade, "att", "att-premium-2", "att-tradein-1200");
+  assert.equal(att.costcoValue, 250 + 100);
+  assert.equal(att.stacked, 0, "Costco's credits replace the $200 online offer");
+  assert.equal(att.fees, 0, "activation waived");
+  assert.equal(find(withTrade, "att", "att-premium-2", "byod").costcoValue, 0, "BYOD does not qualify at Costco");
+  assert.equal(find(withTrade, "att", "att-premium-2", "byod").stacked, 200, "the online credit still applies to bring-your-own");
+
+  const noSwitch = find(buildScenarios(data, { ...baseInput, tradeInId: null, costco: true, switching: false }), "tmobile", "tmo-beyond-2", "byod");
+  assert.equal(noSwitch.costcoValue, 0, "the $75 needs a new line");
+  assert.equal(find(on, "tello", "tello-unl-unl", "byod").costcoValue, 0);
+});

@@ -12,7 +12,7 @@ const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&l
 
 const XF_PROMO = "xf-tradein-1300";
 const DEFAULT_PHONE = "iphone-18-pro-256";
-const DEFAULTS = { switching: "1", xf: "1300", tab: "routes", plans: "" };
+const DEFAULTS = { switching: "1", costco: "0", tab: "routes", plans: "", carrier: "" };
 const MAX_LINES = 5;
 const NONE = "-";
 
@@ -22,6 +22,7 @@ let tab = "routes";
 let selectedPlans = null; // null until the first render picks defaults
 let defaultPlans = [];
 let plansTouched = false; // untouched picks follow the defaults as the situation changes
+let carrierFilter = ""; // "" = every carrier
 const TOP_PER_CARRIER = 3;
 
 /** Rows to display: the cheapest few per carrier unless the reader asked for everything. Keeps global rank. */
@@ -43,8 +44,8 @@ function parseLines(str) {
     .split(",")
     .filter(Boolean)
     .map((pair) => {
-      const [phoneId = NONE, tradeInId = NONE] = pair.split(":");
-      return { phoneId: phoneId === NONE ? null : phoneId, tradeInId: tradeInId === NONE ? null : tradeInId };
+      const [phoneId = NONE, tradeInId = NONE, xf = ""] = pair.split(":");
+      return { phoneId: phoneId === NONE ? null : phoneId, tradeInId: tradeInId === NONE ? null : tradeInId, xfCredit: xf === "" ? null : Number(xf) };
     });
   return items.length ? items.slice(0, MAX_LINES) : [{ phoneId: DEFAULT_PHONE, tradeInId: null }];
 }
@@ -54,7 +55,8 @@ function readState() {
   return {
     lineItems: parseLines(q.get("l")),
     switching: (q.get("switching") ?? DEFAULTS.switching) !== "0",
-    xf: Number(q.get("xf") ?? DEFAULTS.xf),
+    costco: q.get("costco") === "1",
+    carrier: q.get("carrier") || "",
     tab: q.get("tab") === "plans" ? "plans" : "routes",
     plans: (q.get("plans") || "").split(",").filter(Boolean),
   };
@@ -62,10 +64,11 @@ function readState() {
 
 function writeState(s) {
   const q = new URLSearchParams();
-  const l = s.lineItems.map((li) => `${li.phoneId || NONE}:${li.tradeInId || NONE}`).join(",");
+  const l = s.lineItems.map((li) => `${li.phoneId || NONE}:${li.tradeInId || NONE}${li.xfCredit != null ? `:${li.xfCredit}` : ""}`).join(",");
   if (l !== `${DEFAULT_PHONE}:${NONE}`) q.set("l", l);
   if (!s.switching) q.set("switching", "0");
-  if (String(s.xf) !== DEFAULTS.xf) q.set("xf", String(s.xf));
+  if (s.costco) q.set("costco", "1");
+  if (carrierFilter) q.set("carrier", carrierFilter);
   if (tab === "plans") q.set("tab", "plans");
   if (plansTouched && selectedPlans && selectedPlans.join(",") !== defaultPlans.join(",")) q.set("plans", selectedPlans.join(","));
   const qs = q.toString();
@@ -99,6 +102,11 @@ function renderLineItems(items) {
           <select class="input" id="tradein-${i}" data-role="tradein" ${li.phoneId ? "" : "disabled"}>${tradeInOptions()}</select>
           <p class="field-help" id="tradein-help-${i}"></p>
         </div>
+        <div class="field field-xf" id="xf-field-${i}" hidden>
+          <label class="field-label" for="xf-${i}">Xfinity trade-in credit for this phone</label>
+          <input class="input" id="xf-${i}" data-role="xf" type="number" inputmode="numeric" min="0" max="1300" step="10" value="${li.xfCredit ?? 1300}">
+          <p class="field-help is-warning">Xfinity has not published a credit for this phone — only "up to $1,300". Set your checkout figure.</p>
+        </div>
       </div>`,
     )
     .join("");
@@ -112,14 +120,17 @@ function populateControls(state) {
   $("#lines").value = String(state.lineItems.length);
   renderLineItems(state.lineItems);
   $("#switching").checked = state.switching;
-  $("#xf").value = state.xf;
+  $("#costco").checked = state.costco;
+  carrierFilter = state.carrier;
 }
 
 function lineItemsFromControls() {
   return [...document.querySelectorAll("#line-items .line")].map((row) => {
     const phoneId = row.querySelector("[data-role=phone]").value;
     const tradeInId = row.querySelector("[data-role=tradein]").value;
-    return { phoneId: phoneId === NONE ? null : phoneId, tradeInId: phoneId === NONE || tradeInId === NONE ? null : tradeInId };
+    const xfField = row.querySelector(".field-xf");
+    const xfCredit = xfField.hidden ? null : Math.max(0, Number(row.querySelector("[data-role=xf]").value) || 0);
+    return { phoneId: phoneId === NONE ? null : phoneId, tradeInId: phoneId === NONE || tradeInId === NONE ? null : tradeInId, xfCredit };
   });
 }
 
@@ -129,7 +140,7 @@ function syncLines() {
   let items = lineItemsFromControls();
   if (items.length === want) return items;
   const first = items[0] || { phoneId: DEFAULT_PHONE, tradeInId: null };
-  while (items.length < want) items.push({ phoneId: first.phoneId, tradeInId: null });
+  while (items.length < want) items.push({ phoneId: first.phoneId, tradeInId: null, xfCredit: null });
   items = items.slice(0, want);
   renderLineItems(items);
   return items;
@@ -139,7 +150,7 @@ function inputFromControls() {
   return {
     lineItems: lineItemsFromControls(),
     switching: $("#switching").checked,
-    xf: Math.max(0, Number($("#xf").value) || 0),
+    costco: $("#costco").checked,
   };
 }
 
@@ -176,11 +187,21 @@ function renderSummary(rows) {
     .join("");
 }
 
-function renderRows(rows) {
-  const max = Math.max(...rows.map((r) => r.total));
-  const cheapest = rows[0]?.total ?? 0;
+function renderCarrierFilter(rows) {
+  const counts = new Map();
+  for (const r of rows) counts.set(r.carrierId, (counts.get(r.carrierId) || 0) + 1);
+  const chip = (id, label, n) => `<button type="button" class="chip${carrierFilter === id ? " is-on" : ""}" data-carrier="${id}" aria-pressed="${carrierFilter === id}">${esc(label)} <b>${n}</b></button>`;
+  $("#carrier-filter").innerHTML =
+    chip("", "All carriers", rows.length) + data.carriers.filter((c) => counts.has(c.id)).map((c) => chip(c.id, c.name, counts.get(c.id))).join("");
+}
 
-  const shown = visibleRows(rows);
+function renderRows(allRows) {
+  renderCarrierFilter(allRows);
+  const rows = carrierFilter ? allRows.filter((r) => r.carrierId === carrierFilter) : allRows;
+  const max = Math.max(...allRows.map((r) => r.total));
+  const cheapest = allRows[0]?.total ?? 0;
+
+  const shown = carrierFilter ? rows.map((r) => ({ ...r, rank: allRows.indexOf(r) + 1 })) : visibleRows(rows);
   $("#rows").innerHTML = shown
     .map((r) => {
       const segs = segments(r);
@@ -190,12 +211,14 @@ function renderRows(rows) {
         .join("");
       const legend = segs
         .map((s) => `<span style="--seg:${s.seg}" class="${s.value > 0 ? "" : "is-zero"}">${s.label} <b>${usd.format(s.value)}</b></span>`)
-        .join("");
+        .join("") + (r.costcoValue > 0 ? `<span class="is-zero">Costco <b>−${usd.format(r.costcoValue)}</b></span>` : "");
       const badges = [
         r.simUnlocked ? `<span class="badge is-accent">SIM unlocked</span>` : "",
         ...r.requires.map((q) => `<span class="badge">${esc(q)}</span>`),
         r.credits > 0 ? `<span class="badge is-accent">${usd.format(r.credits)} in credits</span>` : "",
-        r.unverified ? `<span class="badge is-warning">Unverified · assumes ${usd.format(r.credits)} credit</span>` : "",
+        r.costcoValue > 0 ? `<span class="badge is-accent">Costco ${usd.format(r.costcoValue)}</span>` : "",
+        r.feesWaived ? `<span class="badge is-accent">Fees waived</span>` : "",
+        r.unverified ? `<span class="badge is-warning">Unverified Xfinity credit</span>` : "",
         r.endsOn ? `<span class="badge">Ends ${esc(r.endsOn)}</span>` : "",
       ].join("");
       const notes = [];
@@ -206,6 +229,10 @@ function renderRows(rows) {
       if (r.simUnlocked) notes.push("Apple sells it unlocked — switch carriers any time, no payoff to leave.");
       if (r.stacked > 0) notes.push(`Includes the ${usd.format(r.stacked)} online new-line credit${r.lines > 1 ? ` (${r.lines} lines)` : ""}.`);
       if (r.creditCapped) notes.push(`Credits stop at ${r.creditedPhones} phones (carrier limit); the rest pay full price.`);
+      if (r.costcoValue > 0) {
+        const src = data.meta.sources[r.costcoSourceKey];
+        notes.push(`Costco: ${r.costcoItems.map((c) => `${esc(c.name)}${c.count > 1 ? ` ×${c.count}` : ""}`).join(" + ")} = ${usd.format(r.costcoValue)}, counted at face value${r.feesWaived ? "; " + esc(r.feesLabel.replace(/\s*\(.*\)$/, "")) + " waived" : ""}.${src ? ` <a href="${esc(src)}" target="_blank" rel="noopener noreferrer">Costco terms ↗</a>` : ""}`);
+      }
       if (r.planNotes) notes.push(esc(r.planNotes));
       const src = r.sourceKey && data.meta.sources[r.sourceKey];
       if (src) notes.push(`<a href="${esc(src)}" target="_blank" rel="noopener noreferrer">Offer terms ↗</a>`);
@@ -231,11 +258,11 @@ function renderRows(rows) {
 
   const hidden = rows.length - shown.length;
   const more = $("#show-all");
-  more.hidden = rows.length <= shown.length && !showAll;
+  more.hidden = !!carrierFilter || (rows.length <= shown.length && !showAll);
   more.textContent = showAll ? `Show top ${TOP_PER_CARRIER} per carrier` : `Show all ${rows.length} routes · ${hidden} hidden`;
   more.setAttribute("aria-expanded", String(showAll));
 
-  $("#table tbody").innerHTML = rows
+  $("#table tbody").innerHTML = allRows
     .map(
       (r, i) => `<tr><td>${i + 1}</td><td>${esc(r.carrierName)}</td><td>${esc(r.planName)}</td><td>${esc(r.routeName)}</td>
         <td class="num">${usd.format(r.plan)}</td><td class="num">${usd.format(r.phoneNet)}</td><td class="num">${usd.format(r.fees)}</td><td class="num">${usd.format(r.tradeInValue)}</td>
@@ -250,31 +277,34 @@ function render() {
   const items = state.lineItems;
   writeState(state);
 
-  // Per-line trade-in help and the Xfinity override (only for devices Xfinity has not priced).
+  // Per-line trade-in help; the Xfinity override shows only on a line whose trade-in Xfinity has not priced.
   const xfPromo = data.carriers.find((c) => c.id === "xfinity").promos.find((p) => p.id === XF_PROMO);
-  let xfUnlisted = false;
   items.forEach((li, i) => {
-    const sel = $(`#tradein-${i}`);
-    sel.disabled = !li.phoneId;
+    $(`#tradein-${i}`).disabled = !li.phoneId;
     const tradeIn = data.tradeIns.find((t) => t.id === li.tradeInId);
     $(`#tradein-help-${i}`).textContent = !li.phoneId
       ? ""
       : tradeIn
         ? `Apple pays up to ${usd.format(tradeIn.appleValue)}; handing it to a carrier deal costs that much.`
         : "Trade-in deals need a phone; without one this line pays full price.";
-    if (tradeIn && !xfPromo.tiers.some((t) => t.devices?.includes(tradeIn.id))) xfUnlisted = true;
+    const unlisted = !!tradeIn && !xfPromo.tiers.some((t) => t.devices?.includes(tradeIn.id));
+    const field = $(`#xf-field-${i}`);
+    if (field.hidden === unlisted) {
+      field.hidden = !unlisted;
+      if (unlisted) li.xfCredit = Math.max(0, Number($(`#xf-${i}`).value) || 0);
+      else li.xfCredit = null;
+    }
   });
-  $("#xf-field").hidden = !xfUnlisted;
-  if (xfUnlisted) $("#xf-help").textContent = `Xfinity has not published a credit for one of these phones — only "up to $1,300". Set your checkout figure here; it applies to each unlisted phone.`;
+  writeState(state);
 
   const rows = buildScenarios(data, {
     lines: items.length,
     lineItems: items,
     termMonths: data.meta.defaultTermMonths,
     switching: state.switching,
+    costco: state.costco,
     minDataGb: 50,
     minutes: "unlimited",
-    overrides: { [XF_PROMO]: state.xf },
   });
 
   renderSummary(rows);
@@ -333,6 +363,12 @@ async function main() {
   selectTab(initial.tab);
   $("#tab-routes").addEventListener("click", () => selectTab("routes"));
   $("#tab-plans").addEventListener("click", () => selectTab("plans"));
+  $("#carrier-filter").addEventListener("click", (e) => {
+    const chip = e.target.closest("[data-carrier]");
+    if (!chip) return;
+    carrierFilter = chip.dataset.carrier;
+    render();
+  });
   $("#show-all").addEventListener("click", () => {
     showAll = !showAll;
     render();
