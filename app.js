@@ -358,7 +358,7 @@ function renderStatic() {
   $("#sources-list").innerHTML = Object.entries(data.meta.sources)
     .map(([k, url]) => `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(url.replace(/^https?:\/\/(www\.)?/, ""))}</a>`)
     .join("");
-  $("#trust").textContent = `${data.meta.defaultTermMonths} months · taxes excluded · prices crawled ${data.meta.crawledAt}`;
+  $("#trust").textContent = `${data.meta.defaultTermMonths} months · taxes excluded · prices updated ${data.meta.crawledAt}`;
 }
 
 async function main() {
