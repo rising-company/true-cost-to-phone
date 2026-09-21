@@ -328,6 +328,7 @@ function render() {
   renderRows(rows);
   renderCompare(rows, compareKeys);
   $("#tab-compare").innerHTML = `Compare${compareKeys.length ? `<b>${compareKeys.length}</b>` : ""}`;
+  renderTray();
   defaultPlans = defaultPlanIds(rows);
   if (!selectedPlans || !plansTouched) selectedPlans = defaultPlans;
   renderPlansTab(state);
@@ -365,12 +366,21 @@ function wireMenu() {
   document.addEventListener("click", (e) => { if (!nav.contains(e.target)) setOpen(false); });
 }
 
+/** The compare tray: up while two or more routes are picked and the Routes tab is showing. */
+function renderTray() {
+  const on = tab === "routes" && compareKeys.length >= 2;
+  $("#compare-tray").classList.toggle("is-on", on);
+  $("#compare-tray-go").disabled = !on; // not tabbable while faded out
+  if (on) $("#compare-tray-text").innerHTML = `<b>${compareKeys.length}</b> routes picked`;
+}
+
 function selectTab(next) {
   tab = next;
   for (const name of ["routes", "plans", "compare"]) {
     $(`#tab-${name}`).setAttribute("aria-selected", String(name === tab));
     $(`#panel-${name}`).hidden = name !== tab;
   }
+  renderTray();
   writeState(inputFromControls());
 }
 
@@ -413,6 +423,10 @@ async function main() {
     render();
   });
   $("#compare-clear").addEventListener("click", () => { compareKeys = []; render(); });
+  $("#compare-tray-go").addEventListener("click", () => {
+    selectTab("compare");
+    $(".tabs").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
   $("#carrier-filter").addEventListener("click", (e) => {
     const chip = e.target.closest("[data-carrier]");
     if (!chip) return;

@@ -279,6 +279,29 @@
 
     .site-footer .shell { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; }
 
+    /* ── Compare tray ──
+       Once two or more routes are picked on the Routes tab, a tray at the bottom edge
+       offers the Compare tab — the picks are otherwise only a count on a tab up the page.
+       Motion job: reveal (design system, toast): y 8→0 with opacity at Base; fade-led exit. */
+    .compare-tray {
+      position: fixed; left: 50%; bottom: 24px; z-index: 50;
+      display: flex; align-items: center; gap: 16px; padding: 8px 8px 8px 20px;
+      background: var(--bg-surface); border: 1px solid var(--accent-line); border-radius: 6px; box-shadow: var(--card-shadow);
+      visibility: hidden; opacity: 0; transform: translate(-50%, 8px);
+      transition: opacity 0.15s ease, transform 0.15s ease, visibility 0s linear 0.15s;
+    }
+    .compare-tray.is-on {
+      visibility: visible; opacity: 1; transform: translate(-50%, 0);
+      transition: opacity 0.2s ease, transform 0.3s cubic-bezier(0.2, 0, 0, 1), visibility 0s;
+    }
+    .compare-tray-text { font-family: "Share Tech Mono", monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-label); white-space: nowrap; }
+    .compare-tray-text b { font-weight: normal; color: var(--accent-ink); }
+    @media (max-width: 768px) {
+      .compare-tray { left: 16px; right: 16px; bottom: 16px; transform: translateY(8px); justify-content: space-between; }
+      .compare-tray.is-on { transform: none; }
+      .compare-tray.is-on ~ .coffee-dock { visibility: hidden; opacity: 0; } /* the tray takes the bottom edge while it is up */
+    }
+
     /* ── Buy me a coffee — a quiet tab on the right edge ── */
     /* The dock carries the motion (transform only); the tab inside keeps its rotation.
        Job: reveal — it slides in once the page has settled, then nudges once. No loop. */
@@ -517,6 +540,10 @@
     </div>
   </footer>
 
+  <div class="compare-tray" id="compare-tray" role="status" aria-live="polite">
+    <span class="compare-tray-text" id="compare-tray-text"></span>
+    <button type="button" class="btn btn-primary btn-sm" id="compare-tray-go">Compare side by side →</button>
+  </div>
   <div class="coffee-dock"><a class="coffee" href="https://buymeacoffee.com/risingcompany" target="_blank" rel="noopener noreferrer">Buy me a coffee</a></div>
 
   <script type="module" src="app.js"></script>
