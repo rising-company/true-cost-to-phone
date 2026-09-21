@@ -60,6 +60,7 @@ function promoEligible(promo, planId, { switching, tradeInId }) {
   if (!promo.plans.includes(planId)) return false;
   const r = promo.requires || {};
   if ((r.newLine || r.portIn) && !switching) return false;
+  if (r.existingLine && switching) return false; // an upgrade offer: the line is already on the account
   if (r.tradeIn && !tradeInId) return false;
   return true;
 }
@@ -74,6 +75,7 @@ function requirementsFor(carrier, plan, promo, input) {
   if (r.newLine && r.portIn) out.push("New line + port-in");
   else if (r.newLine) out.push("New line");
   else if (r.portIn) out.push("Port-in");
+  else if (r.existingLine) out.push("Existing line");
   if (r.tradeIn) out.push(`Trade-in · ${r.tradeInCondition || "eligible"} condition`);
   if (!promo && input.tradeInId) out.push("Apple Trade In");
   if (planIntro(plan, input)) out.push("New customer intro price");

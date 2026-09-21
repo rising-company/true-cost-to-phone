@@ -5,8 +5,9 @@
     "defaultTermMonths": 36,
     "notes": [
       "Taxes and regulatory fees are excluded everywhere; every carrier bills them on top.",
-      "One retail price per phone. Apple, T-Mobile and AT&T list the same figure (carriers show it as $x.99); Xfinity does not publish one, so Apple's is used everywhere.",
+      "One retail price per phone. Apple, T-Mobile, AT&T and Verizon list the same figure (carriers show it as $x.99); Xfinity does not publish one, so Apple's is used everywhere.",
       "T-Mobile prices include the $5/line AutoPay discount. AT&T prices are after the AutoPay + paperless billing discount. Xfinity prices include the $10/mo Xfinity Internet customer discount and require residential Xfinity Internet.",
+      "Verizon prices are after the Auto Pay + paper-free billing discount ($10/line more without). myPlan 1- and 2-line figures follow the May 2026 Unlimited Ultimate increase (+$5); 3- and 4+-line standard rates are from Verizon's plan page, and the $10/mo account credit it gives new 3+-line accounts for 36 months is applied when switching. Simplicity is one flat price per line; its $15/line switch discount has no published end date and is applied for the whole term. Simplicity Pro ($50/mo on top, phone installment credited, phone returned every year) is a lease, not a purchase, so it is not a route. Verizon's $40 activation/upgrade fee is waived with the free Loyalty opt-in and is counted as $0. Costco sells no Verizon plans.",
       "Bill-credit promotions pay out monthly over the term. Leaving early forfeits the remaining credits and the device balance is due.",
       "Trade-in value counts as a cost: when a promotion takes your old phone, its Apple Trade In estimate is added to the total so every route is compared on the same footing.",
       "Mint Mobile is priced on its 12-month prepaid plans (the cheapest term). New customers pay $15/mo for the first 12 months on any plan ($180 upfront), then the regular 12-month rate. 3- and 6-month terms cost more per month and are not modeled.",
@@ -33,7 +34,12 @@
       "mint": "https://www.mintmobile.com/plans/",
       "att-plans-lines": "https://www.att.com/plans/unlimited-data-plans/",
       "costco-att": "https://www.costco.com/f/-/att-brand-showcase",
-      "costco-tmobile": "https://www.costco.com/f/-/t-mobile-brand-showcase"
+      "costco-tmobile": "https://www.costco.com/f/-/t-mobile-brand-showcase",
+      "verizon-press": "https://www.verizon.com/about/news/iphone-18-pro-max-verizon-offers",
+      "verizon-simplicity": "https://www.verizon.com/plans/unlimited/",
+      "verizon-myplan": "https://www.verizon.com/plans/unlimited/myplan/",
+      "verizon-loyalty-faq": "https://www.verizon.com/support/pro-plus-early-upgrade-faqs/",
+      "bestbuy-verizon-tradein": "https://www.bestbuy.com/site/shop-iphone-18-iphone-duo-models/verizon-iphone-18-pro-trade-in/pcmcat1789062925590.c?id=pcmcat1789062925590"
     }
   },
   "phones": [
@@ -1221,6 +1227,407 @@
           }
         ]
       }
+    },
+    {
+      "id": "verizon",
+      "name": "Verizon",
+      "kind": "carrier",
+      "network": "Verizon",
+      "phoneSource": "carrier",
+      "requires": [],
+      "fees": {
+        "perLineOneTime": 0,
+        "label": "No activation or upgrade fee with the free Verizon Loyalty opt-in ($40 otherwise)"
+      },
+      "plans": [
+        {
+          "id": "vz-ultimate",
+          "name": "Unlimited Ultimate",
+          "dataGb": "unlimited",
+          "premiumDataGb": "unlimited",
+          "minutes": "unlimited",
+          "monthly": {
+            "1": 95,
+            "2": 170,
+            "3": 210,
+            "4": 240,
+            "5": 300
+          },
+          "intro": {
+            "months": 36,
+            "monthly": {
+              "3": 200,
+              "4": 230,
+              "5": 290
+            },
+            "requires": {
+              "newLine": true
+            }
+          },
+          "notes": "Unlimited premium data · 200 GB hotspot · 3-year price lock · the full $1,200 trade-in tier"
+        },
+        {
+          "id": "vz-plus",
+          "name": "Unlimited Plus",
+          "dataGb": "unlimited",
+          "premiumDataGb": "unlimited",
+          "minutes": "unlimited",
+          "monthly": {
+            "1": 80,
+            "2": 140,
+            "3": 165,
+            "4": 180,
+            "5": 225
+          },
+          "intro": {
+            "months": 36,
+            "monthly": {
+              "3": 155,
+              "4": 170,
+              "5": 215
+            },
+            "requires": {
+              "newLine": true
+            }
+          },
+          "notes": "Unlimited premium data · 30 GB hotspot · 3-year price lock"
+        },
+        {
+          "id": "vz-welcome",
+          "name": "Unlimited Welcome",
+          "dataGb": "unlimited",
+          "premiumDataGb": 0,
+          "minutes": "unlimited",
+          "monthly": {
+            "1": 65,
+            "2": 110,
+            "3": 120,
+            "4": 120,
+            "5": 150
+          },
+          "intro": {
+            "months": 36,
+            "monthly": {
+              "3": 110,
+              "4": 110,
+              "5": 140
+            },
+            "requires": {
+              "newLine": true
+            }
+          },
+          "notes": "5G, deprioritized · no hotspot · 3-year price lock · the smallest trade-in tier"
+        },
+        {
+          "id": "vz-simplicity",
+          "name": "Simplicity",
+          "dataGb": "unlimited",
+          "premiumDataGb": "unlimited",
+          "minutes": "unlimited",
+          "monthly": {
+            "1": 45,
+            "2": 90,
+            "3": 135,
+            "4": 180,
+            "5": 225
+          },
+          "intro": {
+            "months": 36,
+            "monthly": {
+              "1": 30,
+              "2": 60,
+              "3": 90,
+              "4": 120,
+              "5": 150
+            },
+            "requires": {
+              "newLine": true
+            }
+          },
+          "notes": "One flat price per line · unlimited 5G Ultra Wideband · 10 GB hotspot · no phone promotions — buy from Apple or finance at retail"
+        }
+      ],
+      "promos": [
+        {
+          "id": "vz-tradein-ultimate-new",
+          "name": "Up to $1,200 off — tier 1 trade-in, new line",
+          "sourceKey": "bestbuy-verizon-tradein",
+          "plans": [
+            "vz-ultimate"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "requires": {
+            "tradeIn": true,
+            "tradeInCondition": "any",
+            "newLine": true,
+            "portIn": false
+          },
+          "tiers": [
+            {
+              "credit": 1200,
+              "devices": [
+                "iphone-14",
+                "iphone-14-plus",
+                "iphone-14-pro",
+                "iphone-14-pro-max",
+                "iphone-15",
+                "iphone-15-plus",
+                "iphone-15-pro",
+                "iphone-15-pro-max",
+                "iphone-16",
+                "iphone-16-plus",
+                "iphone-16-pro",
+                "iphone-16-pro-max",
+                "iphone-air",
+                "iphone-17",
+                "iphone-17-pro",
+                "iphone-17-pro-max"
+              ],
+              "note": "Tier 1: iPhone 14 through 16 series as listed by Best Buy on 2026-09-21; the iPhone 17 series and Air are assumed to sit in the same tier."
+            },
+            {
+              "credit": 600,
+              "otherwise": true,
+              "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone."
+            }
+          ],
+          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen."
+        },
+        {
+          "id": "vz-tradein-ultimate-upgrade",
+          "name": "Up to $1,020 off — tier 1 trade-in, upgrade an existing line",
+          "sourceKey": "bestbuy-verizon-tradein",
+          "plans": [
+            "vz-ultimate"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "requires": {
+            "tradeIn": true,
+            "tradeInCondition": "any",
+            "newLine": false,
+            "portIn": false,
+            "existingLine": true
+          },
+          "tiers": [
+            {
+              "credit": 1020,
+              "devices": [
+                "iphone-14",
+                "iphone-14-plus",
+                "iphone-14-pro",
+                "iphone-14-pro-max",
+                "iphone-15",
+                "iphone-15-plus",
+                "iphone-15-pro",
+                "iphone-15-pro-max",
+                "iphone-16",
+                "iphone-16-plus",
+                "iphone-16-pro",
+                "iphone-16-pro-max",
+                "iphone-air",
+                "iphone-17",
+                "iphone-17-pro",
+                "iphone-17-pro-max"
+              ],
+              "note": "Tier 1: iPhone 14 through 16 series as listed by Best Buy on 2026-09-21; the iPhone 17 series and Air are assumed to sit in the same tier."
+            },
+            {
+              "credit": 510,
+              "otherwise": true,
+              "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone."
+            }
+          ],
+          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen."
+        },
+        {
+          "id": "vz-tradein-plus-new",
+          "name": "Up to $840 off — tier 1 trade-in, new line",
+          "sourceKey": "bestbuy-verizon-tradein",
+          "plans": [
+            "vz-plus"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "requires": {
+            "tradeIn": true,
+            "tradeInCondition": "any",
+            "newLine": true,
+            "portIn": false
+          },
+          "tiers": [
+            {
+              "credit": 840,
+              "devices": [
+                "iphone-14",
+                "iphone-14-plus",
+                "iphone-14-pro",
+                "iphone-14-pro-max",
+                "iphone-15",
+                "iphone-15-plus",
+                "iphone-15-pro",
+                "iphone-15-pro-max",
+                "iphone-16",
+                "iphone-16-plus",
+                "iphone-16-pro",
+                "iphone-16-pro-max",
+                "iphone-air",
+                "iphone-17",
+                "iphone-17-pro",
+                "iphone-17-pro-max"
+              ],
+              "note": "Tier 1: iPhone 14 through 16 series as listed by Best Buy on 2026-09-21; the iPhone 17 series and Air are assumed to sit in the same tier."
+            },
+            {
+              "credit": 420,
+              "otherwise": true,
+              "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone."
+            }
+          ],
+          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen."
+        },
+        {
+          "id": "vz-tradein-plus-upgrade",
+          "name": "Up to $660 off — tier 1 trade-in, upgrade an existing line",
+          "sourceKey": "bestbuy-verizon-tradein",
+          "plans": [
+            "vz-plus"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "requires": {
+            "tradeIn": true,
+            "tradeInCondition": "any",
+            "newLine": false,
+            "portIn": false,
+            "existingLine": true
+          },
+          "tiers": [
+            {
+              "credit": 660,
+              "devices": [
+                "iphone-14",
+                "iphone-14-plus",
+                "iphone-14-pro",
+                "iphone-14-pro-max",
+                "iphone-15",
+                "iphone-15-plus",
+                "iphone-15-pro",
+                "iphone-15-pro-max",
+                "iphone-16",
+                "iphone-16-plus",
+                "iphone-16-pro",
+                "iphone-16-pro-max",
+                "iphone-air",
+                "iphone-17",
+                "iphone-17-pro",
+                "iphone-17-pro-max"
+              ],
+              "note": "Tier 1: iPhone 14 through 16 series as listed by Best Buy on 2026-09-21; the iPhone 17 series and Air are assumed to sit in the same tier."
+            },
+            {
+              "credit": 330,
+              "otherwise": true,
+              "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone."
+            }
+          ],
+          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen."
+        },
+        {
+          "id": "vz-tradein-welcome-new",
+          "name": "Up to $480 off — tier 1 trade-in, new line",
+          "sourceKey": "bestbuy-verizon-tradein",
+          "plans": [
+            "vz-welcome"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "requires": {
+            "tradeIn": true,
+            "tradeInCondition": "any",
+            "newLine": true,
+            "portIn": false
+          },
+          "tiers": [
+            {
+              "credit": 480,
+              "devices": [
+                "iphone-14",
+                "iphone-14-plus",
+                "iphone-14-pro",
+                "iphone-14-pro-max",
+                "iphone-15",
+                "iphone-15-plus",
+                "iphone-15-pro",
+                "iphone-15-pro-max",
+                "iphone-16",
+                "iphone-16-plus",
+                "iphone-16-pro",
+                "iphone-16-pro-max",
+                "iphone-air",
+                "iphone-17",
+                "iphone-17-pro",
+                "iphone-17-pro-max"
+              ],
+              "note": "Tier 1: iPhone 14 through 16 series as listed by Best Buy on 2026-09-21; the iPhone 17 series and Air are assumed to sit in the same tier."
+            },
+            {
+              "credit": 240,
+              "otherwise": true,
+              "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone."
+            }
+          ],
+          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen."
+        },
+        {
+          "id": "vz-tradein-welcome-upgrade",
+          "name": "Up to $300 off — tier 1 trade-in, upgrade an existing line",
+          "sourceKey": "bestbuy-verizon-tradein",
+          "plans": [
+            "vz-welcome"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "requires": {
+            "tradeIn": true,
+            "tradeInCondition": "any",
+            "newLine": false,
+            "portIn": false,
+            "existingLine": true
+          },
+          "tiers": [
+            {
+              "credit": 300,
+              "devices": [
+                "iphone-14",
+                "iphone-14-plus",
+                "iphone-14-pro",
+                "iphone-14-pro-max",
+                "iphone-15",
+                "iphone-15-plus",
+                "iphone-15-pro",
+                "iphone-15-pro-max",
+                "iphone-16",
+                "iphone-16-plus",
+                "iphone-16-pro",
+                "iphone-16-pro-max",
+                "iphone-air",
+                "iphone-17",
+                "iphone-17-pro",
+                "iphone-17-pro-max"
+              ],
+              "note": "Tier 1: iPhone 14 through 16 series as listed by Best Buy on 2026-09-21; the iPhone 17 series and Air are assumed to sit in the same tier."
+            },
+            {
+              "credit": 150,
+              "otherwise": true,
+              "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone."
+            }
+          ],
+          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen."
+        }
+      ]
     },
     {
       "id": "xfinity",

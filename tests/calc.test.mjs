@@ -382,3 +382,42 @@ test("heroSummary: cheapest route per carrier, cheapest first, with the spread b
 test("heroSummary: no routes → null", () => {
   assert.equal(heroSummary([]), null);
 });
+
+test("Verizon: myPlan trade-in credits depend on plan and on new line vs upgrade; Simplicity has the switcher price and no phone deals", () => {
+  const on = buildScenarios(data, { ...baseInput, tradeInId: "iphone-16-pro" });
+  const off = buildScenarios(data, { ...baseInput, tradeInId: "iphone-16-pro", switching: false });
+
+  const newLine = find(on, "verizon", "vz-ultimate", "vz-tradein-ultimate-new");
+  assert.ok(newLine, "new-line trade-in route on Unlimited Ultimate");
+  assert.equal(newLine.plan, 95 * 36);
+  assert.equal(newLine.credits, 1199, "$1,200 tier 1 credit capped at the phone");
+  assert.equal(newLine.fees, 0, "no activation fee with the Loyalty opt-in");
+  assert.equal(newLine.tradeInValue, 510, "the iPhone 16 Pro handed over is counted at its Apple value");
+  assert.equal(find(on, "verizon", "vz-ultimate", "vz-tradein-ultimate-upgrade"), undefined, "the upgrade offer is for existing lines only");
+
+  const upgrade = find(off, "verizon", "vz-ultimate", "vz-tradein-ultimate-upgrade");
+  assert.ok(upgrade, "upgrade trade-in route when not switching");
+  assert.equal(upgrade.credits, 1020);
+  assert.ok(upgrade.requires.includes("Existing line"));
+  assert.equal(find(off, "verizon", "vz-ultimate", "vz-tradein-ultimate-new"), undefined);
+
+  assert.equal(tierCredit(data.carriers.find((c) => c.id === "verizon").promos.find((p) => p.id === "vz-tradein-plus-new"), "iphone-11"), 420, "tier 2 on Unlimited Plus");
+  const anyData = buildScenarios(data, { ...baseInput, tradeInId: "iphone-16-pro", minDataGb: 0 });
+  assert.equal(find(on, "verizon", "vz-welcome", "byod"), undefined, "Welcome has no premium data, so it sits under the 50 GB floor");
+  assert.equal(find(anyData, "verizon", "vz-welcome", "vz-tradein-welcome-new").credits, 480);
+
+  const simplicity = find(on, "verizon", "vz-simplicity", "byod");
+  assert.ok(simplicity);
+  assert.equal(simplicity.plan, 30 * 36, "$15 switch discount for the whole term");
+  assert.equal(find(off, "verizon", "vz-simplicity", "byod").plan, 45 * 36);
+  assert.equal(on.filter((r) => r.carrierId === "verizon" && r.planId === "vz-simplicity").length, 1, "Simplicity: buy from Apple only");
+});
+
+test("Verizon multi-line: myPlan is per-line tiers plus a $10/mo account credit on 3+ new lines; Simplicity is flat per line", () => {
+  const four = buildScenarios(data, { ...baseInput, lines: 4, lineItems: undefined, tradeInId: null });
+  const ultimate = find(four, "verizon", "vz-ultimate", "byod");
+  assert.equal(ultimate.plan, 230 * 36, "4 × $60 − $10 account credit");
+  assert.equal(find(four, "verizon", "vz-simplicity", "byod").plan, 120 * 36);
+  const fourExisting = buildScenarios(data, { ...baseInput, lines: 4, tradeInId: null, switching: false });
+  assert.equal(find(fourExisting, "verizon", "vz-ultimate", "byod").plan, 240 * 36);
+});

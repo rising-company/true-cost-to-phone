@@ -1,7 +1,7 @@
 # True Cost to Phone
 
 What an iPhone 18 Pro really costs over 36 months — plan, phone, one-time fees, and the
-trade-in you hand over — compared across Tello, Mint Mobile, T-Mobile, AT&T and Xfinity Mobile.
+trade-in you hand over — compared across Tello, Mint Mobile, T-Mobile, AT&T, Verizon and Xfinity Mobile.
 
 A static tool in the Rising Company **Daylight** theme. No build step: `index.html` +
 `app.js` + `calc.js` read `data/pricing.json`.
@@ -30,7 +30,9 @@ cheapest first.
 own new phone (or none) and its own trade-in (or none). Promotions credit each line on its
 own trade-in; a line without a qualifying trade-in pays full price on that route. One-time
 fees are per line regardless. T-Mobile promotions credit at most four devices per account.
-Xfinity's first-year price covers one line; Mint's $15 intro year applies per line.
+Xfinity's first-year price covers one line; Mint's $15 intro year applies per line. Verizon's
+myPlan gives new 3+-line accounts a $10/mo account credit for 36 months; Simplicity is one
+flat price per line.
 
 The **Extra savings** card holds account-level toggles:
 
@@ -40,7 +42,7 @@ The **Extra savings** card holds account-level toggles:
   $75 Shop Card per new line without a financed phone, device connection charge waived.
   AT&T: $250 bill credits + $100 Shop Card per ported line with a financed phone (replaces
   the $200 online credit), activation waived; bring-your-own does not qualify. Cards are
-  counted at face value. Costco sells no Xfinity, Tello or Mint plans.
+  counted at face value. Costco sells no Verizon, Xfinity, Tello or Mint plans.
 
 An Xfinity trade-in credit field appears on a line whose trade-in Xfinity has not priced.
 The route list can be filtered to one carrier; the filter shows every route for that
@@ -78,7 +80,7 @@ Sources are listed in `meta.sources` and on the page.
 What's in it:
 
 - `phones` — iPhone 18 Pro and iPhone 18 Pro Max storage tiers with one retail price each.
-  Apple, T-Mobile and AT&T list the same figure (carriers show it as $x.99); Xfinity does
+  Apple, T-Mobile, AT&T and Verizon list the same figure (carriers show it as $x.99); Xfinity does
   not publish one, so Apple's is used everywhere.
 - `tradeIns` — Apple's full iPhone trade-in table ("up to" values).
 - `carriers[].plans` — `monthly` is the account total keyed by **line count** (`"1"`…`"5"`,
@@ -86,7 +88,8 @@ What's in it:
   line count; Xfinity, Tello and Mint charge the same per line. A plan with no price for the
   requested count is skipped rather than guessed. `premiumDataGb` and `minutes` let the
   calculator filter by usage.
-- `carriers[].promos` — per-plan eligibility, `requires` (trade-in / new line / port-in),
+- `carriers[].promos` — per-plan eligibility, `requires` (trade-in / new line / port-in /
+  existing line),
   bill-credit term, and trade-in **tiers** keyed by device id, with an `otherwise` tier
   for anything not listed. `stackable` promos (AT&T's $200 online credit) add on top of a
   main promo and, with `appliesToByod`, on top of a bring-your-own phone.
@@ -106,10 +109,17 @@ Things worth knowing that the marketing copy hides:
 - Xfinity's deals require Xfinity Internet and the Mobile Plus line; Mobile Select is
   cheaper but unlocks no phone deals. Its "up to $1,300" is $600 for an iPhone 14 or 15 and
   only reaches $1,300 from iPhone 15 Pro up.
+- Verizon's "up to $1,200" is the new-line credit on Unlimited Ultimate for an iPhone 14
+  or newer (any working condition); upgrading an existing line gets $1,020. Unlimited Plus
+  pays $840 / $660, Unlimited Welcome $480 / $300, and any older phone lands in a tier
+  worth half. Simplicity has no phone deals at all — its pitch is the flat $30/line
+  switcher price with the phone bought from Apple. Simplicity Pro ($50/mo on top, phone
+  returned every year) is a lease, so it is not a route.
 - Mint Mobile is priced on its 12-month prepaid plans; new customers get $15/mo for the
   first year on any plan, then $30/mo for Unlimited. 3- and 6-month terms cost more.
-- Taxes are excluded everywhere. T-Mobile and AT&T prices are with AutoPay (AT&T also
-  paperless); Xfinity prices include the $10 internet-customer discount.
+- Taxes are excluded everywhere. T-Mobile, AT&T and Verizon prices are with AutoPay (AT&T
+  and Verizon also paperless); Xfinity prices include the $10 internet-customer discount.
+  Verizon's $40 activation fee is counted as $0 because the free Loyalty opt-in waives it.
 
 ## Planned
 
