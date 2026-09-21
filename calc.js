@@ -80,20 +80,44 @@ function requirementsFor(carrier, plan, promo, input) {
   return out;
 }
 
+/** Normalize the input into one entry per line: { phone, tradeIn } objects or nulls. */
+function lineItemsFor(data, input) {
+  const lines = input.lines ?? 1;
+  const byPhone = (id) => (id ? data.phones.find((p) => p.id === id) || null : null);
+  const byTrade = (id) => (id ? data.tradeIns.find((t) => t.id === id) || null : null);
+  let items;
+  if (input.lineItems) {
+    items = input.lineItems.slice(0, lines).map((li) => ({ phone: byPhone(li?.phoneId), tradeIn: byPhone(li?.phoneId) ? byTrade(li?.tradeInId) : null }));
+  } else {
+    // Legacy shape: one phone model and trade-in, on the first `phones` lines.
+    const phones = Math.max(1, Math.min(lines, input.phones ?? lines));
+    const phone = byPhone(input.phoneId);
+    if (!phone) throw new Error(`unknown phone ${input.phoneId}`);
+    const tradeIn = byTrade(input.tradeInId);
+    items = Array.from({ length: phones }, () => ({ phone, tradeIn }));
+  }
+  while (items.length < lines) items.push({ phone: null, tradeIn: null });
+  return items;
+}
+
+const phoneName = (p) => `${p.model} ${p.storageGb >= 1024 ? `${p.storageGb / 1024} TB` : `${p.storageGb} GB`}`;
+
 /**
  * Every priced combination for the input, cheapest first.
  *
- * input: { phoneId, tradeInId, lines, termMonths, switching, minDataGb, minutes, overrides }
+ * input: { lines, lineItems: [{ phoneId, tradeInId }], termMonths, switching, minDataGb, minutes, overrides }
+ *   Each line picks its own new phone (or none) and trade-in (or none).
+ *   Legacy shape { phoneId, tradeInId, phones } is still accepted.
  *   overrides — { [promoId]: credit } for tiers a carrier does not publish (Xfinity).
  */
 export function buildScenarios(data, input) {
   const termMonths = input.termMonths ?? data.meta.defaultTermMonths ?? 36;
   const lines = input.lines ?? 1;
-  const phones = Math.max(1, Math.min(lines, input.phones ?? lines));
-  const phone = data.phones.find((p) => p.id === input.phoneId);
-  const tradeIn = data.tradeIns.find((t) => t.id === input.tradeInId);
-  if (!phone) throw new Error(`unknown phone ${input.phoneId}`);
+  const items = lineItemsFor(data, input);
   const overrides = input.overrides || {};
+  const withPhone = items.filter((li) => li.phone);
+  const phones = withPhone.length;
+  const anyTradeIn = withPhone.some((li) => li.tradeIn);
   const rows = [];
 
   for (const carrier of data.carriers) {
@@ -105,22 +129,44 @@ export function buildScenarios(data, input) {
       if (plan$ == null) continue;
       const intro = planIntro(plan, { lines, termMonths, switching: input.switching });
 
-      const eligible = carrier.promos.filter((p) => promoEligible(p, plan.id, input));
+      const eligible = carrier.promos.filter((p) => promoEligible(p, plan.id, { ...input, tradeInId: anyTradeIn ? "any" : null }));
       const stackables = eligible.filter((p) => p.stackable);
       const mains = eligible.filter((p) => !p.stackable);
-      const stackedCredit = (byod) =>
-        stackables.filter((p) => !byod || p.appliesToByod).reduce((sum, p) => sum + tierCredit(p, input.tradeInId), 0);
+      const stackedPerLine = (byod) =>
+        stackables.filter((p) => !byod || p.appliesToByod).reduce((sum, p) => sum + tierCredit(p, null), 0);
 
-      const push = ({ route, routeName, promo, credit, stacked, unverified, surrendered }) => {
+      const push = ({ route, routeName, promo, unverified }) => {
         const byod = route === "byod";
-        const each = phone.retail; // same sticker everywhere — see meta.notes
-        const creditedPhones = Math.min(phones, promo?.maxDevices ?? phones);
-        const phoneCost = round2(each * phones);
-        const appleTradeIn = byod ? round2(Math.min(tradeIn?.appleValue || 0, each) * phones) : 0;
-        // Main promo credit per credited phone, stackable credit per line; never more than the phones cost.
-        const credits = Math.min(round2(credit * creditedPhones + stacked * lines), phoneCost - appleTradeIn);
-        const tradeInValue = surrendered ? round2((tradeIn?.appleValue || 0) * phones) : 0;
+        const maxCredited = promo?.maxDevices ?? Infinity;
+        let credited = 0;
+        let creditCapped = false;
+        const lineDetails = items.map((li) => {
+          if (!li.phone) return { phoneName: null, tradeInName: null, retail: 0, credit: 0, appleTradeIn: 0, tradeInValue: 0 };
+          const retail = li.phone.retail;
+          const tradeInValue = li.tradeIn?.appleValue || 0;
+          if (byod) {
+            return { phoneName: phoneName(li.phone), tradeInName: li.tradeIn?.name || null, retail, credit: 0, appleTradeIn: Math.min(tradeInValue, retail), tradeInValue: 0 };
+          }
+          const needsTrade = !!promo.requires?.tradeIn;
+          const tier = needsTrade ? (li.tradeIn ? tierFor(promo, li.tradeIn.id) : null) : tierFor(promo, null);
+          let credit = 0;
+          if (tier && credited < maxCredited) {
+            credit = Math.min(tier.verified === false ? overrides[promo.id] ?? tier.credit : tier.credit, retail);
+            credited++;
+          } else if (tier) {
+            creditCapped = true;
+          }
+          // The phone only goes to the carrier when the promo actually takes it.
+          const surrendered = needsTrade && credit > 0;
+          return { phoneName: phoneName(li.phone), tradeInName: surrendered ? li.tradeIn.name : null, retail, credit, appleTradeIn: 0, tradeInValue: surrendered ? tradeInValue : 0 };
+        });
+        const phoneCost = round2(lineDetails.reduce((s, l) => s + l.retail, 0));
+        const appleTradeIn = round2(lineDetails.reduce((s, l) => s + l.appleTradeIn, 0));
+        const stacked = round2(stackedPerLine(byod) * lines);
+        const credits = Math.min(round2(lineDetails.reduce((s, l) => s + l.credit, 0) + stacked), phoneCost - appleTradeIn);
+        const tradeInValue = round2(lineDetails.reduce((s, l) => s + l.tradeInValue, 0));
         const total = round2(plan$ + phoneCost - appleTradeIn - credits + fees + tradeInValue);
+        const surrenderedNames = lineDetails.filter((l) => l.tradeInName).map((l) => l.tradeInName);
         rows.push({
           carrierId: carrier.id,
           carrierName: carrier.name,
@@ -133,57 +179,46 @@ export function buildScenarios(data, input) {
           planNotes: plan.notes || "",
           route,
           routeName,
-          simUnlocked: byod, // Apple sells unlocked; a carrier-financed phone stays locked until paid off
+          simUnlocked: byod && phones > 0, // Apple sells unlocked; a carrier-financed phone stays locked until paid off
           promoId: promo?.id || null,
           sourceKey: promo?.sourceKey || null,
           termMonths,
           lines,
           phones,
-          creditedPhones,
+          creditedPhones: credited,
+          creditCapped,
+          lineDetails,
           plan: plan$,
           phone: phoneCost,
           appleTradeIn,
           credits,
-          stacked: round2(stacked * lines),
+          stacked,
           phoneNet: round2(phoneCost - appleTradeIn - credits),
           fees,
           feesLabel: carrier.fees?.label || "",
           tradeInValue,
-          tradeInName: surrendered ? tradeIn?.name || input.tradeInId : null,
+          tradeInName: surrenderedNames.length ? [...new Set(surrenderedNames)].join(", ") : null,
           tradeInCondition: promo?.requires?.tradeInCondition || null,
           unverified: !!unverified,
           endsOn: promo?.endsOn || null,
-          requires: requirementsFor(carrier, plan, promo, input),
+          requires: requirementsFor(carrier, plan, promo, { ...input, tradeInId: anyTradeIn ? "any" : null }),
           total,
           perMonth: round2(total / termMonths),
         });
       };
 
-      // Route 1 — buy from Apple, trade the old phone in to Apple, bring the new one to the plan.
-      push({
-        route: "byod",
-        routeName: `Buy from Apple${tradeIn ? " with trade-in" : ""}${carrier.phoneSource === "carrier" ? ", bring your own" : ""}`,
-        promo: null,
-        credit: 0,
-        stacked: stackedCredit(true),
-        surrendered: false,
-      });
+      // Route 1 — buy from Apple (trading the old phone in to Apple), bring the new one to the plan.
+      const byodName = phones === 0 ? "No new phone" : `Buy from Apple${anyTradeIn ? " with trade-in" : ""}${carrier.phoneSource === "carrier" ? ", bring your own" : ""}`;
+      push({ route: "byod", routeName: byodName, promo: null });
 
-      // Route 2..n — each promotion the plan qualifies for.
+      // Route 2..n — each promotion the plan qualifies for, when there is a phone to credit.
+      if (phones === 0) continue;
       for (const promo of mains) {
-        const tier = tierFor(promo, input.tradeInId);
-        if (!tier) continue;
-        // An override only stands in for a tier the carrier has not published.
-        const credit = tier.verified === false ? overrides[promo.id] ?? tier.credit : tier.credit;
-        push({
-          route: promo.id,
-          routeName: promo.name,
-          promo,
-          credit,
-          stacked: stackedCredit(false),
-          unverified: tier.verified === false,
-          surrendered: !!promo.requires?.tradeIn,
+        const unverified = withPhone.some((li) => {
+          const tier = promo.requires?.tradeIn ? (li.tradeIn ? tierFor(promo, li.tradeIn.id) : null) : tierFor(promo, null);
+          return tier?.verified === false;
         });
+        push({ route: promo.id, routeName: promo.name, promo, unverified });
       }
     }
   }

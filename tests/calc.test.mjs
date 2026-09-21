@@ -243,6 +243,8 @@ test("multi-line: T-Mobile credits stop at four discounted devices per account",
   assert.equal(tmo.credits, 4 * 930);
   assert.equal(tmo.phone, 5 * 1199);
   assert.equal(tmo.creditedPhones, 4);
+  assert.equal(tmo.creditCapped, true);
+  assert.equal(find(five, "tmobile", "tmo-beyond-2", "byod").creditCapped, false);
   assert.equal(find(five, "tmobile", "tmo-beyond-2", "byod").appleTradeIn, 5 * 195, "Apple trades every phone in");
 });
 
@@ -253,4 +255,51 @@ test("comparePlans reports the line count and per-line price", () => {
   assert.equal(cmp[0].perLine, 53.75);
   assert.equal(cmp[1].monthly, 200);
   assert.equal(cmp[0].cumulative[36], 215 * 36);
+});
+
+test("per-line phones and trade-ins: each line priced on its own, promos credit only lines that qualify", () => {
+  const input = {
+    ...baseInput,
+    phoneId: undefined, tradeInId: undefined, lines: 3,
+    lineItems: [
+      { phoneId: "iphone-18-pro-256", tradeInId: "iphone-16" },      // $1,200 tier on Beyond, Apple $430
+      { phoneId: "iphone-18-pro-max-512", tradeInId: null },         // new phone, nothing to trade
+      { phoneId: null, tradeInId: null },                            // keeps their phone
+    ],
+  };
+  const rows = buildScenarios(data, input);
+  const tmo = find(rows, "tmobile", "tmo-beyond-2", "tmo-ID260835");
+  assert.equal(tmo.phones, 2);
+  assert.equal(tmo.phone, 1199 + 1499);
+  assert.equal(tmo.credits, 1199, "only line 1 has a trade-in; its credit is capped at its phone");
+  assert.equal(tmo.creditedPhones, 1);
+  assert.equal(tmo.tradeInValue, 430);
+  assert.equal(tmo.fees, 3 * 35);
+  assert.equal(tmo.total, 170 * 36 + (1199 + 1499) - 1199 + 105 + 430);
+  assert.deepEqual(tmo.lineDetails.map((l) => [l.phoneName, l.tradeInName, l.credit]), [
+    ["iPhone 18 Pro 256 GB", "iPhone 16", 1199],
+    ["iPhone 18 Pro Max 512 GB", null, 0],
+    [null, null, 0],
+  ]);
+
+  const apple = find(rows, "tmobile", "tmo-beyond-2", "byod");
+  assert.equal(apple.appleTradeIn, 430);
+  assert.equal(apple.phoneNet, 1199 + 1499 - 430);
+  assert.equal(apple.routeName, "Buy from Apple with trade-in, bring your own");
+
+  const port = find(rows, "tmobile", "tmo-beyond-2", "tmo-ID260824");
+  assert.equal(port.credits, 1199 + 1200, "no-trade-in promo credits every new phone, each capped at its own price");
+});
+
+test("per-line: a trade-in promo drops out when no line trades in; no new phones means plan-only routes", () => {
+  const none = buildScenarios(data, { ...baseInput, phoneId: undefined, tradeInId: undefined, lines: 2, lineItems: [{ phoneId: "iphone-18-pro-256" }, { phoneId: "iphone-18-pro-256" }] });
+  assert.equal(find(none, "tmobile", "tmo-beyond-2", "tmo-ID260835"), undefined);
+  assert.ok(find(none, "tmobile", "tmo-beyond-2", "tmo-ID260824"));
+  const planOnly = buildScenarios(data, { ...baseInput, phoneId: undefined, tradeInId: undefined, lines: 2, lineItems: [{}, {}] });
+  const t = find(planOnly, "tello", "tello-unl-unl", "byod");
+  assert.equal(t.phone, 0);
+  assert.equal(t.phones, 0);
+  assert.equal(t.total, 50 * 36);
+  assert.equal(t.routeName, "No new phone");
+  assert.equal(find(planOnly, "tmobile", "tmo-beyond-2", "tmo-ID260824"), undefined, "nothing to credit");
 });

@@ -26,10 +26,14 @@ cheapest first.
 
 ## Lines and phones
 
-**Lines** (1–5) prices the plan as an account total for that many lines. **New phones** is how
-many of those lines get the new phone, each with the same trade-in; one-time fees are per
-line regardless. T-Mobile promotions credit at most four devices per account. Xfinity's
-first-year price covers one line; Mint's $15 intro year applies per line.
+**Lines** (1–5) prices the plan as an account total for that many lines. Each line picks its
+own new phone (or none) and its own trade-in (or none). Promotions credit each line on its
+own trade-in; a line without a qualifying trade-in pays full price on that route. One-time
+fees are per line regardless. T-Mobile promotions credit at most four devices per account.
+Xfinity's first-year price covers one line; Mint's $15 intro year applies per line.
+
+The **Extra savings** card holds account-level toggles — today just "switching carriers"
+(new line + port-in, which unlocks port-in deals and intro prices).
 
 ## Two tabs
 
@@ -99,8 +103,6 @@ The calculator already takes these as inputs; the page just pins them for now.
 - Choose the trade-in device — present on the page today, backed by Apple's full table.
 - Monthly data and minutes needed (`minDataGb`, `minutes`) so Tello's smaller plans and
   AT&T Value 2.0 come into play.
-- Different phones or trade-ins per line; today every new phone is the same model with
-  the same trade-in.
 - T-Mobile Essentials 2.0 at 2 and 5 lines and Essentials Saver beyond 2 lines are not
   published on the plan page (T-Mobile shows an "Essentials 4 Line Offer" there instead).
 
