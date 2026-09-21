@@ -26,7 +26,30 @@
     body { display: flex; flex-direction: column; min-height: 100vh; }
     .nav-github, .nav-coffee { display: inline-flex; align-items: center; gap: 8px; }
     .nav-github svg, .nav-coffee svg { flex-shrink: 0; }
-    .nav { position: static; } /* the tool is long and scroll-heavy; the bar need not follow */
+    .nav { position: relative; } /* the tool is long and scroll-heavy; the bar need not follow — but the phone menu hangs off it */
+
+    /* ── Phone menu ──
+       rising.css hides the nav's small links below 640px. Here they move into a
+       panel under the bar, opened by a hamburger; the button exists only at that width. */
+    .nav-menu-btn {
+      display: none; align-items: center; justify-content: center; width: 44px; height: 44px; margin-right: -12px;
+      border: 0; border-radius: 4px; background: none; color: var(--text-heading); cursor: pointer;
+    }
+    .nav-menu-btn:hover { color: var(--accent-ink); }
+    .nav-menu-btn:focus-visible { outline: 1px solid var(--accent-ink); outline-offset: 2px; }
+    .nav-menu-btn .icon-close, .nav-menu-btn[aria-expanded="true"] .icon-open { display: none; }
+    .nav-menu-btn[aria-expanded="true"] .icon-close { display: block; }
+    @media (max-width: 640px) {
+      .nav-menu-btn { display: inline-flex; }
+      .nav-links {
+        display: none; position: absolute; top: 100%; left: 0; right: 0; z-index: 60;
+        flex-direction: column; align-items: stretch; gap: 0; padding: 8px 24px 12px;
+        background: var(--bg-base); border-bottom: 1px solid var(--border);
+      }
+      .nav.is-open .nav-links { display: flex; }
+      .nav.is-open .nav-links a { display: inline-flex; align-items: center; gap: 10px; padding: 14px 0; border-top: 1px solid var(--border-subtle); }
+      .nav.is-open .nav-links a:first-child { border-top: 0; }
+    }
     main { flex: 1; position: relative; z-index: 1; }
 
     /* ── Hero ──
@@ -295,7 +318,7 @@
         <!-- The way home (design system → Landing nav). Same tab: navigation, not a reference. -->
         <a class="app-byline" href="https://rising.company">by <span>rising.company</span></a>
       </div>
-      <div class="nav-links">
+      <div class="nav-links" id="nav-links">
         <a href="#method">Method</a>
         <a href="#sources">Sources</a>
         <a class="nav-github" href="https://github.com/rising-company/true-cost-to-phone" target="_blank" rel="noopener noreferrer">
@@ -307,6 +330,10 @@
           Buy me a coffee
         </a>
       </div>
+      <button type="button" class="nav-menu-btn" id="nav-menu-btn" aria-controls="nav-links" aria-expanded="false" aria-label="Menu">
+        <svg class="icon-open" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 5h14M3 10h14M3 15h14"/></svg>
+        <svg class="icon-close" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg>
+      </button>
     </div>
   </nav>
 

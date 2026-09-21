@@ -351,6 +351,20 @@ function renderPlansTab(state) {
   renderComparison(data, selectedPlans, input);
 }
 
+/** The phone menu: the hamburger toggles the nav links; a link, Escape, or a tap outside closes it. */
+function wireMenu() {
+  const nav = $(".nav");
+  const btn = $("#nav-menu-btn");
+  const setOpen = (open) => {
+    nav.classList.toggle("is-open", open);
+    btn.setAttribute("aria-expanded", String(open));
+  };
+  btn.addEventListener("click", () => setOpen(!nav.classList.contains("is-open")));
+  $("#nav-links").addEventListener("click", (e) => { if (e.target.closest("a")) setOpen(false); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && nav.classList.contains("is-open")) { setOpen(false); btn.focus(); } });
+  document.addEventListener("click", (e) => { if (!nav.contains(e.target)) setOpen(false); });
+}
+
 function selectTab(next) {
   tab = next;
   for (const name of ["routes", "plans", "compare"]) {
@@ -381,6 +395,7 @@ async function main() {
   compareKeys = initial.cmp.slice(0, MAX_ROUTES);
   if (compareKeys.length) render();
   selectTab(initial.tab);
+  wireMenu();
   $("#tab-routes").addEventListener("click", () => selectTab("routes"));
   $("#tab-plans").addEventListener("click", () => selectTab("plans"));
   $("#tab-compare").addEventListener("click", () => selectTab("compare"));
