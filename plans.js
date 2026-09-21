@@ -150,30 +150,6 @@ function renderChart(cmp) {
 }
 
 /** Hero terrain: the cheapest route per carrier as stacked strata, plan / phone / fees / trade-in. */
-export function renderHeroGhost(rows) {
-  const host = $("#hero-ghost");
-  if (!host) return;
-  const best = [];
-  const seen = new Set();
-  for (const r of rows) if (!seen.has(r.carrierId)) { seen.add(r.carrierId); best.push(r); }
-  const W = 1000, H = 320, bandH = 44, gap = 10;
-  const max = Math.max(1, ...best.map((r) => r.total));
-  const strata = best
-    .map((r, i) => {
-      const y = H - (best.length - i) * (bandH + gap) + 24;
-      const shift = i * 28; // strata step back as they climb
-      const segs = [
-        ["var(--seg-plan)", r.plan], ["var(--seg-phone)", r.phoneNet], ["var(--seg-fees)", r.fees], ["var(--seg-tradein)", r.tradeInValue],
-      ].filter(([, v]) => v > 0);
-      let x = shift;
-      return segs
-        .map(([color, v]) => { const w = ((W - shift) * v) / max; const rect = `<rect class="stratum" x="${x.toFixed(1)}" y="${y}" width="${Math.max(0, w - 2).toFixed(1)}" height="${bandH}" rx="3" fill="${color}"/>`; x += w; return rect; })
-        .join("");
-    })
-    .join("");
-  host.innerHTML = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${strata}</svg>`;
-}
-
 /** Summary chart under the per-carrier cards: one stacked bar per carrier, cheapest first. */
 export function renderSummaryChart(rows) {
   const host = $("#summary-chart");

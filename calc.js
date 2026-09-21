@@ -325,3 +325,14 @@ export function cashflow(row) {
   out[term] = row.total; // absorb rounding drift so the curve lands on the headline number
   return out;
 }
+
+/** The hero's glance: the cheapest route per carrier, cheapest first, and the gap between the ends. */
+export function heroSummary(rows) {
+  if (!rows.length) return null;
+  const best = new Map();
+  for (const r of rows) if (!best.has(r.carrierId)) best.set(r.carrierId, r); // rows arrive sorted cheapest first
+  const carriers = [...best.values()].sort((a, b) => a.total - b.total);
+  const cheapest = carriers[0];
+  const priciest = carriers[carriers.length - 1];
+  return { carriers, cheapest, priciest, spread: priciest.total - cheapest.total };
+}

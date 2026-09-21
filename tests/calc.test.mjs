@@ -3,7 +3,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
-import { buildScenarios, tierCredit, planTotal, comparePlans, cashflow } from "../calc.js";
+import { buildScenarios, tierCredit, planTotal, comparePlans, cashflow, heroSummary } from "../calc.js";
 
 const data = JSON.parse(readFileSync(new URL("../data/pricing.json", import.meta.url), "utf8"));
 
@@ -362,4 +362,23 @@ test("cashflow: cumulative out-of-pocket by month; upfront differs by route, mon
   const costco = find(buildScenarios(data, { ...baseInput, tradeInId: null, costco: true }), "tmobile", "tmo-beyond-2", "tmo-ID260824");
   assert.equal(cashflow(costco)[0], 0 - 400, "Costco cards counted on day one");
   assert.equal(cashflow(costco)[36], costco.total);
+});
+
+test("heroSummary: cheapest route per carrier, cheapest first, with the spread between the ends", () => {
+  const rows = buildScenarios(data, baseInput);
+  const hero = heroSummary(rows);
+  assert.equal(hero.carriers.length, new Set(rows.map((r) => r.carrierId)).size, "one entry per carrier");
+  for (let i = 1; i < hero.carriers.length; i++) assert.ok(hero.carriers[i - 1].total <= hero.carriers[i].total, "sorted cheapest first");
+  for (const c of hero.carriers) {
+    const cheapestForCarrier = Math.min(...rows.filter((r) => r.carrierId === c.carrierId).map((r) => r.total));
+    assert.equal(c.total, cheapestForCarrier, `${c.carrierName} shows its cheapest route`);
+  }
+  assert.equal(hero.cheapest, hero.carriers[0]);
+  assert.equal(hero.priciest, hero.carriers.at(-1));
+  assert.equal(hero.spread, hero.priciest.total - hero.cheapest.total);
+  assert.ok(hero.spread > 0);
+});
+
+test("heroSummary: no routes → null", () => {
+  assert.equal(heroSummary([]), null);
 });
