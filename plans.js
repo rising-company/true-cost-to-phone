@@ -149,18 +149,64 @@ function renderChart(cmp) {
   hit.addEventListener("pointerleave", () => { cursor.setAttribute("visibility", "hidden"); tip.hidden = true; });
 }
 
-/** The hero's ghost chart: the given plans' cumulative cost, unlabeled, over a month grid. */
-export function renderHeroGhost(data, planIds, input) {
+/** Hero terrain: the cheapest route per carrier as stacked strata, plan / phone / fees / trade-in. */
+export function renderHeroGhost(rows) {
   const host = $("#hero-ghost");
   if (!host) return;
-  const cmp = comparePlans(data, planIds, input);
-  const W = 1000, H = 320;
-  const term = cmp[0]?.termMonths || 36;
-  const maxY = Math.max(1, ...cmp.map((c) => c.total));
-  const x = (m) => (W * m) / term;
-  const y = (v) => H - 24 - (H - 48) * (v / maxY);
-  const months = Array.from({ length: term + 1 }, (_, m) => `<line class="month${m % 12 === 0 ? " q" : ""}" x1="${x(m).toFixed(1)}" x2="${x(m).toFixed(1)}" y1="0" y2="${H}"/>`).join("");
-  const path = (c) => c.cumulative.map((v, m) => `${m === 0 ? "M" : "L"}${x(m).toFixed(1)},${y(v).toFixed(1)}`).join(" ");
-  const curves = cmp.map((c, i) => `<path class="curve" stroke="${SERIES[i]}" d="${path(c)}"/>`).join("");
-  host.innerHTML = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${months}${curves}</svg>`;
+  const best = [];
+  const seen = new Set();
+  for (const r of rows) if (!seen.has(r.carrierId)) { seen.add(r.carrierId); best.push(r); }
+  const W = 1000, H = 320, bandH = 44, gap = 10;
+  const max = Math.max(1, ...best.map((r) => r.total));
+  const strata = best
+    .map((r, i) => {
+      const y = H - (best.length - i) * (bandH + gap) + 24;
+      const shift = i * 28; // strata step back as they climb
+      const segs = [
+        ["var(--seg-plan)", r.plan], ["var(--seg-phone)", r.phoneNet], ["var(--seg-fees)", r.fees], ["var(--seg-tradein)", r.tradeInValue],
+      ].filter(([, v]) => v > 0);
+      let x = shift;
+      return segs
+        .map(([color, v]) => { const w = ((W - shift) * v) / max; const rect = `<rect class="stratum" x="${x.toFixed(1)}" y="${y}" width="${Math.max(0, w - 2).toFixed(1)}" height="${bandH}" rx="3" fill="${color}"/>`; x += w; return rect; })
+        .join("");
+    })
+    .join("");
+  host.innerHTML = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${strata}</svg>`;
+}
+
+/** Summary chart under the per-carrier cards: one stacked bar per carrier, cheapest first. */
+export function renderSummaryChart(rows) {
+  const host = $("#summary-chart");
+  if (!host) return;
+  const best = [];
+  const seen = new Set();
+  for (const r of rows) if (!seen.has(r.carrierId)) { seen.add(r.carrierId); best.push(r); }
+  // Stacked cost per line: every amount divided by the line count so 1-line and 5-line
+  // situations read on the same scale. Account totals sit under the per-line figure.
+  const lines = best[0]?.lines || 1;
+  const per = (v) => v / lines;
+  const max = Math.max(1, ...best.map((r) => per(r.total)));
+  const segs = (r) => [
+    { label: "Plan", value: per(r.plan), seg: "var(--seg-plan)" },
+    { label: "Phone after credits", value: per(r.phoneNet), seg: "var(--seg-phone)" },
+    { label: "One-time fees", value: per(r.fees), seg: "var(--seg-fees)" },
+    { label: "Trade-in into the deal", value: per(r.tradeInValue), seg: "var(--seg-tradein)" },
+  ];
+  host.innerHTML = `
+    <div class="chart-head"><div class="section-label">// Side by side${lines > 1 ? ` · per line, ${lines} lines` : ""}</div>
+      <div class="legend" aria-hidden="true">
+        <span style="--seg: var(--seg-plan)">Plan</span><span style="--seg: var(--seg-phone)">Phone after credits</span>
+        <span style="--seg: var(--seg-fees)">One-time fees</span><span style="--seg: var(--seg-tradein)">Trade-in into the deal</span>
+      </div></div>
+    ${best
+      .map(
+        (r, i) => `<div class="cbar-row${i === 0 ? " is-best" : ""}">
+          <div class="cbar-label"><div class="card-tag">${esc(r.carrierName)}</div><div class="cbar-plan" title="${esc(r.planName)} · ${esc(r.routeName)}">${esc(r.planName)} · ${esc(r.routeName)}</div></div>
+          <div class="cbar" role="img" aria-label="${esc(r.carrierName)}: ${segs(r).map((s) => `${s.label} ${usd.format(s.value)}`).join(", ")} per line, ${usd.format(per(r.total))} per line" style="width:${((per(r.total) / max) * 100).toFixed(1)}%">
+            ${segs(r).filter((s) => s.value > 0).map((s) => `<span style="--seg:${s.seg}; flex:${s.value} 0 0" title="${s.label} ${usd.format(s.value)}${lines > 1 ? " per line" : ""}"></span>`).join("")}
+          </div>
+          <div class="cbar-total">${usd.format(per(r.total))}${lines > 1 ? `/line<small>${usd.format(r.total)} for ${lines} lines</small>` : ""}</div>
+        </div>`,
+      )
+      .join("")}`;
 }

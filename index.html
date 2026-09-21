@@ -32,15 +32,14 @@
     /* ── Hero ── */
     .hero-band { position: relative; }
     .hero { position: relative; z-index: 1; padding: 64px 0 40px; }
-    /* A ghost of the comparison: the default picks' cumulative cost curves over a
-       36-month grid, full-bleed, fading toward the controls. Decorative — aria-hidden. */
-    .hero-ghost { position: absolute; inset: 0; z-index: 0; pointer-events: none;
-      mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.7) 55%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.7) 55%, transparent 100%); }
+    /* Cost bars as terrain: the cheapest route per carrier, each a stacked band of
+       plan / phone / fees / trade-in at low alpha, laid as strata behind the hero and
+       fading toward the controls. Decorative — aria-hidden. */
+    .hero-ghost { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+      mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.75) 60%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.75) 60%, transparent 100%); }
     .hero-ghost svg { width: 100%; height: 100%; display: block; }
-    .hero-ghost .month { stroke: var(--border-subtle); }
-    .hero-ghost .month.q { stroke: var(--border); }
-    .hero-ghost .curve { fill: none; stroke-width: 1.5; stroke-linejoin: round; opacity: 0.3; }
+    .hero-ghost .stratum { opacity: 0.07; }
     .hero-trust {
       font-family: "Share Tech Mono", monospace; font-size: 12px; letter-spacing: 0.15em;
       text-transform: uppercase; color: var(--text-label); margin-top: 24px;
@@ -86,16 +85,35 @@
     .field[hidden], .rows-more [hidden] { display: none; } /* .field's display:flex would otherwise beat [hidden] */
 
     /* ── Best-per-carrier strip ── */
-    .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 32px; }
+    .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(176px, 1fr)); gap: 16px; margin-bottom: 16px; }
     .summary .card { padding: 20px 24px; display: flex; flex-direction: column; gap: 8px; }
     .summary .stat-label { display: flex; justify-content: space-between; gap: 8px; }
     .summary .big {
       font-family: "Rajdhani", sans-serif; font-weight: 700; font-size: 32px; line-height: 1.1;
       letter-spacing: 1px; color: var(--text-heading); font-variant-numeric: tabular-nums;
     }
-    .summary .big small { font-family: "Share Tech Mono", monospace; font-size: 13px; letter-spacing: 0.06em; color: var(--text-subtle); margin-left: 8px; }
+    .summary .big { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; }
+    .summary .big small { font-family: "Share Tech Mono", monospace; font-size: 13px; letter-spacing: 0.06em; color: var(--text-subtle); }
     .summary .route { font-size: 14px; font-weight: 500; color: var(--text-muted); line-height: 1.4; }
     .summary .card.is-best { border-color: var(--accent-line); background: var(--accent-wash); }
+
+    /* ── Summary chart: one stacked bar per carrier, cheapest first ── */
+    .summary-chart { margin-bottom: 32px; padding: 20px 24px; }
+    .summary-chart::before { display: none; }
+    .summary-chart .chart-head { margin-bottom: 16px; }
+    .cbar-row { display: grid; grid-template-columns: 200px 1fr 150px; gap: 8px 16px; align-items: center; padding: 8px 0; }
+    .cbar-row + .cbar-row { border-top: 1px solid var(--border-subtle); }
+    .cbar-label { min-width: 0; }
+    .cbar-label .card-tag { font-size: 12px; letter-spacing: 0.1em; }
+    .cbar-label .cbar-plan { font-size: 14px; font-weight: 500; color: var(--text-muted); line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cbar { display: flex; height: 14px; gap: 2px; }
+    .cbar span { display: block; height: 100%; border-radius: 2px; background: var(--seg); min-width: 2px; }
+    .cbar span:first-child { border-radius: 4px 2px 2px 4px; }
+    .cbar span:last-child { border-radius: 2px 4px 4px 2px; }
+    .cbar-total { font-family: "Share Tech Mono", monospace; font-size: 13px; letter-spacing: 0.06em; color: var(--text-body); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .cbar-total small { display: block; font-size: 12px; color: var(--text-label); letter-spacing: 0.04em; }
+    .cbar-row.is-best .cbar-total { color: var(--accent-ink); }
+    @media (max-width: 640px) { .cbar-row { grid-template-columns: 1fr 150px; } .cbar { grid-column: 1 / -1; } }
 
     /* ── Results ── */
     .results-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px 24px; flex-wrap: wrap; margin-bottom: 16px; }
@@ -346,6 +364,7 @@
     <section class="shell reveal" aria-label="Best route per carrier">
       <div class="section-label" style="margin-bottom:16px">// Cheapest route per carrier</div>
       <div class="summary" id="summary"></div>
+      <div class="summary-chart card" id="summary-chart" aria-label="Cheapest route per carrier, cost breakdown"></div>
     </section>
 
     <section class="shell reveal" aria-labelledby="results-title">

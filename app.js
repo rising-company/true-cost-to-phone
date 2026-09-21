@@ -3,7 +3,7 @@
 // State lives in the URL query so a result can be shared.
 
 import { buildScenarios, tierCredit } from "./calc.js";
-import { MAX_PLANS, defaultPlanIds, renderPicker, renderComparison, renderHeroGhost } from "./plans.js";
+import { MAX_PLANS, defaultPlanIds, renderPicker, renderComparison, renderHeroGhost, renderSummaryChart } from "./plans.js";
 
 const $ = (sel) => document.querySelector(sel);
 const usd = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
@@ -308,6 +308,8 @@ function render() {
   });
 
   renderSummary(rows);
+  renderSummaryChart(rows);
+  renderHeroGhost(rows);
   renderRows(rows);
   defaultPlans = defaultPlanIds(rows);
   if (!selectedPlans || !plansTouched) selectedPlans = defaultPlans;
@@ -330,7 +332,6 @@ function renderPlansTab(state) {
     render();
   }, state.lineItems.length);
   renderComparison(data, selectedPlans, input);
-  renderHeroGhost(data, defaultPlans, input);
 }
 
 function selectTab(next) {
