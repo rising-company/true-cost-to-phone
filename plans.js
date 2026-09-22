@@ -170,6 +170,10 @@ export function renderSummaryChart(rows) {
     { label: "One-time fees", value: per(r.fees), seg: "var(--seg-fees)" },
     { label: "Trade-in into the deal", value: per(r.tradeInValue), seg: "var(--seg-tradein)" },
   ];
+  // On phones the fold line above the chart carries this label, so the per-line qualifier
+  // rides along with it there rather than disappearing with the hidden heading.
+  const hint = $("#chart-hint");
+  if (hint) hint.textContent = lines > 1 ? `per line, ${lines} lines` : "cost breakdown";
   host.innerHTML = `
     <div class="chart-head"><div class="section-label">// Side by side${lines > 1 ? ` · per line, ${lines} lines` : ""}</div>
       <div class="legend" aria-hidden="true">

@@ -14,7 +14,7 @@ const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&l
 
 const XF_PROMO = "xf-tradein-1300";
 const DEFAULT_PHONE = "iphone-18-pro-256";
-const DEFAULTS = { switching: "1", costco: "0", tab: "routes", plans: "", carrier: "", cmp: "" };
+const DEFAULTS = { switching: "0", costco: "0", tab: "routes", plans: "", carrier: "", cmp: "" };
 const MAX_LINES = 5;
 const NONE = "-";
 
@@ -61,7 +61,7 @@ function readState() {
   const q = new URLSearchParams(location.search);
   return {
     lineItems: parseLines(q.get("l")),
-    switching: (q.get("switching") ?? DEFAULTS.switching) !== "0",
+    switching: (q.get("switching") ?? DEFAULTS.switching) === "1",
     costco: q.get("costco") === "1",
     carrier: q.get("carrier") || "",
     tab: ["plans", "compare"].includes(q.get("tab")) ? q.get("tab") : "routes",
@@ -74,7 +74,7 @@ function writeState(s) {
   const q = new URLSearchParams();
   const l = s.lineItems.map((li) => `${li.phoneId || NONE}:${li.tradeInId || NONE}${li.xfCredit != null ? `:${li.xfCredit}` : ""}`).join(",");
   if (l !== `${DEFAULT_PHONE}:${NONE}`) q.set("l", l);
-  if (!s.switching) q.set("switching", "0");
+  if (s.switching) q.set("switching", "1");
   if (s.costco) q.set("costco", "1");
   if (carrierFilter) q.set("carrier", carrierFilter);
   if (tab !== "routes") q.set("tab", tab);
