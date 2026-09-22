@@ -6,14 +6,10 @@
 // the numbers fails loudly instead of leaving a stale card in every shared link.
 
 import { buildScenarios, heroSummary } from "./calc.js";
+import { HEADLINE_SCENARIO } from "./scenario.js";
 
-/** The situation the card shows: what the page itself computes on first load. */
-export const CARD_SCENARIO = {
-  lines: 1,
-  lineItems: [{ phoneId: "iphone-18-pro-256", tradeInId: null }],
-  switching: false,
-  costco: false,
-};
+/** The situation the card shows: the one the page itself computes on first load. */
+export const CARD_SCENARIO = HEADLINE_SCENARIO;
 
 /* The same four segments, in the same order and the same colors, as the page's
    summary chart. A card that reads differently from the page it links to is a

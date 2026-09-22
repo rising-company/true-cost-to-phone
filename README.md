@@ -163,6 +163,39 @@ numbers printed on the committed card, the stamp against `meta.crawledAt`, and t
 spread quoted in the tags. Moving the data without regenerating the card is a failing
 test, not a stale share.
 
+## Generated pages
+
+The tool answers every situation at one URL, but the question arrives in several
+hundred shapes — "verizon vs t-mobile iphone 18 pro", "is xfinity mobile worth it".
+`seo.js` builds a model for each of those, and `tools/gen-seo.mjs` renders them:
+
+```sh
+node tools/gen-seo.mjs     # 15 compare/ pages, 6 carrier/ pages, sitemap.xml, robots.txt
+```
+
+Output is committed, like `og.png`. Regenerate it whenever `data/pricing.json` moves;
+`tests/seo.test.mjs` fails if the committed pages carry a stale crawl date.
+
+Each page states numbers the calculator produced, names its sources, and deep-links
+into the tool pre-loaded with the situation it describes. The carrier pages carry the
+part the carriers' own pages never show: each promotion priced against buying the same
+phone outright **on the same plan**, which holds the plan constant so the difference is
+the deal and nothing else.
+
+Two scenarios drive everything, both in `scenario.js`:
+
+- `HEADLINE_SCENARIO` — one line, an iPhone 18 Pro 256, no trade-in, not switching.
+  What the landing page computes on first load, so the card and the pages agree with it.
+- `SWITCHER_SCENARIO` — the same line switching in with an iPhone 16 Pro to trade.
+  Every promotion requires a port-in, a trade-in or both, so the headline scenario
+  filters all of them out; a page about whether a deal is worth taking has to price
+  the case where it is on the table.
+
+Both spread in `USAGE_FLOOR` (50 GB premium data, unlimited minutes) — the floor
+`app.js` has always applied. It lives in `scenario.js` because leaving it out prices
+plans the page never shows: the social card once shipped a Tello plan with 300 minutes
+and no data as the cheapest route.
+
 ## Measurement
 
 PostHog, provisioned through the Vercel Marketplace (`vercel integration add posthog`,

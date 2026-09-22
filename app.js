@@ -3,6 +3,7 @@
 // State lives in the URL query so a result can be shared.
 
 import { buildScenarios, tierCredit, heroSummary } from "./calc.js";
+import { USAGE_FLOOR } from "./scenario.js";
 import { MAX_PLANS, defaultPlanIds, renderPicker, renderComparison, renderSummaryChart } from "./plans.js";
 import { MAX_ROUTES, routeKey, renderCompare } from "./compare.js";
 import { init as initAnalytics, track, situationProps, situationIsNew } from "./analytics.js";
@@ -333,8 +334,7 @@ function render() {
     termMonths: data.meta.defaultTermMonths,
     switching: state.switching,
     costco: state.costco,
-    minDataGb: 50,
-    minutes: "unlimited",
+    ...USAGE_FLOOR,
   });
 
   lastRows = rows;

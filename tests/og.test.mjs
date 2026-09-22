@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
 import { CARD_SCENARIO, cardModel } from "../og.js";
+import { HEADLINE_SCENARIO } from "../scenario.js";
 
 const data = JSON.parse(readFileSync(new URL("../data/pricing.json", import.meta.url), "utf8"));
 
@@ -14,18 +15,21 @@ const data = JSON.parse(readFileSync(new URL("../data/pricing.json", import.meta
 const ON_THE_CARD = {
   crawledAt: "2026-09-21",
   cheapestCarrier: "tello",
-  cheapestTotal: 1379,
-  priciestTotal: 3034,
+  cheapestTotal: 2099,
+  priciestTotal: 3754,
   spread: 1655,
   carriers: 6,
 };
 
 test("the card prices the situation a visitor lands on: one line, an 18 Pro 256, no trade-in, not switching", () => {
+  assert.equal(CARD_SCENARIO, HEADLINE_SCENARIO, "card, landing page and SEO pages share one scenario");
   assert.deepEqual(CARD_SCENARIO, {
     lines: 1,
     lineItems: [{ phoneId: "iphone-18-pro-256", tradeInId: null }],
     switching: false,
     costco: false,
+    minDataGb: 50,
+    minutes: "unlimited",
   });
 });
 
@@ -93,4 +97,22 @@ test("the headline in the tags is the spread the data actually produces", () => 
   const spread = usd.format(cardModel(data).spread);
   assert.ok(meta("og:title").includes(spread), `og:title should quote ${spread}`);
   assert.ok(meta("twitter:title").includes(spread), `twitter:title should quote ${spread}`);
+});
+
+/* ── The usage floor ──
+   The page only ever shows plans with real data and real minutes; it pins a floor
+   when it calls the calculator. A scenario that leaves the floor out silently prices
+   plans nobody is shown — a 300-minute Tello plan won the card once — so the floor
+   lives in one place and app.js reads it from there. */
+
+test("the headline scenario carries the same usage floor the page applies", () => {
+  assert.equal(HEADLINE_SCENARIO.minDataGb, 50);
+  assert.equal(HEADLINE_SCENARIO.minutes, "unlimited");
+});
+
+test("app.js takes the floor from scenario.js rather than repeating it", () => {
+  const app = readFileSync(new URL("../app.js", import.meta.url), "utf8");
+  assert.match(app, /import \{[^}]*USAGE_FLOOR[^}]*\} from "\.\/scenario\.js"/, "app.js imports the shared floor");
+  assert.match(app, /\.\.\.USAGE_FLOOR/, "and spreads it into the calculator input");
+  assert.doesNotMatch(app, /minDataGb:\s*50/, "no second copy of the floor to drift");
 });

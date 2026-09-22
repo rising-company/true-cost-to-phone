@@ -26,11 +26,13 @@
   <meta property="og:image" content="https://true-cost-to-phone.rising.company/og.png?v=2026-09-21">
   <meta property="og:image:width" content="2400">
   <meta property="og:image:height" content="1260">
-  <meta property="og:image:alt" content="Six carriers ranked cheapest first for the same iPhone 18 Pro over 36 months: Tello $1,379, Mint Mobile $1,739, Xfinity Mobile $2,304, Verizon $2,819, T-Mobile $3,034, AT&T $3,034.">
+  <meta property="og:image:alt" content="Six carriers ranked cheapest first for the same iPhone 18 Pro over 36 months: Tello $2,099, Mint Mobile $2,279, Xfinity Mobile $2,304, Verizon $2,819, T-Mobile $3,034, AT&T $3,754.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="The same iPhone. $1,655 apart.">
   <meta name="twitter:description" content="Six carriers, one iPhone 18 Pro, 36 months — plan, phone, fees, and the trade-in you hand over, all counted.">
   <meta name="twitter:image" content="https://true-cost-to-phone.rising.company/og.png?v=2026-09-21">
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"True Cost to Phone","url":"https://true-cost-to-phone.rising.company/","applicationCategory":"FinanceApplication","operatingSystem":"Any","description":"Prices an iPhone 18 Pro over 36 months across Tello, Mint Mobile, T-Mobile, AT&T, Verizon and Xfinity Mobile, counting the plan, the phone after bill credits, one-time fees and the trade-in handed to the carrier.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Rising Company","url":"https://rising.company"},"isBasedOn":"https://true-cost-to-phone.rising.company/data/pricing.json"},{"@type":"Dataset","name":"US carrier iPhone 18 Pro pricing, plans and promotions","description":"Plan prices by line count, phone retail prices, Apple trade-in values and every carrier promotion with its eligibility rules and trade-in tiers, captured from each carrier's own pages. Every figure names its source; anything a carrier does not publish is flagged rather than guessed.","url":"https://true-cost-to-phone.rising.company/","distribution":{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://true-cost-to-phone.rising.company/data/pricing.json"},"dateModified":"2026-09-21","temporalCoverage":"2026-09-21","spatialCoverage":{"@type":"Country","name":"United States"},"license":"https://github.com/rising-company/true-cost-to-phone","creator":{"@type":"Organization","name":"Rising Company","url":"https://rising.company"},"isAccessibleForFree":true}]}</script>
 
   <link rel="icon" type="image/svg+xml" href="https://design-system.rising.company/branding/favicon.svg">
   <link rel="apple-touch-icon" sizes="180x180" href="https://design-system.rising.company/branding/apple-icon.png">
@@ -348,6 +350,16 @@
 
     .site-footer .shell { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; }
 
+    /* ── Per-carrier pages ──
+       The tool answers every situation at one URL; these are the same answers written
+       out one carrier at a time, for the searches that arrive already narrowed. They
+       sit above the footer as a quiet row — a reader who has priced their case does
+       not need them, and a reader who has not may prefer to start narrow. */
+    .carrier-links { border-top: 1px solid var(--border-subtle); padding: 24px 0 8px; }
+    .carrier-links ul { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 20px; }
+    .carrier-links a { font-size: 14px; color: var(--text-subtle); text-decoration: none; transition: color 0.2s; }
+    .carrier-links a:hover { color: var(--accent-ink); }
+
     /* ── Compare tray ──
        Once two or more routes are picked on the Routes tab, a tray at the bottom edge
        offers the Compare tab — the picks are otherwise only a count on a tab up the page.
@@ -635,6 +647,18 @@
       </div>
     </section>
   </main>
+
+  <section class="shell carrier-links" aria-labelledby="carrier-links-label">
+    <div class="section-label" id="carrier-links-label">// One carrier at a time</div>
+    <ul>
+      <li><a href="/carrier/tello-iphone-18-pro-cost">Tello</a></li>
+      <li><a href="/carrier/mint-mobile-iphone-18-pro-cost">Mint Mobile</a></li>
+      <li><a href="/carrier/tmobile-iphone-18-pro-cost">T-Mobile</a></li>
+      <li><a href="/carrier/att-iphone-18-pro-cost">AT&T</a></li>
+      <li><a href="/carrier/verizon-iphone-18-pro-cost">Verizon</a></li>
+      <li><a href="/carrier/xfinity-mobile-iphone-18-pro-cost">Xfinity Mobile</a></li>
+    </ul>
+  </section>
 
   <footer class="site-footer">
     <div class="shell">
