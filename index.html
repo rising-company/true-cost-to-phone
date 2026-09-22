@@ -70,6 +70,16 @@
     .hero { position: relative; z-index: 1; padding: 64px 0 48px; }
     .hero .hero-title { max-width: 22ch; }
     .hero .lede { max-width: 56ch; }
+    /* Phones sit at the design system's 36px floor for the title, where an uppercase
+       headline fills the line box edge to edge and the whole hero reads as a wall.
+       Smaller type, tighter tracking and a shorter lede give it room. */
+    @media (max-width: 640px) {
+      .hero { padding: 32px 0 32px; }
+      .hero .hero-title { font-size: 30px; letter-spacing: 1px; line-height: 1.15; max-width: none; }
+      .hero .lede { font-size: 16px; line-height: 1.6; max-width: 34ch; margin-top: 14px; }
+      .hero .lede .lede-tail { display: none; } /* the top row is the answer; the page shows it a screen later */
+      .hero-trust { font-size: 11px; letter-spacing: 0.08em; line-height: 1.8; margin-top: 20px; }
+    }
     .hero-trust {
       font-family: "Share Tech Mono", monospace; font-size: 12px; letter-spacing: 0.15em;
       text-transform: uppercase; color: var(--text-label); margin-top: 24px;
@@ -429,7 +439,7 @@
     <section class="shell hero reveal" aria-labelledby="hero-title">
       <div class="eyebrow">// Rising Company</div>
       <h1 class="hero-title" id="hero-title">Upgrading your iPhone shouldn't take a spreadsheet.</h1>
-      <p class="lede">Bill credits, trade-in tiers, activation fees, intro-year prices — every carrier prices the same phone a different way. This adds it all up over 36 months, so the cheapest way to your next iPhone is just the top row.</p>
+      <p class="lede">Bill credits, trade-in tiers, activation fees, intro-year prices — every carrier prices the same phone a different way. This adds it all up over 36 months<span class="lede-tail">, so the cheapest way to your next iPhone is just the top row</span>.</p>
       <div class="hero-trust" id="trust">36 months · taxes excluded · prices updated 2026-09-21</div>
     </section>
 
