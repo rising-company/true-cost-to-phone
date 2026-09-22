@@ -40,7 +40,7 @@ test("a comparison page names the cheaper carrier and the gap between them", () 
 test("a comparison page deep-links into the Compare tab with both routes picked", () => {
   const page = comparePages(data).find((p) => p.slug === "tmobile-vs-verizon-iphone-18-pro");
   const [a, b] = page.sides;
-  assert.equal(page.toolUrl, `/?cmp=${a.best.key},${b.best.key}&tab=compare`);
+  assert.equal(page.toolUrl, `/?l=iphone-18-pro-256:-&cmp=${a.best.key},${b.best.key}&tab=compare`, "opens on the no-trade-in situation the page priced");
   assert.match(a.best.key, /^[a-z]+\|[a-z0-9-]+\|[a-z0-9-]+$/, "a routeKey the page can hand the tool");
 });
 
@@ -48,7 +48,7 @@ test("one page per carrier, deep-linked to that carrier's filter", () => {
   const pages = carrierPages(data);
   assert.equal(pages.length, data.carriers.length);
   const xfinity = pages.find((p) => p.carrierId === "xfinity");
-  assert.equal(xfinity.toolUrl, "/?carrier=xfinity");
+  assert.equal(xfinity.toolUrl, "/?l=iphone-18-pro-256:-&carrier=xfinity", "opens on the no-trade-in situation the page priced");
   assert.ok(xfinity.routes.length > 1, "every route that carrier offers, not just the best");
   const totals = xfinity.routes.map((r) => r.total);
   assert.deepEqual(totals, [...totals].sort((a, b) => a - b), "cheapest first");
@@ -78,7 +78,7 @@ test("the sitemap is well-formed and lists what it is given, once each", () => {
 });
 
 /* ── What the deals actually pay ──
-   Every promo needs a port-in or a trade-in, so the headline scenario shows none of
+   Every promo needs a port-in or a trade-in, so the no-trade-in scenario shows none of
    them. A page answering "is this deal worth it" has to price the case where it is
    on the table, and measure it against buying outright *on the same plan* — which is
    the comparison the carrier's own page never makes. */

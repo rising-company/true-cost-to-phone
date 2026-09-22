@@ -141,8 +141,8 @@ carrier chart — same segments, same colors, same cheapest-first ranking — so
 survives a timeline and the click is verification rather than curiosity.
 
 `og.js` holds the card's data model (`CARD_SCENARIO`, `cardModel`). The scenario is the
-one the page itself computes on first load: one line, an iPhone 18 Pro 256, no trade-in,
-not switching. A card that disagrees with the page it links to is a worse card.
+one the page itself computes on first load: one line, an iPhone 18 Pro 256, an iPhone 16
+Pro to trade, not switching. A card that disagrees with the page it links to is a worse card.
 
 Regenerate it whenever `data/pricing.json` moves:
 
@@ -194,10 +194,13 @@ the deal and nothing else.
 
 Two scenarios drive everything, both in `scenario.js`:
 
-- `HEADLINE_SCENARIO` — one line, an iPhone 18 Pro 256, no trade-in, not switching.
-  What the landing page computes on first load, so the card and the pages agree with it.
+- `HEADLINE_SCENARIO` — one line, an iPhone 18 Pro 256, an iPhone 16 Pro to trade, not
+  switching. What the landing page computes on first load, so the card agrees with it.
+- `NO_TRADE_IN_SCENARIO` — the same line with nothing to trade. The generated pages lead
+  with it, and their tool links carry it (`l=iphone-18-pro-256:-`) so the tool opens on
+  the numbers the page quoted.
 - `SWITCHER_SCENARIO` — the same line switching in with an iPhone 16 Pro to trade.
-  Every promotion requires a port-in, a trade-in or both, so the headline scenario
+  Every promotion requires a port-in, a trade-in or both, so the no-trade-in scenario
   filters all of them out; a page about whether a deal is worth taking has to price
   the case where it is on the table.
 

@@ -3,7 +3,7 @@
 // State lives in the URL query so a result can be shared.
 
 import { buildScenarios, tierCredit, heroSummary } from "./calc.js";
-import { USAGE_FLOOR } from "./scenario.js";
+import { USAGE_FLOOR, HEADLINE_SCENARIO } from "./scenario.js";
 import { MAX_PLANS, defaultPlanIds, renderPicker, renderComparison, renderSummaryChart } from "./plans.js";
 import { MAX_ROUTES, routeKey, renderCompare } from "./compare.js";
 import { init as initAnalytics, track, situationProps, situationIsNew } from "./analytics.js";
@@ -14,7 +14,9 @@ const usd2 = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD"
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
 const XF_PROMO = "xf-tradein-1300";
-const DEFAULT_PHONE = "iphone-18-pro-256";
+// First load prices the headline scenario, so the page agrees with its own social card.
+const DEFAULT_LINE = HEADLINE_SCENARIO.lineItems[0];
+const DEFAULT_PHONE = DEFAULT_LINE.phoneId;
 const DEFAULTS = { switching: "0", costco: "0", tab: "routes", plans: "", carrier: "", cmp: "" };
 const MAX_LINES = 5;
 const NONE = "-";
@@ -55,7 +57,7 @@ function parseLines(str) {
       const [phoneId = NONE, tradeInId = NONE, xf = ""] = pair.split(":");
       return { phoneId: phoneId === NONE ? null : phoneId, tradeInId: tradeInId === NONE ? null : tradeInId, xfCredit: xf === "" ? null : Number(xf) };
     });
-  return items.length ? items.slice(0, MAX_LINES) : [{ phoneId: DEFAULT_PHONE, tradeInId: null }];
+  return items.length ? items.slice(0, MAX_LINES) : [{ phoneId: DEFAULT_PHONE, tradeInId: DEFAULT_LINE.tradeInId }];
 }
 
 function readState() {
@@ -74,7 +76,7 @@ function readState() {
 function writeState(s) {
   const q = new URLSearchParams();
   const l = s.lineItems.map((li) => `${li.phoneId || NONE}:${li.tradeInId || NONE}${li.xfCredit != null ? `:${li.xfCredit}` : ""}`).join(",");
-  if (l !== `${DEFAULT_PHONE}:${NONE}`) q.set("l", l);
+  if (l !== `${DEFAULT_PHONE}:${DEFAULT_LINE.tradeInId || NONE}`) q.set("l", l);
   if (s.switching) q.set("switching", "1");
   if (s.costco) q.set("costco", "1");
   if (carrierFilter) q.set("carrier", carrierFilter);

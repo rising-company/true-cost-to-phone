@@ -15,17 +15,17 @@ const data = JSON.parse(readFileSync(new URL("../data/pricing.json", import.meta
 const ON_THE_CARD = {
   crawledAt: "2026-09-22",
   cheapestCarrier: "tello",
-  cheapestTotal: 2099,
-  priciestTotal: 3754,
+  cheapestTotal: 1589,
+  priciestTotal: 3244,
   spread: 1655,
   carriers: 6,
 };
 
-test("the card prices the situation a visitor lands on: one line, an 18 Pro 256, no trade-in, not switching", () => {
-  assert.equal(CARD_SCENARIO, HEADLINE_SCENARIO, "card, landing page and SEO pages share one scenario");
+test("the card prices the situation a visitor lands on: one line, an 18 Pro 256, an iPhone 16 Pro to trade, not switching", () => {
+  assert.equal(CARD_SCENARIO, HEADLINE_SCENARIO, "card and landing page share one scenario");
   assert.deepEqual(CARD_SCENARIO, {
     lines: 1,
-    lineItems: [{ phoneId: "iphone-18-pro-256", tradeInId: null }],
+    lineItems: [{ phoneId: "iphone-18-pro-256", tradeInId: "iphone-16-pro" }],
     switching: false,
     costco: false,
     minDataGb: 50,

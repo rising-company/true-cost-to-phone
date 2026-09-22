@@ -10,7 +10,7 @@
 // pre-loaded with the situation it describes. `tools/gen-seo.mjs` renders these.
 
 import { buildScenarios } from "./calc.js";
-import { HEADLINE_SCENARIO, SWITCHER_SCENARIO } from "./scenario.js";
+import { NO_TRADE_IN_SCENARIO, SWITCHER_SCENARIO } from "./scenario.js";
 
 /* The phone every generated page is about — the same one the landing page and the
    social card price. Kept in the slug because that is how the question is typed. */
@@ -44,7 +44,11 @@ export function carrierSlug(carrierId) {
 
 const routeKey = (r) => `${r.carrierId}|${r.planId}|${r.route}`;
 
-/** Every route for one carrier, cheapest first, for the headline situation. */
+/* The tool opens with a trade-in selected; the pages price none. Carry that in the
+   link so the tool shows the numbers the page just quoted. */
+const NO_TRADE_IN_LINES = NO_TRADE_IN_SCENARIO.lineItems.map((li) => `${li.phoneId}:-`).join(",");
+
+/** Every route for one carrier, cheapest first, for the no-trade-in situation. */
 function routesFor(rows, carrierId) {
   return rows.filter((r) => r.carrierId === carrierId).map((r) => ({ ...r, key: routeKey(r) }));
 }
@@ -90,7 +94,7 @@ function sideFor(rows, carrier) {
 
 /** A page for each unordered pair of carriers: who is cheaper, by how much, and why. */
 export function comparePages(data) {
-  const rows = buildScenarios(data, HEADLINE_SCENARIO);
+  const rows = buildScenarios(data, NO_TRADE_IN_SCENARIO);
   const swRows = buildScenarios(data, SWITCHER_SCENARIO);
   const pages = [];
   for (let i = 0; i < data.carriers.length; i++) {
@@ -118,7 +122,7 @@ export function comparePages(data) {
           gap: swSides[1].best.total - swSides[0].best.total,
           sides: swSides,
         },
-        toolUrl: `/?cmp=${sides[0].best.key},${sides[1].best.key}&tab=compare`,
+        toolUrl: `/?l=${NO_TRADE_IN_LINES}&cmp=${sides[0].best.key},${sides[1].best.key}&tab=compare`,
         crawledAt: data.meta.crawledAt,
         termMonths: rows[0].termMonths,
       });
@@ -133,7 +137,7 @@ export function comparePages(data) {
  * carrier costs when you decline the phone deal.
  */
 export function carrierPages(data) {
-  const rows = buildScenarios(data, HEADLINE_SCENARIO);
+  const rows = buildScenarios(data, NO_TRADE_IN_SCENARIO);
   return data.carriers.map((carrier) => {
     const routes = routesFor(rows, carrier.id);
     const baseline = routes.find((r) => r.route === "byod") || null;
@@ -146,7 +150,7 @@ export function carrierPages(data) {
       baseline,
       routes: routes.map((r) => ({ ...r, vsBaseline: baseline ? r.total - baseline.total : null })),
       deals: dealsFor(data, carrier.id),
-      toolUrl: `/?carrier=${carrier.id}`,
+      toolUrl: `/?l=${NO_TRADE_IN_LINES}&carrier=${carrier.id}`,
       crawledAt: data.meta.crawledAt,
       termMonths: rows[0].termMonths,
     };
