@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>True Cost to Phone — Marketing Plan</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #fbfaf7;
+    --surface: #ffffff;
+    --line: #e2ded4;
+    --line-soft: #efece4;
+    --ink: #1c1b18;
+    --body: #35332d;
+    --muted: #6d6a60;
+    --label: #8c887c;
+    --accent: #0b7a4e;
+    --accent-soft: #e8f3ed;
+    --warn: #c46a12;
+    --warn-soft: #fbf0e2;
+    --blue: #1f5fbf;
+    --purple: #8a3f9e;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14150f;
+      --surface: #1c1e17;
+      --line: #32352a;
+      --line-soft: #26291f;
+      --ink: #f2f0e8;
+      --body: #d3d1c6;
+      --muted: #97958a;
+      --label: #7f7d72;
+      --accent: #57c08e;
+      --accent-soft: #172a20;
+      --warn: #e09a4d;
+      --warn-soft: #2c2115;
+      --blue: #7aa6ef;
+      --purple: #c186d6;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--body);
+    font-family: var(--sans);
+    font-size: 16.5px;
+    line-height: 1.68;
+    -webkit-font-smoothing: antialiased;
+  }
+  .shell { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+  header.top { border-bottom: 1px solid var(--line); padding: 56px 0 36px; margin-bottom: 8px; }
+  .kicker {
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--label); margin: 0 0 14px;
+  }
+  h1 { font-size: 40px; line-height: 1.12; letter-spacing: -0.5px; color: var(--ink); margin: 0 0 16px; font-weight: 700; }
+  .lede { font-size: 19px; line-height: 1.6; color: var(--muted); max-width: 62ch; margin: 0; }
+  h2 {
+    font-size: 15px; font-family: var(--mono); letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); margin: 64px 0 6px; font-weight: 500;
+  }
+  h2 + .h2sub { font-size: 26px; line-height: 1.25; color: var(--ink); margin: 0 0 20px; font-weight: 700; letter-spacing: -0.2px; }
+  h3 { font-size: 19px; color: var(--ink); margin: 34px 0 8px; font-weight: 600; }
+  h4 { font-size: 15.5px; color: var(--ink); margin: 24px 0 6px; font-weight: 600; }
+  p { margin: 0 0 16px; }
+  ul, ol { margin: 0 0 16px; padding-left: 22px; }
+  li { margin: 0 0 8px; }
+  li::marker { color: var(--label); }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); }
+  a:hover { border-bottom-color: var(--accent); }
+  strong { color: var(--ink); font-weight: 600; }
+  code {
+    font-family: var(--mono); font-size: 0.86em; background: var(--line-soft);
+    padding: 1.5px 5px; border-radius: 3px; color: var(--ink);
+  }
+  pre {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
+    padding: 16px 18px; overflow-x: auto; font-family: var(--mono); font-size: 13px;
+    line-height: 1.65; color: var(--body); margin: 0 0 18px; white-space: pre-wrap;
+  }
+  pre code { background: none; padding: 0; font-size: inherit; }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 22px; font-size: 14.5px; }
+  th {
+    text-align: left; font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--label); font-weight: 500;
+    border-bottom: 1px solid var(--line); padding: 8px 12px 8px 0; vertical-align: bottom;
+  }
+  td { padding: 11px 12px 11px 0; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  td.num, th.num { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; padding-right: 0; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+    padding: 22px 24px; margin: 0 0 20px;
+  }
+  .card > :last-child { margin-bottom: 0; }
+  .card.accent { border-left: 3px solid var(--accent); background: var(--accent-soft); }
+  .card.warn { border-left: 3px solid var(--warn); background: var(--warn-soft); }
+  .tag {
+    display: inline-block; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 3px 8px; border-radius: 3px; vertical-align: 2px;
+    background: var(--line-soft); color: var(--muted); margin-left: 8px;
+  }
+  .tag.p0 { background: var(--warn-soft); color: var(--warn); }
+  .tag.p1 { background: var(--accent-soft); color: var(--accent); }
+  .stat-row { display: flex; flex-wrap: wrap; gap: 14px; margin: 0 0 24px; }
+  .stat {
+    flex: 1 1 180px; background: var(--surface); border: 1px solid var(--line);
+    border-radius: 8px; padding: 18px 20px;
+  }
+  .stat .n { font-family: var(--mono); font-size: 30px; color: var(--ink); line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .stat .k { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--label); margin-top: 8px; }
+  .mermaid { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 20px; margin: 0 0 24px; text-align: center; }
+  figcaption { font-size: 13px; color: var(--label); margin: -14px 0 26px; font-family: var(--mono); letter-spacing: 0.03em; }
+  hr { border: 0; border-top: 1px solid var(--line); margin: 56px 0; }
+  footer.bot { border-top: 1px solid var(--line); margin-top: 64px; padding: 24px 0 64px; font-size: 13.5px; color: var(--label); }
+  .toc { font-size: 14.5px; }
+  .toc ol { padding-left: 20px; }
+  .toc li { margin-bottom: 4px; }
+  @media (max-width: 640px) {
+    h1 { font-size: 30px; }
+    .lede { font-size: 17px; }
+    h2 + .h2sub { font-size: 22px; }
+    body { font-size: 16px; }
+    table { font-size: 13.5px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="shell">
+    <p class="kicker">Rising Company · Plan · 2026-09-22</p>
+    <h1>Getting True Cost to Phone in front of people</h1>
+    <p class="lede">The tool answers a question millions of Americans ask every autumn, and almost nobody knows it exists. This is the plan to change that over the next ten weeks — through Black Friday, which is the only window that really matters this year.</p>
+  </div>
+</header>
+
+<main class="shell">
+
+<div class="card toc">
+  <strong>Contents</strong>
+  <ol>
+    <li><a href="#state">Where it stands today</a></li>
+    <li><a href="#claim">The one claim worth marketing</a></li>
+    <li><a href="#who">Who this is for, and when they show up</a></li>
+    <li><a href="#blockers">Blockers — fix before any launch</a></li>
+    <li><a href="#channels">Channels, ranked</a></li>
+    <li><a href="#calendar">The ten-week calendar</a></li>
+    <li><a href="#copy">Copy assets, ready to use</a></li>
+    <li><a href="#seo">SEO: pages generated from the data we already have</a></li>
+    <li><a href="#measure">Measurement and targets</a></li>
+    <li><a href="#decisions">Open decisions</a></li>
+    <li><a href="#limits">What this plan does not do</a></li>
+  </ol>
+</div>
+
+<h2 id="state">01 — Baseline</h2>
+<p class="h2sub">Where it stands today</p>
+
+<p>The product is finished enough to market. Distribution is at zero.</p>
+
+<table>
+  <thead><tr><th>Asset</th><th>State</th></tr></thead>
+  <tbody>
+    <tr><td>Live URL</td><td><code>true-cost-to-phone.rising.company</code> (also <code>.vercel.app</code>), static, free, no sign-up</td></tr>
+    <tr><td>Source</td><td><a href="https://github.com/rising-company/true-cost-to-phone">github.com/rising-company/true-cost-to-phone</a> — public, 0 stars, created 2026-09-21</td></tr>
+    <tr><td>Data</td><td><code>data/pricing.json</code>, crawled 2026-09-21, every figure attributed to a carrier page</td></tr>
+    <tr><td>Coverage</td><td>6 carriers · 8 iPhone 18 Pro / Pro Max SKUs · 41 trade-in devices · 1–5 lines · Costco</td></tr>
+    <tr><td>Shareable state</td><td>Yes — <code>l=</code>, <code>cmp=</code>, <code>plans=</code>, <code>switching</code>, <code>costco</code>, <code>carrier</code> all live in the URL</td></tr>
+    <tr><td>Measurement</td><td>PostHog: pageviews, autocapture, <code>situation_priced</code>, <code>tab_selected</code>, <code>route_compared</code>, <code>carrier_filtered</code></td></tr>
+    <tr><td>Money</td><td>Buy Me a Coffee only. No affiliate links, no ads, no email list.</td></tr>
+    <tr><td>Social preview</td><td><strong>None.</strong> No Open Graph tags, no card image, no <code>robots.txt</code>, no <code>sitemap.xml</code>, no structured data.</td></tr>
+  </tbody>
+</table>
+
+<div class="card warn">
+  <p><strong>The asymmetry to notice.</strong> The tool encodes every input in the URL — it was built to be shared — and yet a link pasted into iMessage, Slack, Reddit or X today renders as a naked grey rectangle. Every share made before that is fixed converts at a fraction of what it should. Section 04 treats this as the launch gate, not a nice-to-have.</p>
+</div>
+
+<h2 id="claim">02 — Positioning</h2>
+<p class="h2sub">The one claim worth marketing</p>
+
+<p>Tools that "compare phone plans" are a commodity — every carrier, every affiliate blog and every deal site has one. What this tool has that none of them do is an <em>accounting argument</em>, and the argument happens to be against the industry that funds all the others.</p>
+
+<p>The argument: <strong>the phone you hand a carrier for bill credits is money out of your pocket, at exactly what Apple would have paid you for it.</strong> Trading an iPhone 16 Pro into a "free iPhone 18 Pro" deal costs you the $510 Apple was offering. Nobody's comparison page counts it, because counting it makes the deals look worse.</p>
+
+<p>Run the tool across every combination it supports — 5 line counts × switching × Costco × 41 trade-in devices × 2 phone models — and this is what falls out:</p>
+
+<div class="stat-row">
+  <div class="stat"><div class="n">1,420</div><div class="k">of 1,440 scenarios where<br>buying the phone outright wins</div></div>
+  <div class="stat"><div class="n">$1,655</div><div class="k">spread, one line,<br>same phone</div></div>
+  <div class="stat"><div class="n">$3,340</div><div class="k">spread, family of four,<br>same four phones</div></div>
+</div>
+
+<p>Put plainly, and defensibly, because anyone can check it in thirty seconds:</p>
+
+<div class="card accent">
+  <p style="font-size:19px; line-height:1.5; color:var(--ink); margin:0;"><strong>In 98.6% of the situations we priced, the cheapest route to an iPhone 18 Pro is to buy the phone outright and bring it to a cheap plan — not to take any carrier's free-phone deal.</strong></p>
+</div>
+
+<p>Two supporting numbers, both from the same sweep, both worth having ready because they are the first thing a sceptic will push on:</p>
+
+<table>
+  <thead><tr><th>Scenario (36 months, taxes excluded)</th><th class="num">Cheapest</th><th class="num">Priciest</th><th class="num">Gap</th></tr></thead>
+  <tbody>
+    <tr><td>1 line · iPhone 18 Pro 256 · no trade-in · switching</td><td class="num">$1,379</td><td class="num">$3,034</td><td class="num">$1,655</td></tr>
+    <tr><td>1 line · trading in an iPhone 16 Pro · switching</td><td class="num">$869</td><td class="num">$2,524</td><td class="num">$1,655</td></tr>
+    <tr><td>4 lines · four phones · four trade-ins · switching</td><td class="num">$3,476</td><td class="num">$6,816</td><td class="num">$3,340</td></tr>
+  </tbody>
+</table>
+
+<p>And the honest caveat, which should be stated <em>in the pitch rather than extracted by a commenter</em> — it is what makes the claim credible instead of clickbait:</p>
+
+<ul>
+  <li>The exceptions are real. Xfinity's $1,300 trade-in credit beats buying outright in 20 of 1,440 scenarios, all of them someone switching in with a genuinely old phone (iPhone X, XR, SE) that Apple values at almost nothing.</li>
+  <li>Within a single carrier, promotions often beat that carrier's own bring-your-own route — AT&T in roughly 44% of combinations, Xfinity 34%, T-Mobile 14%, Verizon 6%. The deals aren't fake. They just rarely beat leaving the big carriers entirely.</li>
+  <li>Sub-headline for the honest version: <em>"and the 1.4% where the deal does win is worth knowing too"</em>. That sentence buys more trust than the headline does.</li>
+</ul>
+
+<h3>Positioning statement</h3>
+<div class="card">
+  <p style="margin:0;">For anyone about to upgrade an iPhone in the US, <strong>True Cost to Phone</strong> is the only calculator that counts the trade-in you hand over as the cost it is. Unlike carrier comparison pages and affiliate deal blogs, it is paid by nobody, cites every number to the carrier's own page, and shows its source. The output is a single ranked list: cheapest way to the phone you want, first row.</p>
+</div>
+
+<h2 id="who">03 — Audience</h2>
+<p class="h2sub">Who this is for, and when they show up</p>
+
+<table>
+  <thead><tr><th>Segment</th><th>Where they are</th><th>What lands</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>The upgrader</strong><br><span style="color:var(--muted)">One line, wants the new phone, doesn't want to be fleeced</span></td>
+      <td>r/iphone, r/apple, r/NoContract, Google: <em>"is the T-Mobile iPhone 18 deal worth it"</em></td>
+      <td>The $1,655 spread. One line, one number, top row.</td>
+    </tr>
+    <tr>
+      <td><strong>The family decision-maker</strong><br><span style="color:var(--muted)">3–5 lines, the switch is a genuine project</span></td>
+      <td>r/personalfinance, r/Frugal, r/NoContract, Facebook groups, Costco members</td>
+      <td>The $3,340 spread, the Costco modelling, the multi-line plan comparison.</td>
+    </tr>
+    <tr>
+      <td><strong>The deal researcher</strong><br><span style="color:var(--muted)">Enjoys the optimisation, answers other people's questions</span></td>
+      <td>Hacker News, r/NoContract, Slickdeals, r/Costco, r/tmobile / r/verizon / r/ATT</td>
+      <td>Open data, cited sources, "here is a link pre-loaded with your exact situation".</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The third segment is the leverage. They are a small group who answer the same question for strangers a hundred times a season, and the tool's URL state makes them dramatically better at it. Win them and they distribute the tool for you, in the exact threads where the question is being asked. Everything in section 05 is downstream of that.</p>
+
+<h3>Timing is not neutral</h3>
+<p>This is a seasonal product. Search and forum volume for "best iPhone deal" peaks twice: the weeks after the September launch, and Black Friday through Cyber Monday. Today is 22 September 2026. Black Friday is 27 November. <strong>Most of this tool's lifetime traffic will happen inside the next ten weeks</strong>, and a plan that ramps slowly misses the year.</p>
+
+<pre class="mermaid">
+gantt
+    title Demand windows vs. the plan
+    dateFormat YYYY-MM-DD
+    axisFormat %b %d
+    section Demand
+    Post-launch upgrade window   :active, d1, 2026-09-15, 35d
+    Quiet stretch                :        d2, 2026-10-20, 21d
+    Black Friday / Cyber Monday  :crit,   d3, 2026-11-10, 24d
+    section Plan
+    Fix shareability             :crit,   p0, 2026-09-22, 7d
+    Launch (HN + Reddit)         :active, p1, 2026-09-29, 7d
+    SEO pages + creator outreach :        p2, 2026-10-06, 28d
+    Black Friday push            :crit,   p3, 2026-11-10, 24d
+</pre>
+<figcaption>The quiet stretch in late October is when the SEO and creator work has to be done — it pays out in November, not when it ships.</figcaption>
+
+<h2 id="blockers">04 — Launch gate</h2>
+<p class="h2sub">Fix these before any launch <span class="tag p0">P0 · week of Sep 22</span></p>
+
+<p>None of these are marketing activities. They are the difference between a share that converts and a share that doesn't, and they are all a day's work combined. Nothing in section 06 should start before they ship.</p>
+
+<h4>1. Open Graph and Twitter card tags, with a real image</h4>
+<p>Every link shared today renders bare. Add to <code>index.html</code>:</p>
+<pre><code>&lt;meta property="og:title" content="True Cost to Phone"&gt;
+&lt;meta property="og:description" content="What an iPhone 18 Pro really costs over 36 months — plan, phone, fees, and the trade-in you hand over."&gt;
+&lt;meta property="og:image" content="https://true-cost-to-phone.rising.company/og.png"&gt;
+&lt;meta property="og:url" content="https://true-cost-to-phone.rising.company/"&gt;
+&lt;meta property="og:type" content="website"&gt;
+&lt;meta name="twitter:card" content="summary_large_image"&gt;
+&lt;link rel="canonical" href="https://true-cost-to-phone.rising.company/"&gt;</code></pre>
+<p><em>Built 2026-09-22: <code>tools/og.html</code> → <code>og.png</code>, 2400×1260 (a 2× capture of a 1200×630 card), generated from <code>og.js</code> and pinned by <code>tests/og.test.mjs</code>.</em> The image carries the argument, not the logo: the six carriers as labelled bars from $1,379 to $3,034, the words <em>"the same iPhone"</em> across them, and the URL small at the bottom. Someone should be able to get the point from the card without clicking — the click is then an act of verification, which converts better than curiosity.</p>
+
+<h4>2. A share button that copies the configured URL</h4>
+<p>The state is already in the URL; nothing tells anyone. Put a <strong>Copy link to this comparison</strong> button next to the summary card, and fire a <code>link_copied</code> event with the same <code>situationProps</code> payload. This single button is what turns segment three into a distribution channel — it makes pasting a personalised link into a Reddit reply a one-tap action.</p>
+
+<h4>3. <code>robots.txt</code>, <code>sitemap.xml</code>, and JSON-LD</h4>
+<p>Trivial files, and the precondition for section 08 being worth anything. The JSON-LD should be <code>WebApplication</code> plus a <code>Dataset</code> node pointing at <code>data/pricing.json</code> with its <code>crawledAt</code> date — the dataset framing is what gets a tool like this cited rather than ranked.</p>
+
+<h4>4. A visible "prices as of" freshness stamp, above the fold</h4>
+<p>It exists in the hero trust line already (<code>prices updated 2026-09-21</code>). Keep it, and make it the thing the marketing repeats. Freshness is the entire moat here: a deal blog's post rots the week after it is published, and a tool whose data is re-crawled weekly through November does not. Say the date every time you say the name.</p>
+
+<h2 id="channels">05 — Channels</h2>
+<p class="h2sub">Ranked by fit, not by size</p>
+
+<pre class="mermaid">
+quadrantChart
+    title Effort against reach
+    x-axis "Low effort" --> "High effort"
+    y-axis "Slow payoff" --> "Fast payoff"
+    quadrant-1 "Worth the push"
+    quadrant-2 "Do first"
+    quadrant-3 "Background"
+    quadrant-4 "Invest for November"
+    "Reddit answering": [0.30, 0.88]
+    "Show HN": [0.20, 0.76]
+    "OG + share button": [0.10, 0.64]
+    "Deal communities": [0.38, 0.58]
+    "Creator seeding": [0.68, 0.56]
+    "Press / newsletters": [0.60, 0.38]
+    "Programmatic SEO": [0.76, 0.22]
+</pre>
+<figcaption>Paid search is absent on purpose — carriers and affiliates outbid a free tool on every one of these keywords.</figcaption>
+
+<h3>1. Reddit — answering, not posting <span class="tag p1">primary</span></h3>
+<p>The question this tool answers is asked, in public, dozens of times a day, in r/NoContract, r/tmobile, r/verizon, r/ATT, r/mintmobile, r/Costco, r/Frugal, r/personalfinance, r/iphone and r/apple. Almost all of those threads get answered with anecdote.</p>
+<p>The play is not to post the tool. It is to <strong>answer the question properly, with the arithmetic in the comment, and a pre-configured link underneath</strong>. The URL state means the link opens on <em>their</em> situation — four lines, switching, trading a 15 Pro — not a generic homepage. That is a materially better comment than anyone else in the thread is writing, and it is the reason the tool survives the self-promotion filter.</p>
+<p>Cadence: twenty to thirty genuine answers over the first three weeks, at most one link per thread, never the same boilerplate twice. Before any of it, read each subreddit's self-promotion rule and post the tool itself only where a rule explicitly allows it (r/NoContract is the likeliest yes). Being banned from r/NoContract in week one would cost more than everything else in this plan combined.</p>
+
+<h3>2. Hacker News — one Show HN <span class="tag p1">week of Sep 29</span></h3>
+<p>One shot, and the audience is not there for phone deals — it is there for a method. Lead with the counting error and the open data, not the savings. Tuesday–Thursday, 8–10am ET. Full text in section 07.</p>
+
+<h3>3. Deal communities <span class="tag">ongoing</span></h3>
+<p>Slickdeals, r/Costco, r/NoContract's deal threads, DansDeals. The Costco modelling is the differentiator here and genuinely nobody else has it in a calculator: Shop Cards at face value, the $250 prepaid Visa on a new $100+ account with port-in, the four-device cap, the waived device connection charge. A post titled around <em>what the Costco T-Mobile deal is actually worth, counted properly</em> is native to those communities in a way "check out my tool" is not.</p>
+
+<h3>4. Creator seeding <span class="tag">Oct, pays out in Nov</span></h3>
+<p>Every tech YouTuber and newsletter publishes a "best iPhone 18 deal" piece in October and again at Black Friday, and all of them need a source they can point at. Ten to fifteen personal emails to mid-size creators (50k–500k — the large ones are carrier-sponsored and structurally cannot use this). Offer the tool, the open dataset, and an on-the-record answer to "which carrier deal is actually worth taking". Being cited by three of them in November beats any amount of posting.</p>
+
+<h3>5. Press and newsletters <span class="tag">opportunistic</span></h3>
+<p>The angle for a writer is not the calculator, it is the finding: <em>carriers' "free iPhone" promotions lose to buying the phone outright in 98.6% of cases, and here is the open dataset</em>. That is a story. Targets: the consumer desks that already cover carrier pricing sharply, plus personal-finance newsletters. Send after the Show HN, so there is something to point at.</p>
+
+<h3>6. Paid search <span class="tag">not now</span></h3>
+<p>"iphone 18 pro deal" keywords are bid up by carriers and affiliates with real revenue per click. A free tool with a coffee tip jar cannot win that auction. Revisit only if section 10's monetisation question gets a different answer.</p>
+
+<h2 id="calendar">06 — Execution</h2>
+<p class="h2sub">The ten-week calendar</p>
+
+<table>
+  <thead><tr><th>Week</th><th>Focus</th><th>Ship</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>W0</strong><br>Sep 22–28</td>
+      <td>Launch gate</td>
+      <td>OG tags + <code>og.png</code> · share button + <code>link_copied</code> event · robots, sitemap, JSON-LD · re-crawl prices · draft the Show HN and three Reddit answers</td>
+    </tr>
+    <tr>
+      <td><strong>W1</strong><br>Sep 29–Oct 5</td>
+      <td>Launch</td>
+      <td>Show HN (Tue or Wed, 8–10am ET) · first 10 Reddit answers · watch PostHog live for the funnel breaking under real traffic</td>
+    </tr>
+    <tr>
+      <td><strong>W2–3</strong><br>Oct 6–19</td>
+      <td>Compounding work</td>
+      <td>Ship the first 12 programmatic comparison pages (section 08) · 15 creator emails · 10 more Reddit answers · one Slickdeals / r/Costco post</td>
+    </tr>
+    <tr>
+      <td><strong>W4–6</strong><br>Oct 20–Nov 9</td>
+      <td>The quiet stretch</td>
+      <td>Rest of the SEO pages · press outreach on the 98.6% finding · weekly data re-crawl becomes a habit · fix whatever week 1 revealed</td>
+    </tr>
+    <tr>
+      <td><strong>W7–9</strong><br>Nov 10–29</td>
+      <td>Black Friday <span class="tag p0">peak</span></td>
+      <td><strong>Re-crawl every carrier twice a week — this is the product in November.</strong> Publish a dated "Black Friday carrier deals, counted properly" page. Second Reddit push. Follow up every creator who didn't reply in October, now that they're writing the piece.</td>
+    </tr>
+    <tr>
+      <td><strong>W10</strong><br>Nov 30–Dec 6</td>
+      <td>Tail and retro</td>
+      <td>Cyber Monday data refresh · read the season's <code>situation_priced</code> data · decide on section 10 with numbers instead of guesses</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="card">
+  <p style="margin:0;"><strong>The one commitment that matters.</strong> If only one thing from this calendar survives contact with reality, make it the November re-crawl cadence. Carrier promotions change weekly through Black Friday, and a calculator showing September's promotions in late November is worse than no calculator — it is wrong, publicly, at the exact moment people are checking it. Freshness is both the moat and the liability.</p>
+</div>
+
+<h2 id="copy">07 — Assets</h2>
+<p class="h2sub">Copy, ready to use</p>
+
+<h3>Show HN</h3>
+<p><strong>Title:</strong> <code>Show HN: Carrier "free iPhone" deals lose to buying the phone outright in 98.6% of cases</code></p>
+<p><strong>First comment:</strong></p>
+<pre>I kept trying to work out whether T-Mobile's "free iPhone 18 Pro" was actually
+free, and every comparison I could find had the same hole in it: none of them
+counted the phone you hand over.
+
+A phone traded into a carrier deal for bill credits is money out of your pocket,
+at exactly what Apple would have paid you for it. Trading in an iPhone 16 Pro
+costs you the $510 Apple was offering. Once you count that, and count the plan
+over the full 36 months the bill credits run, the ranking changes a lot.
+
+So I priced every (carrier, plan, route) combination — Tello, Mint, T-Mobile,
+AT&T, Verizon, Xfinity Mobile — against the same phone:
+
+  total = plan x 36
+        + phone - promo credits
+        + one-time fees
+        + Apple's value for the phone the carrier takes
+
+Across 1,440 scenarios (1-5 lines, switching or not, Costco or not, 41 trade-in
+devices), buying the phone outright and bringing it to a cheap plan wins 1,420
+times. The spread between cheapest and priciest route to the same phone is
+$1,655 on one line and $3,340 for a family of four.
+
+The 1.4% where a carrier deal does win is worth knowing too: it's Xfinity's
+$1,300 trade-in credit when you're switching in with a genuinely old phone that
+Apple values near zero. And within a single carrier, promos beat that carrier's
+own bring-your-own route fairly often — AT&T about 44% of the time. The deals
+aren't fake. They just rarely beat leaving the big carriers.
+
+Every price is from the carrier's own page, crawled 2026-09-21, and each figure
+names its source. Anything a carrier doesn't publish is flagged rather than
+guessed. It's a static page, no sign-up, no affiliate links, no tracking beyond
+anonymous event counts. Data and code:
+https://github.com/rising-company/true-cost-to-phone
+
+https://true-cost-to-phone.rising.company</pre>
+
+<h3>Reddit reply template — adapt every time, never paste twice</h3>
+<pre>The bit that usually gets missed: the phone you trade in isn't free to give
+away. Apple will pay you $510 for that 16 Pro, so handing it to [carrier] for
+bill credits costs you $510 on top of the plan.
+
+Counting it over the full 36 months your credits run:
+
+  Buy outright + [cheap carrier] : $X,XXX
+  [Carrier]'s deal               : $X,XXX
+
+Here's your exact situation if you want to poke at it — [N] lines, switching,
+trading a [phone]: <link with l= / switching= / carrier= already set>
+
+Prices are from each carrier's own page as of [date]; sources are on the page.</pre>
+
+<h3>X / Bluesky</h3>
+<pre>Six carriers. The same iPhone 18 Pro. $1,655 between the cheapest way to
+get it and the most expensive.
+
+The trick: nobody counts the phone you hand over. Apple would pay you
+$510 for that 16 Pro — giving it to a carrier for "free phone" credits
+costs you $510.
+
+Free tool, open data, no affiliate links:
+true-cost-to-phone.rising.company</pre>
+
+<h3>Creator email</h3>
+<pre>Subject: open dataset for your iPhone 18 deal video
+
+Hi [name] — you're probably writing the "best iPhone 18 Pro deal" piece
+about now. I built a calculator that might save you the spreadsheet.
+
+It prices every carrier/plan/promo combination over 36 months and counts
+the trade-in you hand over as a cost, at Apple's own valuation — which is
+the step that flips most of the rankings. Across 1,440 scenarios, buying
+the phone outright wins 1,420 times.
+
+Every number is cited to the carrier's own page and the dataset is public
+JSON, so you're welcome to take the figures, check them, or disagree with
+them on camera. I'm re-crawling weekly through Black Friday.
+
+true-cost-to-phone.rising.company
+github.com/rising-company/true-cost-to-phone
+
+Happy to answer "which deal is actually worth taking" on the record.
+
+— Ben, rising.company</pre>
+
+<h2 id="seo">08 — SEO</h2>
+<p class="h2sub">Pages generated from the data we already have</p>
+
+<p>The tool is one URL competing for a query space of several hundred long-tail questions — <em>"verizon vs t-mobile iphone 18 pro cost"</em>, <em>"is the xfinity mobile iphone deal worth it"</em>, <em>"t-mobile costco iphone deal"</em>. One page cannot rank for all of them, and a single-page SPA gives Google nothing to index beyond the hero.</p>
+
+<p>Every one of those pages is already computable from <code>pricing.json</code> and <code>calc.js</code>. Generate them at build time as static HTML — real prose, the real number, and a link into the tool pre-loaded with that scenario.</p>
+
+<pre class="mermaid">
+flowchart LR
+    A["data/pricing.json<br/>crawled weekly"] --> B["calc.js<br/>buildScenarios()"]
+    B --> C["gen script"]
+    C --> D["/compare/verizon-vs-tmobile-iphone-18-pro"]
+    C --> E["/carrier/xfinity-mobile-iphone-18-pro"]
+    C --> F["/costco/tmobile-iphone-deal"]
+    D --> G["Tool, pre-loaded<br/>?l=...&amp;carrier=...&amp;switching=1"]
+    E --> G
+    F --> G
+    G --> H["situation_priced<br/>PostHog"]
+</pre>
+
+<p>Three page families, roughly 40 pages total, all from one generator:</p>
+<ul>
+  <li><strong><code>/compare/&lt;a&gt;-vs-&lt;b&gt;-iphone-18-pro</code></strong> — 15 carrier pairs. Both totals, the gap, why.</li>
+  <li><strong><code>/carrier/&lt;carrier&gt;-iphone-18-pro-cost</code></strong> — 6 pages. Every route that carrier offers, ranked, with the bring-your-own baseline as the yardstick.</li>
+  <li><strong><code>/costco/&lt;carrier&gt;-iphone-deal</code></strong> — 2 pages, plus one explainer on what Costco's cards are actually worth. Low competition, high intent, and the modelling is genuinely unique.</li>
+</ul>
+
+<p>Two rules that keep this from becoming SEO sludge: <strong>every page carries its crawl date and regenerates on every data refresh</strong>, and no page ships without a sentence a human would actually write. Forty good pages beat four hundred templated ones, and Google has been unambiguous about that since well before 2026.</p>
+
+<h2 id="measure">09 — Measurement</h2>
+<p class="h2sub">What to watch, and what would count as working</p>
+
+<p>The PostHog instrumentation is already better than most launched products have. It needs one addition (<code>link_copied</code>, from section 04) and then a funnel defined on top of it.</p>
+
+<pre class="mermaid">
+flowchart TD
+    A["Pageview"] --> B["situation_priced<br/>they changed something"]
+    B --> C["route_compared or tab_selected<br/>they went deeper"]
+    C --> D["link_copied<br/>they shared it"]
+    D --> E["A new session from that link"]
+    B -.-> F["Bounce without pricing<br/>= the hero failed"]
+    style D fill:#0b7a4e,color:#fff
+    style F fill:#c46a12,color:#fff
+</pre>
+<figcaption>link_copied is the growth metric. Everything else is diagnostics.</figcaption>
+
+<table>
+  <thead><tr><th>Metric</th><th>Why it matters</th><th>Target by Dec 1</th></tr></thead>
+  <tbody>
+    <tr><td>Unique visitors</td><td>Blunt, but the denominator</td><td class="num">25,000</td></tr>
+    <tr><td>Pageview → <code>situation_priced</code></td><td>Did the hero convince them to try their own case?</td><td class="num">&gt; 45%</td></tr>
+    <tr><td><code>link_copied</code> per 100 visitors</td><td>The compounding loop</td><td class="num">&gt; 3</td></tr>
+    <tr><td>Sessions arriving with URL params</td><td>Shares that actually returned traffic</td><td class="num">&gt; 15% of sessions</td></tr>
+    <tr><td>GitHub stars</td><td>Proxy for credibility with segment three</td><td class="num">250</td></tr>
+    <tr><td>Creator / press citations</td><td>The highest-leverage outcome available</td><td class="num">3</td></tr>
+  </tbody>
+</table>
+
+<p>The <code>situation_priced</code> payload is also a product-research feed that most tools would pay for: <code>lines</code>, <code>trade_ins</code>, <code>phone_models</code>, <code>switching</code>, <code>costco</code>, <code>carrier_filter</code>. By early December it will say plainly which carriers people actually filter to, how many lines the median visitor has, and which trade-in devices dominate — which is how the 2027 roadmap (Android? more phone models? the data/minutes filters that <code>calc.js</code> already supports?) gets decided from evidence rather than instinct.</p>
+
+<div class="card warn">
+  <p style="margin:0;"><strong>Known instrumentation trap.</strong> PostHog drops events from headless user agents, so verification runs through <code>agent-browser</code> silently record nothing. Verify the funnel on the deployed URL with the UA filter turned off before trusting a zero.</p>
+</div>
+
+<h2 id="decisions">10 — Open decisions</h2>
+<p class="h2sub">Three questions this plan deliberately leaves open</p>
+
+<h4>Affiliate links</h4>
+<p>Carrier affiliate programmes would pay real money per activation, and the traffic this plan aims at is the highest-intent traffic there is. They would also destroy the only thing that makes the tool worth sharing. "Paid by nobody" is load-bearing — it is in the Show HN, the creator email and the press angle, and the first commenter to find an affiliate tag would say so loudly. <strong>Recommendation: no affiliate links through this season.</strong> Revisit in January with the season's numbers, and if the answer changes, disclose it at the top of the page rather than in a footer.</p>
+
+<h4>Email list</h4>
+<p>Phone upgrades happen every two or three years, so retention is structurally near zero — which argues against a list. But <em>"email me when prices change before Black Friday"</em> is a genuinely useful offer during exactly this window, and it converts the September launch spike into a November audience. <strong>Recommendation: a single-field capture with that one specific promise, shipped in week 2</strong>, and nothing else sent to it.</p>
+
+<h4>Scope</h4>
+<p>The tool covers iPhone 18 Pro and Pro Max only, and the US only. <code>calc.js</code> already takes more phone models, chosen trade-in devices, and data/minutes requirements as inputs — the page just pins them. Expanding to Android roughly doubles the addressable audience. <strong>Recommendation: don't, until December.</strong> Shipping Pixel support in October would eat the weeks that the SEO and creator work needs, and arrive too late to rank before Black Friday. Let the <code>situation_priced</code> data decide it in the new year.</p>
+
+<h2 id="limits">11 — Honesty</h2>
+<p class="h2sub">What this plan does not do</p>
+
+<ul>
+  <li><strong>It does not build an audience.</strong> It gets a seasonal tool in front of people during its season. The asset being built here is the dataset and the reputation for counting honestly — not a subscriber base.</li>
+  <li><strong>It depends on one claim staying true.</strong> If a carrier launches a promotion in November that genuinely beats buying outright, the 98.6% headline changes and the messaging has to change with it, publicly and fast. That would be a good problem — it would prove the tool works — but the marketing must not be so committed to the number that the tool stops being honest about it.</li>
+  <li><strong>It is labour, not spend.</strong> There is no budget line here. The cost is roughly a day of engineering for the launch gate, two or three days for the SEO generator, and an hour a day of genuinely useful forum participation for ten weeks. The Reddit work in particular cannot be outsourced or templated without destroying the thing that makes it work.</li>
+  <li><strong>It has one hard deadline.</strong> Everything compounds toward Black Friday. Work that slips past mid-November is work that should be dropped rather than done late.</li>
+</ul>
+
+</main>
+
+<footer class="bot">
+  <div class="shell">
+    Rising Company · <code>docs/plans/2026-09-22-marketing-plan.html</code> · figures computed from <code>data/pricing.json</code> (crawled 2026-09-21) by sweeping <code>buildScenarios()</code> across 1,440 input combinations.
+  </div>
+</footer>
+
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
+  const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: dark ? 'dark' : 'neutral',
+    themeVariables: { fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize: '14px' },
+  });
+</script>
+
+</body>
+</html>
