@@ -3,7 +3,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
-import { CARD_SCENARIO, cardModel } from "../og.js";
+import { CARD_SCENARIO, cardModel, stampIndex } from "../og.js";
 import { HEADLINE_SCENARIO } from "../scenario.js";
 
 const data = JSON.parse(readFileSync(new URL("../data/pricing.json", import.meta.url), "utf8"));
@@ -115,4 +115,24 @@ test("app.js takes the floor from scenario.js rather than repeating it", () => {
   assert.match(app, /import \{[^}]*USAGE_FLOOR[^}]*\} from "\.\/scenario\.js"/, "app.js imports the shared floor");
   assert.match(app, /\.\.\.USAGE_FLOOR/, "and spreads it into the calculator input");
   assert.doesNotMatch(app, /minDataGb:\s*50/, "no second copy of the floor to drift");
+});
+
+/* ── Restamping index.html ──
+   Eight strings in the landing page are derived from the data: the ?v= stamps, the
+   headline spread in the tags, the alt text's six totals, two JSON-LD dates, the
+   no-JS hero line and the footer. Hand-editing eight strings after every re-crawl is
+   how a page ends up half-updated, so one function derives them all and this test
+   proves the committed page is what it derives. */
+
+test("index.html is in sync with the data it was stamped from", () => {
+  const current = readFileSync(new URL("../index.html", import.meta.url), "utf8");
+  assert.equal(stampIndex(current, data), current, "run `node tools/restamp.mjs` — index.html is stale");
+});
+
+test("restamping is idempotent and actually rewrites a stale page", () => {
+  const current = readFileSync(new URL("../index.html", import.meta.url), "utf8");
+  const stale = current.replace(/og\.png\?v=[\d-]+/g, "og.png?v=1999-01-01");
+  assert.notEqual(stale, current, "the fixture is genuinely stale");
+  assert.equal(stampIndex(stale, data), current, "restamping repairs it exactly");
+  assert.equal(stampIndex(stampIndex(stale, data), data), current, "and settles");
 });

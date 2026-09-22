@@ -153,10 +153,19 @@ agent-browser wait --load networkidle
 agent-browser screenshot "#card" og.png        # writes 2400x1260
 ```
 
-Then bump the `?v=` stamp on `og:image` and `twitter:image` in `index.html` to the new
-`meta.crawledAt`, and update the headline spread in `og:title` / `twitter:title`.
+Then restamp the landing page, which owns eight strings derived from the data — the
+`?v=` cache stamps, the headline spread in the tags, the six totals in the alt text,
+the two dataset dates, the no-JS hero line and the footer:
+
+```sh
+node tools/restamp.mjs           # rewrite in place
+node tools/restamp.mjs --check   # exit 1 if index.html has drifted
+```
+
 Scrapers cache `og:image` by URL, so without a new stamp Facebook, Slack and X keep
 serving the old numbers for days — the exact failure a weekly re-crawl exists to avoid.
+
+The whole refresh is written up as a skill: `.claude/skills/refresh-carrier-pricing`.
 
 `tests/og.test.mjs` pins all of it: the scenario, the arithmetic behind each bar, the
 numbers printed on the committed card, the stamp against `meta.crawledAt`, and the
