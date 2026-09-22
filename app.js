@@ -5,6 +5,7 @@
 import { buildScenarios, tierCredit, heroSummary } from "./calc.js";
 import { MAX_PLANS, defaultPlanIds, renderPicker, renderComparison, renderSummaryChart } from "./plans.js";
 import { MAX_ROUTES, routeKey, renderCompare } from "./compare.js";
+import { init as initAnalytics, track, situationProps, situationIsNew } from "./analytics.js";
 
 const $ = (sel) => document.querySelector(sel);
 const usd = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
@@ -81,6 +82,17 @@ function writeState(s) {
   if (plansTouched && selectedPlans && selectedPlans.join(",") !== defaultPlans.join(",")) q.set("plans", selectedPlans.join(","));
   const qs = q.toString();
   history.replaceState(null, "", qs ? `?${qs}` : location.pathname);
+}
+
+/* Inputs fire on every keystroke and every select change; one event per settled
+   situation is what tells us what people actually price. */
+let situationTimer;
+function trackSituation(state, rows) {
+  clearTimeout(situationTimer);
+  situationTimer = setTimeout(() => {
+    const props = situationProps(state, rows);
+    if (situationIsNew(props)) track("situation_priced", props);
+  }, 800);
 }
 
 function storageLabel(gb) {
@@ -339,6 +351,7 @@ function render() {
   renderPlansTab(state);
   const phones = items.filter((li) => li.phoneId).length;
   const linesText = `${items.length} line${items.length === 1 ? "" : "s"} · ${phones} new phone${phones === 1 ? "" : "s"}`;
+  trackSituation({ lineItems: items, switching: $("#switching").checked, costco: $("#costco").checked, carrier: carrierFilter }, rows);
   $("#results-sub").textContent = `${rows.length} routes · ${linesText} · unlimited talk, 50 GB+ data · sorted by ${data.meta.defaultTermMonths}-month total`;
 }
 
@@ -385,6 +398,7 @@ function renderTray() {
 }
 
 function selectTab(next) {
+  if (next !== tab) track("tab_selected", { tab: next, compared: compareKeys.length });
   tab = next;
   for (const name of ["routes", "plans", "compare"]) {
     $(`#tab-${name}`).setAttribute("aria-selected", String(name === tab));
@@ -404,6 +418,7 @@ function renderStatic() {
 }
 
 async function main() {
+  initAnalytics();
   const res = await fetch("data/pricing.json");
   data = await res.json();
   const initial = readState();
@@ -427,7 +442,10 @@ async function main() {
     const b = e.target.closest("[data-compare]");
     if (!b || b.disabled) return;
     const k = b.dataset.compare;
-    compareKeys = compareKeys.includes(k) ? compareKeys.filter((x) => x !== k) : [...compareKeys, k].slice(0, MAX_ROUTES);
+    const dropping = compareKeys.includes(k);
+    compareKeys = dropping ? compareKeys.filter((x) => x !== k) : [...compareKeys, k].slice(0, MAX_ROUTES);
+    const [carrier, plan, route] = k.split("|");
+    track(dropping ? "route_uncompared" : "route_compared", { carrier, plan, route, picked: compareKeys.length });
     render();
   });
   $("#route-compare").addEventListener("click", (e) => {
@@ -438,6 +456,7 @@ async function main() {
   });
   $("#compare-clear").addEventListener("click", () => { compareKeys = []; render(); });
   $("#compare-tray-go").addEventListener("click", () => {
+    track("compare_tray_used", { picked: compareKeys.length });
     selectTab("compare");
     $(".tabs").scrollIntoView({ behavior: "smooth", block: "start" });
   });
@@ -445,10 +464,12 @@ async function main() {
     const chip = e.target.closest("[data-carrier]");
     if (!chip) return;
     carrierFilter = chip.dataset.carrier;
+    track("carrier_filtered", { carrier: carrierFilter || "all" });
     render();
   });
   $("#show-all").addEventListener("click", () => {
     showAll = !showAll;
+    track("routes_expanded", { expanded: showAll });
     render();
   });
   $("#controls").addEventListener("input", render);

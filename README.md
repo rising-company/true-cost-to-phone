@@ -66,7 +66,7 @@ carrier with its overall rank.
 
 ```sh
 python3 -m http.server 8000      # then open http://localhost:8000
-node --test tests/               # calculator tests
+node --test tests/               # calculator + analytics tests
 ```
 
 The page fetches `data/pricing.json`, so it needs to be served — `file://` blocks fetch.
@@ -131,6 +131,31 @@ The calculator already takes these as inputs; the page just pins them for now.
   AT&T Value 2.0 come into play.
 - T-Mobile Essentials 2.0 at 2 and 5 lines and Essentials Saver beyond 2 lines are not
   published on the plan page (T-Mobile shows an "Essentials 4 Line Offer" there instead).
+
+## Measurement
+
+PostHog, provisioned through the Vercel Marketplace (`vercel integration add posthog`,
+US region). `analytics.js` holds the whole of it.
+
+The project token in `analytics.js` is a public write-only key — the same one PostHog's
+own snippet puts in the page source. There is no build step to inject it from the
+environment, so it is written in. The Marketplace also set `*_POSTHOG_PROJECT_TOKEN` and
+`*_POSTHOG_HOST` on the Vercel project for anything that later needs them.
+
+Nobody signs in here, so nobody is identified: `person_profiles: "identified_only"` keeps
+readers anonymous. `shouldTrack()` drops localhost and `.local`, so serving the folder
+locally never reaches the numbers.
+
+Alongside PostHog's automatic pageviews and click autocapture:
+
+- `situation_priced` — the situation someone actually priced (lines, phones, trade-ins,
+  switching, Costco, carrier filter) and what won it (carrier, plan, route, total, spread).
+  Debounced, and a situation already reported is not reported again until something
+  changes — tab switches re-render without being a new data point.
+- `tab_selected` · `route_compared` / `route_uncompared` · `carrier_filtered` ·
+  `routes_expanded` · `compare_tray_used`
+
+Counts and ids only. No prices typed by the reader, no free text, no identifiers.
 
 ## Contributing
 
