@@ -95,10 +95,11 @@ What's in it:
   main promo and, with `appliesToByod`, on top of a bring-your-own phone.
 - Anything a carrier did not publish is flagged, not guessed. Xfinity's trade-in credits were read at checkout on the crawl date for a
   new Mobile Plus line: the full $1,300 for iPhone 15 Pro and anything newer or higher (16,
-  16 Plus/Pro/Pro Max, Air, 17 series) · $700 iPhone 15 Plus and Pixel 9 · $600 iPhone 14 and
-  iPhone 15. Credits only kick in on Mobile Plus.
-  Other devices fall to an `otherwise` tier marked `verified: false`, which the page lets
-  you override.
+  16 Plus/Pro/Pro Max, Air, 17 series) · $700 iPhone 15, 15 Plus, 16e, 14 Pro/Pro Max,
+  13 Pro Max and Pixel 9 · $600 iPhone 14, 14 Plus, 13 series and 12 Pro Max · $500 iPhone 12
+  and 12 Pro · $450 every older iPhone. Credits only kick in on Mobile Plus.
+  Every iPhone in Apple's trade-in table has been quoted, so none needs an override; a tier
+  marked `verified: false` is one read nowhere, and the page lets you override it.
 
 Things worth knowing that the marketing copy hides:
 
@@ -107,8 +108,8 @@ Things worth knowing that the marketing copy hides:
 - AT&T's $1,200 takes any iPhone 14 or newer in any condition, but only on Premium 2.0 or
   Elite 2.0; Extra 2.0 gets $930, Value 2.0 gets $500.
 - Xfinity's deals require Xfinity Internet and the Mobile Plus line; Mobile Select is
-  cheaper but unlocks no phone deals. Its "up to $1,300" is $600 for an iPhone 14 or 15 and
-  only reaches $1,300 from iPhone 15 Pro up.
+  cheaper but unlocks no phone deals. Its "up to $1,300" is $600 for an iPhone 14, $700 for
+  an iPhone 15, and only reaches $1,300 from iPhone 15 Pro up.
 - Verizon's "up to $1,200" is the new-line credit on Unlimited Ultimate for an iPhone 14
   or newer (any working condition); upgrading an existing line gets $1,020. Unlimited Plus
   pays $840 / $660, Unlimited Welcome $480 / $300, and any older phone lands in a tier
@@ -129,8 +130,8 @@ The calculator already takes these as inputs; the page just pins them for now.
 - Choose the trade-in device — present on the page today, backed by Apple's full table.
 - Monthly data and minutes needed (`minDataGb`, `minutes`) so Tello's smaller plans and
   AT&T Value 2.0 come into play.
-- T-Mobile Essentials 2.0 at 2 and 5 lines and Essentials Saver beyond 2 lines are not
-  published on the plan page (T-Mobile shows an "Essentials 4 Line Offer" there instead).
+- T-Mobile Essentials 2.0 at 2 lines and Essentials Saver beyond 2 lines are not published
+  on the plan page (4 and 5 lines are priced from its "Essentials 4 Line Offer").
 
 ## The social card
 

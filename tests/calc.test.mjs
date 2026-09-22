@@ -18,6 +18,15 @@ const baseInput = {
   overrides: {},
 };
 
+// Every Xfinity trade-in is now observed at checkout, so the override path is exercised
+// against a copy whose fallback tier is still an unverified guess.
+const withUnverifiedXfinityFallback = (source) => {
+  const copy = structuredClone(source);
+  const promo = copy.carriers.find((c) => c.id === "xfinity").promos.find((p) => p.id === "xf-tradein-1300");
+  promo.tiers = promo.tiers.map((t) => (t.otherwise ? { credit: 1300, otherwise: true, verified: false } : t));
+  return copy;
+};
+
 const find = (rows, carrierId, planId, route) =>
   rows.find((r) => r.carrierId === carrierId && r.planId === planId && r.route === route);
 
@@ -99,7 +108,7 @@ test("Xfinity: intro pricing for the first 12 months, published tiers win over t
   assert.ok(row.requires.includes("Xfinity Internet"));
 
   const promo = data.carriers.find((c) => c.id === "xfinity").promos.find((p) => p.id === "xf-tradein-1300");
-  assert.equal(tierCredit(promo, "iphone-15"), 600);
+  assert.equal(tierCredit(promo, "iphone-15"), 700);
   assert.equal(tierCredit(promo, "iphone-15-plus"), 700);
   for (const id of ["iphone-15-pro", "iphone-15-pro-max", "iphone-16", "iphone-16-plus", "iphone-16-pro", "iphone-16-pro-max", "iphone-air", "iphone-17", "iphone-17-pro", "iphone-17-pro-max"]) {
     assert.equal(tierCredit(promo, id), 1300, `${id} is at or above iPhone 15 Pro`);
@@ -108,10 +117,15 @@ test("Xfinity: intro pricing for the first 12 months, published tiers win over t
 
   assert.equal(tierCredit(promo, "iphone-13"), 600);
   assert.equal(tierCredit(promo, "iphone-12"), 500);
-  // iPhone 11 is not in Xfinity's published list: unverified, and the override applies.
-  const unlisted = find(buildScenarios(data, { ...baseInput, tradeInId: "iphone-11" }), "xfinity", "xf-plus", "xf-tradein-1300");
+  // iPhone 11 falls in the observed $450 fallback tier: verified, so the override leaves it alone.
+  const older = find(buildScenarios(data, { ...baseInput, tradeInId: "iphone-11", overrides: { "xf-tradein-1300": 500 } }), "xfinity", "xf-plus", "xf-tradein-1300");
+  assert.equal(older.credits, 450);
+  assert.equal(older.unverified, false);
+  // An unverified fallback tier stays editable: the override applies.
+  const guessed = withUnverifiedXfinityFallback(data);
+  const unlisted = find(buildScenarios(guessed, { ...baseInput, tradeInId: "iphone-11" }), "xfinity", "xf-plus", "xf-tradein-1300");
   assert.equal(unlisted.unverified, true);
-  const overridden = find(buildScenarios(data, { ...baseInput, tradeInId: "iphone-11", overrides: { "xf-tradein-1300": 500 } }), "xfinity", "xf-plus", "xf-tradein-1300");
+  const overridden = find(buildScenarios(guessed, { ...baseInput, tradeInId: "iphone-11", overrides: { "xf-tradein-1300": 500 } }), "xfinity", "xf-plus", "xf-tradein-1300");
   assert.equal(overridden.credits, 500);
   assert.equal(overridden.unverified, true, "an override is still an assumption");
 });
@@ -307,10 +321,11 @@ test("per-line: a trade-in promo drops out when no line trades in; no new phones
 test("per-line Xfinity override: only that line's unlisted trade-in uses it", () => {
   const input = { ...baseInput, phoneId: undefined, tradeInId: undefined, lines: 2, overrides: {},
     lineItems: [{ phoneId: "iphone-18-pro-256", tradeInId: "iphone-14" }, { phoneId: "iphone-18-pro-256", tradeInId: "iphone-11", xfCredit: 300 }] };
-  const row = find(buildScenarios(data, input), "xfinity", "xf-plus", "xf-tradein-1300");
+  const guessed = withUnverifiedXfinityFallback(data);
+  const row = find(buildScenarios(guessed, input), "xfinity", "xf-plus", "xf-tradein-1300");
   assert.deepEqual(row.lineDetails.map((l) => l.credit), [600, 300]);
   assert.equal(row.unverified, true);
-  const noOverride = find(buildScenarios(data, { ...input, lineItems: [{ phoneId: "iphone-18-pro-256", tradeInId: "iphone-11" }] }), "xfinity", "xf-plus", "xf-tradein-1300");
+  const noOverride = find(buildScenarios(guessed, { ...input, lineItems: [{ phoneId: "iphone-18-pro-256", tradeInId: "iphone-11" }] }), "xfinity", "xf-plus", "xf-tradein-1300");
   assert.equal(noOverride.lineDetails[0].credit, 1199, "no override → the published ceiling, capped at the phone");
 });
 

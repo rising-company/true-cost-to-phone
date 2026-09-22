@@ -13,7 +13,7 @@ const data = JSON.parse(readFileSync(new URL("../data/pricing.json", import.meta
    rather than quietly. Regenerate the card and restamp the tags — README, "The
    social card" — then update these. */
 const ON_THE_CARD = {
-  crawledAt: "2026-09-21",
+  crawledAt: "2026-09-22",
   cheapestCarrier: "tello",
   cheapestTotal: 2099,
   priciestTotal: 3754,

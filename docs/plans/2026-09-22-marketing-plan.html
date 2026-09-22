@@ -169,7 +169,7 @@
     <tr><td>Live URL</td><td><code>true-cost-to-phone.rising.company</code> (also <code>.vercel.app</code>), static, free, no sign-up</td></tr>
     <tr><td>Source</td><td><a href="https://github.com/rising-company/true-cost-to-phone">github.com/rising-company/true-cost-to-phone</a> — public, 0 stars, created 2026-09-21</td></tr>
     <tr><td>Data</td><td><code>data/pricing.json</code>, crawled 2026-09-21, every figure attributed to a carrier page</td></tr>
-    <tr><td>Coverage</td><td>6 carriers · 8 iPhone 18 Pro / Pro Max SKUs · 41 trade-in devices · 1–5 lines · Costco</td></tr>
+    <tr><td>Coverage</td><td>6 carriers · 8 iPhone 18 Pro / Pro Max SKUs · 35 trade-in iPhones · 1–5 lines · Costco</td></tr>
     <tr><td>Shareable state</td><td>Yes — <code>l=</code>, <code>cmp=</code>, <code>plans=</code>, <code>switching</code>, <code>costco</code>, <code>carrier</code> all live in the URL</td></tr>
     <tr><td>Measurement</td><td>PostHog: pageviews, autocapture, <code>situation_priced</code>, <code>tab_selected</code>, <code>route_compared</code>, <code>carrier_filtered</code></td></tr>
     <tr><td>Money</td><td>Buy Me a Coffee only. No affiliate links, no ads, no email list.</td></tr>
@@ -188,16 +188,16 @@
 
 <p>The argument: <strong>the phone you hand a carrier for bill credits is money out of your pocket, at exactly what Apple would have paid you for it.</strong> Trading an iPhone 16 Pro into a "free iPhone 18 Pro" deal costs you the $510 Apple was offering. Nobody's comparison page counts it, because counting it makes the deals look worse.</p>
 
-<p>Count it, then sweep every combination the tool supports — 5 line counts × switching × Costco × 41 trade-in devices × 2 phone models, restricted to plans with real data and real minutes — and the result is not the clean "deals are a scam" story you might expect:</p>
+<p>Count it, then sweep every combination the tool supports — 5 line counts × switching × Costco × 36 trade-in options (Apple's 35 iPhones, or none) × 2 phone models = 1,440 situations, restricted to plans with real data and real minutes — and the result is not the clean "deals are a scam" story you might expect:</p>
 
 <div class="stat-row">
-  <div class="stat"><div class="n">47%</div><div class="k">of situations where taking<br>the carrier deal is cheaper</div></div>
+  <div class="stat"><div class="n">1 in 5</div><div class="k">situations where taking<br>the carrier deal is cheaper</div></div>
   <div class="stat"><div class="n">$1,655</div><div class="k">spread between carriers,<br>one line, same phone</div></div>
-  <div class="stat"><div class="n">$13,715</div><div class="k">swing in what one T-Mobile<br>promo is worth, case to case</div></div>
+  <div class="stat"><div class="n">$13,715</div><div class="k">swing in what T-Mobile's<br>promos are worth, case to case</div></div>
 </div>
 
 <div class="card accent">
-  <p style="font-size:19px; line-height:1.5; color:var(--ink); margin:0;"><strong>Whether a carrier's phone deal is worth taking is close to a coin flip — and which way it lands swings by thousands of dollars on details the carrier's own page never shows you. There is no rule of thumb. That is the whole reason this calculator exists.</strong></p>
+  <p style="font-size:19px; line-height:1.5; color:var(--ink); margin:0;"><strong>A carrier's "free iPhone" usually costs more than buying the phone and bringing it — but about one time in five it genuinely wins, and nothing on the carrier's own page tells you which case you are in. That is the whole reason this calculator exists.</strong></p>
 </div>
 
 <p>The supporting numbers, all from the same sweep, all checkable in thirty seconds on the site:</p>
@@ -215,9 +215,10 @@
 <h3>Why this framing is stronger than "the deals are a con"</h3>
 <p>The tempting pitch is that carrier promotions always lose. They don't, and claiming so would not survive first contact with a commenter who has taken one.</p>
 <ul>
-  <li><strong>Within a single carrier, on the same plan, the deal usually is worth taking</strong> — Xfinity 83% of the time, AT&amp;T 78%, Verizon 69%, T-Mobile 66%. Once you have committed to an expensive plan, declining the promo is normally the wrong move.</li>
+  <li><strong>The best carrier deal beats buying the phone outright in 310 of 1,440 situations — 21.5%.</strong> The median case is $511 <em>against</em> the deal. The wins cluster: 276 of the 310 involve switching carriers, and 242 are T-Mobile's port-in offers. Someone switching to T-Mobile and bringing their number is exactly the person who should check.</li>
+  <li><strong>Within a single carrier, on the same plan, the deal usually is worth taking</strong> — Xfinity 85% of the time, AT&amp;T 77%, Verizon 71%, T-Mobile 65%. Once you have committed to an expensive plan, declining the promo is normally the wrong move. The deal loses to the <em>cheaper plan elsewhere</em>, not to itself.</li>
   <li><strong>The decision that actually moves money is which carrier and plan</strong>, not which promotion. That is why the $1,655 spread matters more than any individual deal, and it is the thing carrier marketing is built to keep you from comparing.</li>
-  <li><strong>The tails are enormous.</strong> One T-Mobile promotion ranges from saving $6,350 to costing $7,365 depending on the plan, the line count and the phone you hand over. The median case is a near-wash, at about $150 <em>against</em> the deal.</li>
+  <li><strong>The tails are enormous.</strong> Across T-Mobile's six iPhone promotions, the same plan with a deal ranges from saving $6,350 (iPhone 18 Pro on Us, new line and port-in) to costing $7,365 (up to $300 off with trade-in) against buying the phone outright, depending on the plan, the line count and the phone you hand over.</li>
 </ul>
 <p>A calculator is the honest response to a question whose answer genuinely depends on your case. "Just buy outright" would be a simpler pitch — and it would argue nobody needs the tool.</p>
 
@@ -334,7 +335,7 @@ quadrantChart
 <p>Every tech YouTuber and newsletter publishes a "best iPhone 18 deal" piece in October and again at Black Friday, and all of them need a source they can point at. Ten to fifteen personal emails to mid-size creators (50k–500k — the large ones are carrier-sponsored and structurally cannot use this). Offer the tool, the open dataset, and an on-the-record answer to "which carrier deal is actually worth taking". Being cited by three of them in November beats any amount of posting.</p>
 
 <h3>5. Press and newsletters <span class="tag">opportunistic</span></h3>
-<p>The angle for a writer is not the calculator, it is the finding: <em>whether a carrier's "free iPhone" deal is worth taking is a coin flip, the same promotion swings $13,715 between best and worst case, and here is the open dataset</em>. That is a story — and it is a better one than "the deals are a con", because it is true and it is checkable. Targets: the consumer desks that already cover carrier pricing sharply, plus personal-finance newsletters. Send after the Show HN, so there is something to point at.</p>
+<p>The angle for a writer is not the calculator, it is the finding: <em>a carrier's "free iPhone" costs more than buying the phone about four times in five, T-Mobile's promotions swing $13,715 between best and worst case, and here is the open dataset</em>. That is a story — and it is a better one than "the deals are a con", because it is true and it is checkable. Targets: the consumer desks that already cover carrier pricing sharply, plus personal-finance newsletters. Send after the Show HN, so there is something to point at.</p>
 
 <h3>6. Paid search <span class="tag">not now</span></h3>
 <p>"iphone 18 pro deal" keywords are bid up by carriers and affiliates with real revenue per click. A free tool with a coffee tip jar cannot win that auction. Revisit only if section 10's monetisation question gets a different answer.</p>
@@ -363,7 +364,7 @@ quadrantChart
     <tr>
       <td><strong>W4–6</strong><br>Oct 20–Nov 9</td>
       <td>The quiet stretch</td>
-      <td>Rest of the SEO pages · press outreach on the coin-flip finding · weekly data re-crawl becomes a habit · fix whatever week 1 revealed</td>
+      <td>Rest of the SEO pages · press outreach on the one-in-five finding · weekly data re-crawl becomes a habit · fix whatever week 1 revealed</td>
     </tr>
     <tr>
       <td><strong>W7–9</strong><br>Nov 10–29</td>
@@ -386,7 +387,7 @@ quadrantChart
 <p class="h2sub">Copy, ready to use</p>
 
 <h3>Show HN</h3>
-<p><strong>Title:</strong> <code>Show HN: I priced every US carrier iPhone deal; taking one is a coin flip</code></p>
+<p><strong>Title:</strong> <code>Show HN: I priced every US carrier iPhone deal; one in five beats buying outright</code></p>
 <p><strong>First comment:</strong></p>
 <pre>I kept trying to work out whether T-Mobile's "free iPhone 18 Pro" was actually
 free, and every comparison I could find had the same hole in it: none of them
@@ -405,15 +406,16 @@ AT&T, Verizon, Xfinity Mobile — against the same phone:
         + one-time fees
         + Apple's value for the phone the carrier takes
 
-I expected the deals to lose outright. They don't. Across 1,440 scenarios
-(1-5 lines, switching or not, Costco or not, 41 trade-in devices), taking the
-best carrier deal beats buying the phone outright 47% of the time. It is close
-to a coin flip, and the median case is a near-wash — about $150 against the
-deal.
+I expected the deals to lose every time. They don't. Across 1,440 scenarios
+(1-5 lines, switching or not, Costco or not, every iPhone Apple takes in trade
+or none), the best carrier deal beats buying the phone outright 21.5% of the
+time. The median case is $511 against the deal, but the wins are real and they
+cluster: almost all of them are people switching carriers, most of them to
+T-Mobile with a port-in.
 
-What is not close is how much the answer swings. The same T-Mobile promotion
-ranges from saving you $6,350 to costing you $7,365 depending on your plan,
-your line count and the phone you trade. And the gap between carriers for the
+What varies most is how much the answer swings. Across T-Mobile's six
+promotions, taking the deal ranges from saving you $6,350 to costing you
+$7,365 depending on your plan, your line count and the phone you trade. And the gap between carriers for the
 identical phone is $1,655 on one line before any promotion is involved. The
 decision that moves real money is which carrier and plan — which is the
 comparison carrier marketing is built to prevent.
@@ -447,8 +449,9 @@ Prices are from each carrier's own page as of [date]; sources are on the page.</
 <pre>Six carriers. The same iPhone 18 Pro. $1,655 between the cheapest way
 to get it and the most expensive — before any "deal" is involved.
 
-And the deals? Close to a coin flip. The same T-Mobile promo swings
-from saving you $6,350 to costing you $7,365 depending on your plan.
+And the deals? They beat buying the phone outright about 1 time in 5.
+T-Mobile's range from saving you $6,350 to costing you $7,365
+depending on your plan.
 
 Free tool, open data, no affiliate links:
 true-cost-to-phone.rising.company</pre>
@@ -463,10 +466,10 @@ It prices every carrier/plan/promo combination over 36 months and counts
 the trade-in you hand over as a cost, at Apple's own valuation — the step
 that flips most of the rankings.
 
-The headline I didn't expect: taking the carrier deal only wins about 47%
-of the time, and the same promo can swing $13k between best and worst case
-depending on plan and line count. So "is this deal good" genuinely has no
-general answer, which makes it awkward for a video and useful for a tool.
+The headline I didn't expect: taking the carrier deal wins about 1 time
+in 5, and T-Mobile's promos can swing $13k between best and worst case
+depending on plan and line count. So "is this deal good" has no general
+answer, which makes it awkward for a video and useful for a tool.
 
 Every number is cited to the carrier's own page and the dataset is public
 JSON, so you're welcome to take the figures, check them, or disagree with
@@ -560,7 +563,7 @@ flowchart TD
 
 <ul>
   <li><strong>It does not build an audience.</strong> It gets a seasonal tool in front of people during its season. The asset being built here is the dataset and the reputation for counting honestly — not a subscriber base.</li>
-  <li><strong>It depends on numbers that move.</strong> The coin-flip figure, the $1,655 spread and the $13,715 swing are all outputs of a dataset that gets re-crawled weekly; a big November promotion will move all three. The messaging has to be rebuilt from the sweep each time rather than repeated from memory. The first version of this plan quoted a 98.6% figure computed without the page's own usage floor, which let in plans the tool never shows — a reminder that a headline derived from the data must be re-derived, not carried forward.</li>
+  <li><strong>It depends on numbers that move.</strong> The one-in-five figure, the $1,655 spread and the $13,715 swing are all outputs of a dataset that gets re-crawled weekly; a big November promotion will move all three. The messaging has to be rebuilt from the sweep each time rather than repeated from memory. The first version of this plan quoted a 98.6% figure computed without the page's own usage floor, which let in plans the tool never shows. The second called the deals "a coin flip" (47%): 519 of those wins came from an unverified $1,300 Xfinity credit assumed for old phones, which checkout on 2026-09-22 showed is $450–$700. A headline derived from the data must be re-derived, not carried forward, and it is only as good as the data's least-verified tier.</li>
   <li><strong>It is labour, not spend.</strong> There is no budget line here. The cost is roughly a day of engineering for the launch gate, two or three days for the SEO generator, and an hour a day of genuinely useful forum participation for ten weeks. The Reddit work in particular cannot be outsourced or templated without destroying the thing that makes it work.</li>
   <li><strong>It has one hard deadline.</strong> Everything compounds toward Black Friday. Work that slips past mid-November is work that should be dropped rather than done late.</li>
 </ul>

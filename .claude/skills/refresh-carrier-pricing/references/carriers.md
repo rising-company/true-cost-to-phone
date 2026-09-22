@@ -47,9 +47,13 @@ Traps:
 - Promotions credit **at most four devices per account** (`maxDevices: 4`).
 - "iPhone 18 Pro on Us" needs an iPhone 15 Pro or newer. Older phones land in much
   smaller tiers that differ per plan — read every tier, not the headline.
-- Essentials 2.0 at 2 and 5 lines, and Essentials Saver above 2 lines, are not
-  published. Leave them out rather than interpolating; the calculator skips a plan
-  with no price for the requested count.
+- The plan cards, not the "Monthly Price" tables, carry the AutoPay and 3rd-line-free
+  prices, and they only render for the line count selected at the top of the page.
+  Step through 1–5 lines and read each card. Essentials 2.0's 4- and 5-line prices come
+  from a separate "Essentials 4 Line Offer" card.
+- Essentials 2.0 at 2 lines, and Essentials Saver above 2 lines, are not published.
+  Leave them out rather than interpolating; the calculator skips a plan with no price
+  for the requested count.
 
 ## AT&T
 
@@ -102,9 +106,17 @@ Traps:
 - Requires residential Xfinity Internet, and published prices include the $10
   internet-customer discount.
 - Credits only apply on Mobile Plus. Mobile Select is cheaper and unlocks nothing.
-- The credits are **not published** — they were read at checkout for a new Mobile Plus
-  line. Re-read them the same way, and mark anything not observed `verified: false`;
-  the page lets a reader override those.
+- The credits are **not published**. They are read on the phone page's trade-in picker
+  for a new Mobile Plus line: brand → type → model → carrier → storage → four condition
+  questions → Submit, then read "Save $X when you trade it in". The figure shown before
+  Submit is the headline ceiling, not the quote, so don't use it. The site remembers the
+  last trade-in across reloads, so clear localStorage between models. Quote every iPhone
+  in `tradeIns[]`, and mark anything not observed `verified: false`; the page lets a
+  reader override those. The credit depends only on the phone traded in, not on which
+  new iPhone is bought, but it is capped at retail (a 256 GB Pro shows $1,200).
+- The shop page is sometimes down ("Check back soon to view this item"). The product URL
+  has also changed once already. If `xfinity-checkout` 404s or stays blank, find the
+  current link from the shop listing.
 - The first-year intro price covers **one line** only.
 
 ## Tello and Mint

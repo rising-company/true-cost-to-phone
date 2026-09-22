@@ -1,6 +1,6 @@
 {
   "meta": {
-    "crawledAt": "2026-09-21",
+    "crawledAt": "2026-09-22",
     "currency": "USD",
     "defaultTermMonths": 36,
     "notes": [
@@ -11,10 +11,10 @@
       "Bill-credit promotions pay out monthly over the term. Leaving early forfeits the remaining credits and the device balance is due.",
       "Trade-in value counts as a cost: when a promotion takes your old phone, its Apple Trade In estimate is added to the total so every route is compared on the same footing.",
       "Mint Mobile is priced on its 12-month prepaid plans (the cheapest term). New customers pay $15/mo for the first 12 months on any plan ($180 upfront), then the regular 12-month rate. 3- and 6-month terms cost more per month and are not modeled.",
-      "Multi-line: plan prices are account totals per line count with AutoPay. T-Mobile and AT&T were read from their plan pages for 1–5 lines (T-Mobile Beyond to 8; Essentials 2.0 is shown only at 1, 3 and 4 lines, Essentials Saver at 1 and 2). Xfinity, Tello and Mint charge the same per line, so those totals are per-line price × lines.",
+      "Multi-line: plan prices are account totals per line count with AutoPay. T-Mobile and AT&T were read from their plan pages for 1–5 lines (T-Mobile Beyond to 8; Essentials 2.0 is shown only at 1, 3, 4 and 5 lines — the 4- and 5-line prices are its 4 Line Offer, Essentials Saver at 1 and 2). Xfinity, Tello and Mint charge the same per line, so those totals are per-line price × lines.",
       "Xfinity's first-year price applies to one line per account; extra lines pay the regular rate. Mint's $15 new-customer year is applied to every line (family lines are priced like single 12-month lines).",
       "T-Mobile promotions cover at most four discounted devices per account; phones beyond that pay full price.",
-      "Costco: member benefits read from Costco's AT&T and T-Mobile showcases on 2026-09-21. Shop Cards and prepaid Visa cards are counted at face value against the total. Costco sells no Xfinity, Tello or Mint plans."
+      "Costco: member benefits read from Costco's AT&T and T-Mobile showcases on 2026-09-22. Shop Cards and prepaid Visa cards are counted at face value against the total. Costco sells no Xfinity, Tello or Mint plans."
     ],
     "sources": {
       "tello": "https://tello.com/buy/custom_plans",
@@ -28,7 +28,7 @@
       "xfinity-plans": "https://www.xfinity.com/mobile/plan",
       "apple-tradein": "https://www.apple.com/shop/trade-in",
       "apple-iphone": "https://www.apple.com/shop/buy-iphone/iphone-18-pro",
-      "xfinity-checkout": "https://www.xfinity.com/mobile/shop/phone/iphone-18-pro-apple",
+      "xfinity-checkout": "https://www.xfinity.com/mobile/shop/phone/apple-iphone-18-pro",
       "tmobile-iphone-max": "https://www.t-mobile.com/cell-phone/apple-iphone-18-pro-max",
       "att-iphone-max": "https://www.att.com/buy/phones/apple-iphone-18-pro-max.html",
       "mint": "https://www.mintmobile.com/plans/",
@@ -663,7 +663,8 @@
           "monthly": {
             "1": 60,
             "3": 90,
-            "4": 100
+            "4": 100,
+            "5": 125
           },
           "notes": "50 GB premium data, then deprioritized · SD video"
         },
@@ -1382,9 +1383,10 @@
                 "iphone-air",
                 "iphone-17",
                 "iphone-17-pro",
-                "iphone-17-pro-max"
+                "iphone-17-pro-max",
+                "iphone-16e"
               ],
-              "note": "Tier 1: iPhone 14 through 16 series as listed by Best Buy on 2026-09-21; the iPhone 17 series and Air are assumed to sit in the same tier."
+              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, as listed by Best Buy on 2026-09-22."
             },
             {
               "credit": 600,
@@ -1429,9 +1431,10 @@
                 "iphone-air",
                 "iphone-17",
                 "iphone-17-pro",
-                "iphone-17-pro-max"
+                "iphone-17-pro-max",
+                "iphone-16e"
               ],
-              "note": "Tier 1: iPhone 14 through 16 series as listed by Best Buy on 2026-09-21; the iPhone 17 series and Air are assumed to sit in the same tier."
+              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, as listed by Best Buy on 2026-09-22."
             },
             {
               "credit": 510,
@@ -1475,9 +1478,10 @@
                 "iphone-air",
                 "iphone-17",
                 "iphone-17-pro",
-                "iphone-17-pro-max"
+                "iphone-17-pro-max",
+                "iphone-16e"
               ],
-              "note": "Tier 1: iPhone 14 through 16 series as listed by Best Buy on 2026-09-21; the iPhone 17 series and Air are assumed to sit in the same tier."
+              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, as listed by Best Buy on 2026-09-22."
             },
             {
               "credit": 420,
@@ -1522,9 +1526,10 @@
                 "iphone-air",
                 "iphone-17",
                 "iphone-17-pro",
-                "iphone-17-pro-max"
+                "iphone-17-pro-max",
+                "iphone-16e"
               ],
-              "note": "Tier 1: iPhone 14 through 16 series as listed by Best Buy on 2026-09-21; the iPhone 17 series and Air are assumed to sit in the same tier."
+              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, as listed by Best Buy on 2026-09-22."
             },
             {
               "credit": 330,
@@ -1568,9 +1573,10 @@
                 "iphone-air",
                 "iphone-17",
                 "iphone-17-pro",
-                "iphone-17-pro-max"
+                "iphone-17-pro-max",
+                "iphone-16e"
               ],
-              "note": "Tier 1: iPhone 14 through 16 series as listed by Best Buy on 2026-09-21; the iPhone 17 series and Air are assumed to sit in the same tier."
+              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, as listed by Best Buy on 2026-09-22."
             },
             {
               "credit": 240,
@@ -1615,9 +1621,10 @@
                 "iphone-air",
                 "iphone-17",
                 "iphone-17-pro",
-                "iphone-17-pro-max"
+                "iphone-17-pro-max",
+                "iphone-16e"
               ],
-              "note": "Tier 1: iPhone 14 through 16 series as listed by Best Buy on 2026-09-21; the iPhone 17 series and Air are assumed to sit in the same tier."
+              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, as listed by Best Buy on 2026-09-22."
             },
             {
               "credit": 150,
@@ -1732,7 +1739,7 @@
                 "iphone-17-pro",
                 "iphone-17-pro-max"
               ],
-              "note": "Full promo credit for iPhone 15 Pro and anything newer or higher. Observed at checkout 2026-09-21 (new Mobile Plus line with trade-in)."
+              "note": "Full promo credit for iPhone 15 Pro and anything newer or higher. Observed at checkout 2026-09-22 (new Mobile Plus line with trade-in)."
             },
             {
               "credit": 700,
@@ -1740,35 +1747,37 @@
                 "iphone-13-pro-max",
                 "iphone-14-pro",
                 "iphone-14-pro-max",
+                "iphone-15",
                 "iphone-15-plus",
+                "iphone-16e",
                 "pixel-9"
               ],
-              "note": "Observed at checkout 2026-09-21."
+              "note": "Observed at checkout 2026-09-22 (new Mobile Plus line with trade-in). Pixel 9 last observed 2026-09-21."
             },
             {
               "credit": 600,
               "devices": [
+                "iphone-12-pro-max",
                 "iphone-13-mini",
                 "iphone-13",
                 "iphone-13-pro",
                 "iphone-14",
-                "iphone-14-plus",
-                "iphone-15"
+                "iphone-14-plus"
               ],
-              "note": "Observed at checkout 2026-09-21."
+              "note": "Observed at checkout 2026-09-22 (new Mobile Plus line with trade-in)."
             },
             {
               "credit": 500,
               "devices": [
-                "iphone-12"
+                "iphone-12",
+                "iphone-12-pro"
               ],
-              "note": "Observed at checkout 2026-09-21."
+              "note": "Observed at checkout 2026-09-22 (new Mobile Plus line with trade-in)."
             },
             {
-              "credit": 1300,
+              "credit": 450,
               "otherwise": true,
-              "verified": false,
-              "note": "Xfinity publishes only the ceiling; other devices show their credit at checkout. Adjust it in Assumptions."
+              "note": "Every older iPhone in the trade-in table (12 mini, 11 series, SE 2 and 3, X, XR, XS, XS Max, 8 Plus) quoted $450. Observed at checkout 2026-09-22 (new Mobile Plus line with trade-in)."
             }
           ],
           "note": "Credits are paid only while the line stays on Mobile Plus; Mobile Select does not qualify."
