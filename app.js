@@ -205,9 +205,9 @@ function renderSummary(rows) {
     .map((c) => {
       const r = best.get(c.id);
       if (!r) return `<div class="card"><div class="stat-label">${esc(c.name)}</div><div class="route">No plan fits the current filters.</div></div>`;
-      const isBest = r === cheapest;
+      const isBest = r === cheapest; // the wash and the first position say "cheapest"; a label would only crowd the card
       return `<div class="card${isBest ? " is-best" : ""}">
-        <div class="stat-label"><span>${esc(c.name)}</span>${isBest ? "<span>Cheapest</span>" : ""}</div>
+        <div class="stat-label"><span>${esc(c.name)}${isBest ? '<span class="sr-only"> — cheapest</span>' : ""}</span></div>
         <div class="big">${usd.format(r.total)}<small>${usd.format(r.perMonth)}/mo</small></div>
         <div class="route">${esc(r.planName)} · ${esc(r.routeName)}${r.unverified ? " · <em>credit unverified</em>" : ""}</div>
       </div>`;

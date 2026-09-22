@@ -30,6 +30,8 @@ export function defaultPlanIds(rows) {
 
 export function renderPicker(data, selected, onToggle, lines = 1) {
   const full = selected.length >= MAX_PLANS;
+  const count = $("#picker-count");
+  if (count) count.textContent = `${selected.length} of ${MAX_PLANS} selected`;
   $("#plan-picker").innerHTML = data.carriers
     .map(
       (c) => `<div class="picker-group">

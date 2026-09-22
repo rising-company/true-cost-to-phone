@@ -82,6 +82,10 @@
        hidden, the content just sits there) and closed on phones, where app.js drops the
        `open` attribute. The fold's summary reads like a section label with a count. */
     .fold > summary { display: none; cursor: pointer; list-style: none; }
+    /* The picker's label belongs on desktop too, where it reads as a plain section label:
+       shown, not clickable, no count and no +/− marker. */
+    #panel-plans .fold > summary { display: block; pointer-events: none; margin-bottom: 12px; }
+    #panel-plans .fold > summary .fold-hint, #panel-plans .fold > summary::after { display: none; }
     .fold > summary::-webkit-details-marker { display: none; }
     .fold > summary .fold-hint { color: var(--text-subtle); margin-left: 8px; }
     .fold > summary .fold-hint::before { content: "· "; }
@@ -89,6 +93,8 @@
     .fold[open] > summary::after { content: "−"; }
     @media (max-width: 768px) {
       .fold > summary { display: block; padding: 14px 0; margin-bottom: 24px; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); }
+      #panel-plans .fold > summary { pointer-events: auto; margin-bottom: 24px; }
+      #panel-plans .fold > summary .fold-hint, #panel-plans .fold > summary::after { display: inline; }
       .fold[open] > summary { border-bottom: 0; margin-bottom: 0; }
       .fold > summary:focus-visible { outline: 1px solid var(--accent-ink); outline-offset: 2px; }
       .fold > .card, .fold > .notes, .fold > .sources { margin-top: 16px; }
@@ -136,7 +142,6 @@
     /* ── Best-per-carrier strip ── */
     .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 16px; } /* six carriers fit one row in the 984px shell */
     .summary .card { padding: 20px 24px; display: flex; flex-direction: column; gap: 8px; }
-    .summary .stat-label { display: flex; justify-content: space-between; gap: 8px; }
     .summary .big {
       font-family: "Rajdhani", sans-serif; font-weight: 700; font-size: 32px; line-height: 1.1;
       letter-spacing: 1px; color: var(--text-heading); font-variant-numeric: tabular-nums;
@@ -365,7 +370,6 @@
       /* Cheapest per carrier: two to a row, the total is the card. */
       .summary { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
       .summary .card { padding: 14px 16px; gap: 4px; }
-      .summary .stat-label { flex-direction: column; gap: 0; }
       .summary .big { font-size: 24px; }
       .summary .big small { font-size: 12px; }
       .summary .route { font-size: 12px; }
@@ -378,6 +382,7 @@
       .row-more[open] > summary { margin-bottom: 10px; }
       .row-more .row-notes { margin-top: 10px; }
       .results-head .legend { display: none; } /* each card's breakdown names its colors */
+      #picker-note { display: none; } /* the fold line already carries the count */
       /* Phones: a narrower, wrapping label column so more than one plan fits beside it. */
       .compare th, .compare td { padding: 10px 12px; min-width: 150px; }
       .compare tbody th, .compare thead th:first-child { width: 100px; max-width: 100px; padding-inline: 10px; letter-spacing: 0.06em; white-space: normal; line-height: 1.5; }
@@ -535,8 +540,10 @@
             <p class="subtitle" id="picker-note"></p>
           </div>
         </div>
-        <div class="section-label" style="margin-bottom:12px">// Pick up to five</div>
-        <div id="plan-picker" class="picker"></div>
+        <details class="fold" open>
+          <summary class="section-label">// Pick up to five<span class="fold-hint" id="picker-count"></span></summary>
+          <div id="plan-picker" class="picker"></div>
+        </details>
       </section>
       <section class="shell" style="margin-top:32px" aria-label="Plan comparison">
         <div id="plan-compare"></div>
