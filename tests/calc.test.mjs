@@ -86,10 +86,29 @@ test("switching off hides port-in promos and AT&T's stackable online credit", ()
   const off = buildScenarios(data, { ...baseInput, switching: false });
   assert.ok(find(on, "tmobile", "tmo-beyond-2", "tmo-ID260824"));
   assert.equal(find(off, "tmobile", "tmo-beyond-2", "tmo-ID260824"), undefined);
-  assert.equal(find(on, "att", "att-premium-2", "att-tradein-1200").credits, 1199);
+  assert.equal(find(on, "att", "att-premium-2", "att-tradein-1200").credits, 1199 + 200, "trade-in credit capped at the phone, plus the line credit");
   assert.equal(find(on, "att", "att-premium-2", "att-tradein-1200").stacked, 200);
   assert.equal(find(off, "att", "att-premium-2", "att-tradein-1200").stacked, 0);
   assert.equal(find(on, "att", "att-premium-2", "byod").credits, 200);
+});
+
+test("AT&T's $200 online credit is a line bill credit: it survives a trade-in credit that already covers the phone", () => {
+  // $5.56/mo for 36 months on the new line, BYOD or financed — it is not money off the device.
+  const rows = buildScenarios(data, { ...baseInput, tradeInId: "iphone-16-pro" });
+  const deal = find(rows, "att", "att-premium-2", "att-tradein-1200");
+  assert.equal(deal.credits, 1199 + 200, "the trade-in credit is capped at the phone; the line credit is not");
+  assert.equal(deal.phoneNet, 0, "the phone never goes below zero");
+  assert.equal(deal.planCredit, 200, "what the phone cannot absorb comes off the plan");
+  assert.equal(deal.plan, 90 * 36 - 200);
+  assert.equal(deal.total, 90 * 36 + 1199 - 1399 + 35 + 510);
+  assert.equal(deal.plan + deal.phoneNet + deal.fees + deal.tradeInValue, deal.total, "the bars still add up to the total");
+});
+
+test("a new AT&T line keeping its own phone still gets the $200 online credit", () => {
+  const rows = buildScenarios(data, { ...baseInput, lineItems: [{ phoneId: null, tradeInId: null }] });
+  const keep = find(rows, "att", "att-premium-2", "byod");
+  assert.equal(keep.stacked, 200);
+  assert.equal(keep.total, 90 * 36 - 200 + 35);
 });
 
 test("Xfinity: intro pricing for the first 12 months, published tiers win over the override, unlisted devices stay editable", () => {
@@ -239,7 +258,9 @@ test("multi-line: plan priced for the line count, fees per line, phone/credits/t
   assert.equal(onePhone.fees, 105, "connection charge is per line, not per phone");
 
   const att = find(three, "att", "att-premium-2", "att-tradein-1200");
-  assert.equal(att.plan, 65 * 3 * 36, "AT&T Premium 2.0 is $65/line at 3 lines");
+  assert.equal(att.planMonthly, 65 * 3, "AT&T Premium 2.0 is $65/line at 3 lines");
+  assert.equal(att.planCredit, 3 * 200, "each phone is fully covered, so the online credits come off the plan");
+  assert.equal(att.plan, 65 * 3 * 36 - 3 * 200);
   assert.equal(att.stacked, 3 * 200, "online new-line credit is per line");
 
   const xf = find(three, "xfinity", "xf-select", "byod");

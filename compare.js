@@ -37,7 +37,7 @@ export function renderCompare(rows, keys) {
       ${row(`Total · ${picked[0].termMonths} mo`, (r) => `<b>${usd.format(r.total)}</b><span class="delta">${r.total > cheapest ? `+${usd.format(r.total - cheapest)}` : "cheapest"}</span>`)}
       ${row("Per month", (r) => `${usd2.format(r.perMonth)}`)}
       ${row("Day one", (r) => usd.format(cashflow(r)[0]))}
-      ${row("Plan", (r) => `${usd.format(r.plan)}<span class="delta">${r.planIntro ? `${usd.format(r.planIntro.monthly)}/mo × ${r.planIntro.months}, then ` : ""}${usd.format(r.planMonthly)}/mo${r.lines > 1 ? ` · ${r.lines} lines` : ""}</span>`)}
+      ${row("Plan", (r) => `${usd.format(r.plan + (r.planCredit || 0))}<span class="delta">${r.planIntro ? `${usd.format(r.planIntro.monthly)}/mo × ${r.planIntro.months}, then ` : ""}${usd.format(r.planMonthly)}/mo${r.lines > 1 ? ` · ${r.lines} lines` : ""}</span>`)}
       ${row("Phones", (r) => (r.phones ? `${usd.format(r.phone)}<span class="delta">${r.phones} phone${r.phones > 1 ? "s" : ""}</span>` : "—"))}
       ${row("Credits", (r) => (r.credits ? `−${usd.format(r.credits)}` : "—"))}
       ${row("Apple trade-in", (r) => (r.appleTradeIn ? `−${usd.format(r.appleTradeIn)}` : "—"))}

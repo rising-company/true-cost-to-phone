@@ -190,7 +190,12 @@ export function buildScenarios(data, input) {
         const appleTradeIn = round2(lineDetails.reduce((s, l) => s + l.appleTradeIn, 0));
         const costco = costcoFor(carrier, plan, { byod, financed: byod ? 0 : phones, lines, input });
         const stacked = round2(stackables.filter((p) => (!byod || p.appliesToByod) && !costco.replaces.includes(p.id)).reduce((sum, p) => sum + tierCredit(p, null), 0) * lines);
-        const credits = Math.min(round2(lineDetails.reduce((s, l) => s + l.credit, 0) + stacked), phoneCost - appleTradeIn);
+        // Device credits never exceed the phone. Stackable credits are line bill credits
+        // (AT&T's $200 pays out on a bring-your-own line too), so they are not capped:
+        // what the phone cannot absorb comes off the plan instead.
+        const phoneAfterApple = round2(phoneCost - appleTradeIn);
+        const credits = round2(Math.min(round2(lineDetails.reduce((s, l) => s + l.credit, 0)), phoneAfterApple) + stacked);
+        const planCredit = round2(Math.max(0, credits - phoneAfterApple));
         const tradeInValue = round2(lineDetails.reduce((s, l) => s + l.tradeInValue, 0));
         const routeFees = costco.feeWaived ? 0 : fees;
         const total = round2(plan$ + phoneCost - appleTradeIn - credits + routeFees + tradeInValue - costco.value);
@@ -216,12 +221,13 @@ export function buildScenarios(data, input) {
           creditedPhones: credited,
           creditCapped,
           lineDetails,
-          plan: plan$,
+          plan: round2(plan$ - planCredit),
+          planCredit,
           phone: phoneCost,
           appleTradeIn,
           credits,
           stacked,
-          phoneNet: round2(phoneCost - appleTradeIn - credits),
+          phoneNet: round2(phoneAfterApple - credits + planCredit),
           fees: routeFees,
           feesWaived: costco.feeWaived,
           feesLabel: carrier.fees?.label || "",

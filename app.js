@@ -258,7 +258,7 @@ function renderRows(allRows) {
       if (r.route === "byod" && r.appleTradeIn > 0) notes.push(`Trades ${esc([...new Set(r.lineDetails.filter((l) => l.tradeInName).map((l) => l.tradeInName))].join(", "))} in to Apple for ${usd.format(r.appleTradeIn)} off the phone${r.phones > 1 ? "s" : ""}.`);
       if (r.lines > 1 && r.phones > 0) notes.push(r.lineDetails.map((l, i) => `Line ${i + 1}: ${l.phoneName ? esc(l.phoneName) + (l.credit ? ` − ${usd.format(l.credit)}` : "") + (l.appleTradeIn ? ` − ${usd.format(l.appleTradeIn)} Apple trade-in` : "") : "no new phone"}`).join(" · "));
       if (r.simUnlocked) notes.push("Apple sells it unlocked — switch carriers any time, no payoff to leave.");
-      if (r.stacked > 0) notes.push(`Includes the ${usd.format(r.stacked)} online new-line credit${r.lines > 1 ? ` (${r.lines} lines)` : ""}.`);
+      if (r.stacked > 0) notes.push(`Includes the ${usd.format(r.stacked)} online new-line credit${r.lines > 1 ? ` (${r.lines} lines)` : ""}${r.planCredit > 0 ? ` — a bill credit on the line, so the ${usd.format(r.planCredit)} the phone cannot absorb comes off the plan` : ""}.`);
       if (r.creditCapped) notes.push(`Credits stop at ${r.creditedPhones} phones (carrier limit); the rest pay full price.`);
       if (r.costcoValue > 0) {
         const src = data.meta.sources[r.costcoSourceKey];
