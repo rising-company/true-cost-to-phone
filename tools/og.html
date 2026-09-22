@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="daylight">
+<head>
+<meta charset="UTF-8">
+<title>og.png source</title>
+<!--
+  The social card, at exactly 1200×630. Not a page anyone visits — it is the source
+  the committed /og.png is shot from, kept in the repo so the card can be regenerated
+  from the data rather than redrawn by hand. See README → "The social card".
+
+  The card is a picture of the page's own summary chart: same four segments, same
+  colors, same order, same cheapest-first ranking. Someone should be able to take the
+  point from the card without clicking, so the click is verification rather than
+  curiosity.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;500;700&display=swap">
+<link rel="stylesheet" href="https://design-system.rising.company/rising.css">
+<style>
+  :root {
+    --seg-plan: #0b7a4e;
+    --seg-phone: #1f5fbf;
+    --seg-fees: #c46a12;
+    --seg-tradein: #8a3f9e;
+  }
+  body { margin: 0; background: #666; }
+  #card {
+    width: 1200px; height: 630px; overflow: hidden; position: relative;
+    background: var(--bg-surface);
+    padding: 52px 64px; box-sizing: border-box;
+    display: flex; flex-direction: column;
+    font-family: "Rajdhani", sans-serif;
+  }
+  /* A thin accent rule down the left edge, the way the page brackets its cards. */
+  #card::before {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 6px;
+    background: linear-gradient(180deg, var(--seg-plan), var(--seg-phone) 45%, var(--seg-tradein));
+  }
+  .eyebrow {
+    font-family: "Share Tech Mono", monospace; font-size: 17px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--accent-ink); margin-bottom: 14px;
+  }
+  h1 {
+    font-size: 62px; line-height: 1.02; font-weight: 700; letter-spacing: 0.5px;
+    color: var(--text-heading); margin: 0 0 12px;
+  }
+  h1 .spread { color: var(--accent-ink); }
+  .sub { font-size: 25px; font-weight: 500; line-height: 1.32; color: var(--text-muted); margin: 0 0 26px; max-width: 70ch; text-wrap: balance; }
+
+  .rows { display: flex; flex-direction: column; gap: 2px; }
+  .row { display: grid; grid-template-columns: 196px 1fr 124px; gap: 18px; align-items: center; padding: 6px 0; }
+  .row + .row { border-top: 1px solid var(--border-subtle); }
+  .name { font-family: "Share Tech Mono", monospace; font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-label); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row.is-best .name { color: var(--accent-ink); }
+  .bar { display: flex; height: 20px; gap: 2px; }
+  .bar span { display: block; height: 100%; background: var(--seg); border-radius: 2px; min-width: 3px; }
+  .bar span:first-child { border-radius: 5px 2px 2px 5px; }
+  .bar span:last-child { border-radius: 2px 5px 5px 2px; }
+  .total {
+    font-family: "Share Tech Mono", monospace; font-size: 21px; letter-spacing: 0.04em;
+    color: var(--text-body); text-align: right; font-variant-numeric: tabular-nums;
+  }
+  .row.is-best .total { color: var(--accent-ink); }
+
+  .foot {
+    margin-top: auto; padding-top: 20px; border-top: 1px solid var(--border-subtle);
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+  }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 20px; font-family: "Share Tech Mono", monospace; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-label); }
+  .legend span { display: inline-flex; align-items: center; gap: 7px; }
+  .legend i { width: 11px; height: 11px; border-radius: 2px; background: var(--seg); }
+  .stamp { font-family: "Share Tech Mono", monospace; font-size: 14px; letter-spacing: 0.08em; color: var(--text-dim); text-align: right; white-space: nowrap; line-height: 1.7; }
+  .stamp b { font-weight: normal; color: var(--text-muted); }
+</style>
+</head>
+<body>
+
+<div id="card">
+  <div class="eyebrow">// true-cost-to-phone.rising.company</div>
+  <h1 id="head"></h1>
+  <p class="sub" id="sub"></p>
+  <div class="rows" id="rows"></div>
+  <div class="foot">
+    <div class="legend" id="legend"></div>
+    <div class="stamp" id="stamp"></div>
+  </div>
+</div>
+
+<script type="module">
+  import { cardModel } from "../og.js";
+
+  const usd = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+  const data = await (await fetch("../data/pricing.json")).json();
+  const card = cardModel(data);
+
+  document.getElementById("head").innerHTML =
+    `The same iPhone. <span class="spread">${usd.format(card.spread)}</span> apart.`;
+  document.getElementById("sub").textContent =
+    `Six carriers, one ${card.phoneName}, ${card.termMonths} months — including the trade-in you hand over.`;
+
+  /* Only the segments this situation actually puts on a bar. A key for a color that
+     is nowhere in the chart reads as a mistake. */
+  const shown = new Map();
+  for (const r of card.rows) for (const s of r.segments) shown.set(s.label, s.seg);
+  document.getElementById("legend").innerHTML = [...shown]
+    .map(([label, seg]) => `<span><i style="--seg:${seg}"></i>${label}</span>`)
+    .join("");
+
+  document.getElementById("rows").innerHTML = card.rows
+    .map(
+      (r, i) => `<div class="row${i === 0 ? " is-best" : ""}">
+        <div class="name">${r.carrierName}</div>
+        <div class="bar" style="width:${r.width.toFixed(1)}%">
+          ${r.segments.map((s) => `<span style="--seg:${s.seg}; flex:${s.value} 0 0"></span>`).join("")}
+        </div>
+        <div class="total">${usd.format(r.total)}</div>
+      </div>`,
+    )
+    .join("");
+
+  document.getElementById("stamp").innerHTML =
+    `Taxes excluded<br><b>Prices ${card.crawledAt}</b>`;
+
+  document.fonts.ready.then(() => document.documentElement.setAttribute("data-og-ready", "1"));
+</script>
+
+</body>
+</html>

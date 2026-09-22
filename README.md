@@ -132,6 +132,37 @@ The calculator already takes these as inputs; the page just pins them for now.
 - T-Mobile Essentials 2.0 at 2 and 5 lines and Essentials Saver beyond 2 lines are not
   published on the plan page (T-Mobile shows an "Essentials 4 Line Offer" there instead).
 
+## The social card
+
+Every input is in the URL, so a shared link opens on the situation the sender priced.
+The link preview has to carry its weight: `og.png` is a picture of the page's own
+carrier chart — same segments, same colors, same cheapest-first ranking — so the point
+survives a timeline and the click is verification rather than curiosity.
+
+`og.js` holds the card's data model (`CARD_SCENARIO`, `cardModel`). The scenario is the
+one the page itself computes on first load: one line, an iPhone 18 Pro 256, no trade-in,
+not switching. A card that disagrees with the page it links to is a worse card.
+
+Regenerate it whenever `data/pricing.json` moves:
+
+```sh
+python3 -m http.server 8000
+agent-browser set viewport 1240 720 2          # 2x — the card is 1200x630 CSS px
+agent-browser open http://localhost:8000/tools/og.html
+agent-browser wait --load networkidle
+agent-browser screenshot "#card" og.png        # writes 2400x1260
+```
+
+Then bump the `?v=` stamp on `og:image` and `twitter:image` in `index.html` to the new
+`meta.crawledAt`, and update the headline spread in `og:title` / `twitter:title`.
+Scrapers cache `og:image` by URL, so without a new stamp Facebook, Slack and X keep
+serving the old numbers for days — the exact failure a weekly re-crawl exists to avoid.
+
+`tests/og.test.mjs` pins all of it: the scenario, the arithmetic behind each bar, the
+numbers printed on the committed card, the stamp against `meta.crawledAt`, and the
+spread quoted in the tags. Moving the data without regenerating the card is a failing
+test, not a stale share.
+
 ## Measurement
 
 PostHog, provisioned through the Vercel Marketplace (`vercel integration add posthog`,
