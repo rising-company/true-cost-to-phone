@@ -14,7 +14,8 @@
       "Multi-line: plan prices are account totals per line count with AutoPay. T-Mobile and AT&T were read from their plan pages for 1–5 lines (T-Mobile Beyond to 8; Essentials 2.0 is shown only at 1, 3, 4 and 5 lines — the 4- and 5-line prices are its 4 Line Offer, Essentials Saver at 1 and 2). Xfinity, Tello and Mint charge the same per line, so those totals are per-line price × lines.",
       "Xfinity's first-year price applies to one line per account; extra lines pay the regular rate. Mint's $15 new-customer year is applied to every line (family lines are priced like single 12-month lines).",
       "T-Mobile promotions cover at most four discounted devices per account; phones beyond that pay full price.",
-      "Costco: member benefits read from Costco's AT&T and T-Mobile showcases on 2026-09-22. Shop Cards and prepaid Visa cards are counted at face value against the total. Costco sells no Xfinity, Tello or Mint plans."
+      "Costco: member benefits read from Costco's AT&T and T-Mobile showcases on 2026-09-22. Shop Cards and prepaid Visa cards are counted at face value against the total. Costco sells no Xfinity, Tello or Mint plans.",
+      "Trade-in values come from each phone maker's own program: Apple Trade In for iPhones, Samsung's standalone trade-in (run by Likewize, pays without a purchase) for Galaxy phones, and the Google Store estimator for Pixels, each at top storage in good condition. Google pays the same for a phone whichever Pixel is bought. Galaxy S26 and Pixel 11 are not in either maker's program yet, so they are not offered as trade-ins."
     ],
     "sources": {
       "tello": "https://tello.com/buy/custom_plans",
@@ -39,7 +40,9 @@
       "verizon-simplicity": "https://www.verizon.com/plans/unlimited/",
       "verizon-myplan": "https://www.verizon.com/plans/unlimited/myplan/",
       "verizon-loyalty-faq": "https://www.verizon.com/support/pro-plus-early-upgrade-faqs/",
-      "bestbuy-verizon-tradein": "https://www.bestbuy.com/site/shop-iphone-18-iphone-duo-models/verizon-iphone-18-pro-trade-in/pcmcat1789062925590.c?id=pcmcat1789062925590"
+      "bestbuy-verizon-tradein": "https://www.bestbuy.com/site/shop-iphone-18-iphone-duo-models/verizon-iphone-18-pro-trade-in/pcmcat1789062925590.c?id=pcmcat1789062925590",
+      "samsung-tradein": "https://us-samsung-tradein.likewize.com/",
+      "google-tradein": "https://store.google.com/us/config/pixel_11"
     }
   },
   "phones": [
@@ -96,177 +99,639 @@
     {
       "id": "iphone-17-pro-max",
       "name": "iPhone 17 Pro Max",
-      "appleValue": 885
+      "brand": "Apple",
+      "value": 885,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-17-pro",
       "name": "iPhone 17 Pro",
-      "appleValue": 785
+      "brand": "Apple",
+      "value": 785,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-air",
       "name": "iPhone Air",
-      "appleValue": 585
+      "brand": "Apple",
+      "value": 585,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-17",
       "name": "iPhone 17",
-      "appleValue": 585
+      "brand": "Apple",
+      "value": 585,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-16-pro-max",
       "name": "iPhone 16 Pro Max",
-      "appleValue": 610
+      "brand": "Apple",
+      "value": 610,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-16-pro",
       "name": "iPhone 16 Pro",
-      "appleValue": 510
+      "brand": "Apple",
+      "value": 510,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-16-plus",
       "name": "iPhone 16 Plus",
-      "appleValue": 430
+      "brand": "Apple",
+      "value": 430,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-16",
       "name": "iPhone 16",
-      "appleValue": 430
+      "brand": "Apple",
+      "value": 430,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-16e",
       "name": "iPhone 16e",
-      "appleValue": 270
+      "brand": "Apple",
+      "value": 270,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-15-pro-max",
       "name": "iPhone 15 Pro Max",
-      "appleValue": 455
+      "brand": "Apple",
+      "value": 455,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-15-pro",
       "name": "iPhone 15 Pro",
-      "appleValue": 370
+      "brand": "Apple",
+      "value": 370,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-15-plus",
       "name": "iPhone 15 Plus",
-      "appleValue": 315
+      "brand": "Apple",
+      "value": 315,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-15",
       "name": "iPhone 15",
-      "appleValue": 305
+      "brand": "Apple",
+      "value": 305,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-14-pro-max",
       "name": "iPhone 14 Pro Max",
-      "appleValue": 360
+      "brand": "Apple",
+      "value": 360,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-14-pro",
       "name": "iPhone 14 Pro",
-      "appleValue": 285
+      "brand": "Apple",
+      "value": 285,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-14-plus",
       "name": "iPhone 14 Plus",
-      "appleValue": 210
+      "brand": "Apple",
+      "value": 210,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-14",
       "name": "iPhone 14",
-      "appleValue": 195
+      "brand": "Apple",
+      "value": 195,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-se-3",
       "name": "iPhone SE (3rd generation)",
-      "appleValue": 75
+      "brand": "Apple",
+      "value": 75,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-13-pro-max",
       "name": "iPhone 13 Pro Max",
-      "appleValue": 320
+      "brand": "Apple",
+      "value": 320,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-13-pro",
       "name": "iPhone 13 Pro",
-      "appleValue": 255
+      "brand": "Apple",
+      "value": 255,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-13",
       "name": "iPhone 13",
-      "appleValue": 175
+      "brand": "Apple",
+      "value": 175,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-13-mini",
       "name": "iPhone 13 mini",
-      "appleValue": 145
+      "brand": "Apple",
+      "value": 145,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-12-pro-max",
       "name": "iPhone 12 Pro Max",
-      "appleValue": 210
+      "brand": "Apple",
+      "value": 210,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-12-pro",
       "name": "iPhone 12 Pro",
-      "appleValue": 165
+      "brand": "Apple",
+      "value": 165,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-12",
       "name": "iPhone 12",
-      "appleValue": 120
+      "brand": "Apple",
+      "value": 120,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-12-mini",
       "name": "iPhone 12 mini",
-      "appleValue": 80
+      "brand": "Apple",
+      "value": 80,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-se-2",
       "name": "iPhone SE (2nd generation)",
-      "appleValue": 40
+      "brand": "Apple",
+      "value": 40,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-11-pro-max",
       "name": "iPhone 11 Pro Max",
-      "appleValue": 140
+      "brand": "Apple",
+      "value": 140,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-11-pro",
       "name": "iPhone 11 Pro",
-      "appleValue": 125
+      "brand": "Apple",
+      "value": 125,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-11",
       "name": "iPhone 11",
-      "appleValue": 100
+      "brand": "Apple",
+      "value": 100,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-xs-max",
       "name": "iPhone XS Max",
-      "appleValue": 85
+      "brand": "Apple",
+      "value": 85,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-xs",
       "name": "iPhone XS",
-      "appleValue": 60
+      "brand": "Apple",
+      "value": 60,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-xr",
       "name": "iPhone XR",
-      "appleValue": 75
+      "brand": "Apple",
+      "value": 75,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-x",
       "name": "iPhone X",
-      "appleValue": 50
+      "brand": "Apple",
+      "value": 50,
+      "valueSource": "apple-tradein"
     },
     {
       "id": "iphone-8-plus",
       "name": "iPhone 8 Plus",
-      "appleValue": 35
+      "brand": "Apple",
+      "value": 35,
+      "valueSource": "apple-tradein"
+    },
+    {
+      "id": "galaxy-s25-ultra",
+      "name": "Samsung Galaxy S25 Ultra",
+      "brand": "Samsung",
+      "value": 569,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-s25-edge",
+      "name": "Samsung Galaxy S25 Edge",
+      "brand": "Samsung",
+      "value": 394,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-s25-plus",
+      "name": "Samsung Galaxy S25+",
+      "brand": "Samsung",
+      "value": 396,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-s25",
+      "name": "Samsung Galaxy S25",
+      "brand": "Samsung",
+      "value": 321,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-s25-fe",
+      "name": "Samsung Galaxy S25 FE",
+      "brand": "Samsung",
+      "value": 217,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-s24-ultra",
+      "name": "Samsung Galaxy S24 Ultra",
+      "brand": "Samsung",
+      "value": 425,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-s24-plus",
+      "name": "Samsung Galaxy S24+",
+      "brand": "Samsung",
+      "value": 249,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-s24",
+      "name": "Samsung Galaxy S24",
+      "brand": "Samsung",
+      "value": 204,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-s24-fe",
+      "name": "Samsung Galaxy S24 FE",
+      "brand": "Samsung",
+      "value": 198,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-s23-ultra",
+      "name": "Samsung Galaxy S23 Ultra",
+      "brand": "Samsung",
+      "value": 267,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-s23-plus",
+      "name": "Samsung Galaxy S23+",
+      "brand": "Samsung",
+      "value": 171,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-s23",
+      "name": "Samsung Galaxy S23",
+      "brand": "Samsung",
+      "value": 152,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-s23-fe",
+      "name": "Samsung Galaxy S23 FE",
+      "brand": "Samsung",
+      "value": 116,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-s22-ultra",
+      "name": "Samsung Galaxy S22 Ultra",
+      "brand": "Samsung",
+      "value": 184,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-s22-plus",
+      "name": "Samsung Galaxy S22+",
+      "brand": "Samsung",
+      "value": 121,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-s22",
+      "name": "Samsung Galaxy S22",
+      "brand": "Samsung",
+      "value": 99,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-s21-ultra",
+      "name": "Samsung Galaxy S21 Ultra",
+      "brand": "Samsung",
+      "value": 137,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-s21-plus",
+      "name": "Samsung Galaxy S21+",
+      "brand": "Samsung",
+      "value": 94,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-s21",
+      "name": "Samsung Galaxy S21",
+      "brand": "Samsung",
+      "value": 79,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-s21-fe",
+      "name": "Samsung Galaxy S21 FE",
+      "brand": "Samsung",
+      "value": 75,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-s20-ultra",
+      "name": "Samsung Galaxy S20 Ultra",
+      "brand": "Samsung",
+      "value": 110,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-s20-plus",
+      "name": "Samsung Galaxy S20+",
+      "brand": "Samsung",
+      "value": 80,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-s20",
+      "name": "Samsung Galaxy S20",
+      "brand": "Samsung",
+      "value": 51,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-s20-fe",
+      "name": "Samsung Galaxy S20 FE",
+      "brand": "Samsung",
+      "value": 51,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-note20-ultra",
+      "name": "Samsung Galaxy Note20 Ultra",
+      "brand": "Samsung",
+      "value": 137,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-note20",
+      "name": "Samsung Galaxy Note20",
+      "brand": "Samsung",
+      "value": 72,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-z-fold7",
+      "name": "Samsung Galaxy Z Fold7",
+      "brand": "Samsung",
+      "value": 731,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-z-fold6",
+      "name": "Samsung Galaxy Z Fold6",
+      "brand": "Samsung",
+      "value": 476,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-z-fold5",
+      "name": "Samsung Galaxy Z Fold5",
+      "brand": "Samsung",
+      "value": 292,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-z-fold4",
+      "name": "Samsung Galaxy Z Fold4",
+      "brand": "Samsung",
+      "value": 234,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-z-fold3",
+      "name": "Samsung Galaxy Z Fold3",
+      "brand": "Samsung",
+      "value": 108,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-z-flip7",
+      "name": "Samsung Galaxy Z Flip7",
+      "brand": "Samsung",
+      "value": 351,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-z-flip7-fe",
+      "name": "Samsung Galaxy Z Flip7 FE",
+      "brand": "Samsung",
+      "value": 278,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-z-flip6",
+      "name": "Samsung Galaxy Z Flip6",
+      "brand": "Samsung",
+      "value": 226,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-z-flip5",
+      "name": "Samsung Galaxy Z Flip5",
+      "brand": "Samsung",
+      "value": 142,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-z-flip4",
+      "name": "Samsung Galaxy Z Flip4",
+      "brand": "Samsung",
+      "value": 103,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "galaxy-z-flip3",
+      "name": "Samsung Galaxy Z Flip3",
+      "brand": "Samsung",
+      "value": 49,
+      "valueSource": "samsung-tradein"
+    },
+    {
+      "id": "pixel-10-pro-fold",
+      "name": "Google Pixel 10 Pro Fold",
+      "brand": "Google",
+      "value": 850,
+      "valueSource": "google-tradein"
+    },
+    {
+      "id": "pixel-10-pro-xl",
+      "name": "Google Pixel 10 Pro XL",
+      "brand": "Google",
+      "value": 650,
+      "valueSource": "google-tradein"
+    },
+    {
+      "id": "pixel-10-pro",
+      "name": "Google Pixel 10 Pro",
+      "brand": "Google",
+      "value": 550,
+      "valueSource": "google-tradein"
+    },
+    {
+      "id": "pixel-10",
+      "name": "Google Pixel 10",
+      "brand": "Google",
+      "value": 460,
+      "valueSource": "google-tradein"
+    },
+    {
+      "id": "pixel-9-pro-fold",
+      "name": "Google Pixel 9 Pro Fold",
+      "brand": "Google",
+      "value": 630,
+      "valueSource": "google-tradein"
+    },
+    {
+      "id": "pixel-9-pro-xl",
+      "name": "Google Pixel 9 Pro XL",
+      "brand": "Google",
+      "value": 500,
+      "valueSource": "google-tradein"
+    },
+    {
+      "id": "pixel-9-pro",
+      "name": "Google Pixel 9 Pro",
+      "brand": "Google",
+      "value": 480,
+      "valueSource": "google-tradein"
+    },
+    {
+      "id": "pixel-9",
+      "name": "Google Pixel 9",
+      "brand": "Google",
+      "value": 350,
+      "valueSource": "google-tradein"
+    },
+    {
+      "id": "pixel-9a",
+      "name": "Google Pixel 9a",
+      "brand": "Google",
+      "value": 250,
+      "valueSource": "google-tradein"
+    },
+    {
+      "id": "pixel-fold",
+      "name": "Google Pixel Fold",
+      "brand": "Google",
+      "value": 450,
+      "valueSource": "google-tradein"
+    },
+    {
+      "id": "pixel-8-pro",
+      "name": "Google Pixel 8 Pro",
+      "brand": "Google",
+      "value": 420,
+      "valueSource": "google-tradein"
+    },
+    {
+      "id": "pixel-8",
+      "name": "Google Pixel 8",
+      "brand": "Google",
+      "value": 350,
+      "valueSource": "google-tradein"
+    },
+    {
+      "id": "pixel-8a",
+      "name": "Google Pixel 8a",
+      "brand": "Google",
+      "value": 180,
+      "valueSource": "google-tradein"
+    },
+    {
+      "id": "pixel-7-pro",
+      "name": "Google Pixel 7 Pro",
+      "brand": "Google",
+      "value": 340,
+      "valueSource": "google-tradein"
+    },
+    {
+      "id": "pixel-7",
+      "name": "Google Pixel 7",
+      "brand": "Google",
+      "value": 280,
+      "valueSource": "google-tradein"
+    },
+    {
+      "id": "pixel-7a",
+      "name": "Google Pixel 7a",
+      "brand": "Google",
+      "value": 120,
+      "valueSource": "google-tradein"
+    },
+    {
+      "id": "pixel-6-pro",
+      "name": "Google Pixel 6 Pro",
+      "brand": "Google",
+      "value": 300,
+      "valueSource": "google-tradein"
+    },
+    {
+      "id": "pixel-6",
+      "name": "Google Pixel 6",
+      "brand": "Google",
+      "value": 230,
+      "valueSource": "google-tradein"
+    },
+    {
+      "id": "pixel-6a",
+      "name": "Google Pixel 6a",
+      "brand": "Google",
+      "value": 100,
+      "valueSource": "google-tradein"
     }
   ],
   "carriers": [
@@ -711,7 +1176,20 @@
                 "iphone-16-pro-max",
                 "iphone-16e",
                 "iphone-15-pro",
-                "iphone-15-pro-max"
+                "iphone-15-pro-max",
+                "galaxy-s25",
+                "galaxy-s25-plus",
+                "galaxy-s25-ultra",
+                "galaxy-s25-edge",
+                "galaxy-s25-fe",
+                "galaxy-s24-plus",
+                "galaxy-s24-ultra",
+                "galaxy-z-fold7",
+                "galaxy-z-fold6",
+                "galaxy-z-fold5",
+                "galaxy-z-flip7",
+                "galaxy-z-flip6",
+                "galaxy-z-flip5"
               ]
             },
             {
@@ -724,7 +1202,34 @@
                 "iphone-14-pro",
                 "iphone-14-pro-max",
                 "iphone-13-pro",
-                "iphone-13-pro-max"
+                "iphone-13-pro-max",
+                "galaxy-z-fold4",
+                "galaxy-z-fold3",
+                "galaxy-z-flip4",
+                "galaxy-z-flip3",
+                "galaxy-s24",
+                "galaxy-s24-fe",
+                "galaxy-s23",
+                "galaxy-s23-plus",
+                "galaxy-s23-ultra",
+                "galaxy-s23-fe",
+                "galaxy-s22-plus",
+                "galaxy-s22-ultra",
+                "galaxy-note20",
+                "galaxy-note20-ultra",
+                "pixel-10",
+                "pixel-10-pro",
+                "pixel-10-pro-fold",
+                "pixel-10-pro-xl",
+                "pixel-9",
+                "pixel-9-pro",
+                "pixel-9-pro-fold",
+                "pixel-9-pro-xl",
+                "pixel-8",
+                "pixel-8-pro",
+                "pixel-7-pro",
+                "pixel-6-pro",
+                "pixel-fold"
               ]
             },
             {
@@ -786,7 +1291,20 @@
                 "iphone-16e",
                 "iphone-16",
                 "iphone-15-pro-max",
-                "iphone-15-pro"
+                "iphone-15-pro",
+                "galaxy-s25",
+                "galaxy-s25-plus",
+                "galaxy-s25-ultra",
+                "galaxy-s25-edge",
+                "galaxy-s25-fe",
+                "galaxy-s24-plus",
+                "galaxy-s24-ultra",
+                "galaxy-z-fold7",
+                "galaxy-z-fold6",
+                "galaxy-z-fold5",
+                "galaxy-z-flip7",
+                "galaxy-z-flip6",
+                "galaxy-z-flip5"
               ]
             },
             {
@@ -799,7 +1317,35 @@
                 "iphone-14-plus",
                 "iphone-14",
                 "iphone-13-pro-max",
-                "iphone-13-pro"
+                "iphone-13-pro",
+                "galaxy-z-fold4",
+                "galaxy-z-fold3",
+                "galaxy-z-flip4",
+                "galaxy-z-flip3",
+                "galaxy-s24",
+                "galaxy-s24-fe",
+                "galaxy-s23",
+                "galaxy-s23-plus",
+                "galaxy-s23-ultra",
+                "galaxy-s23-fe",
+                "galaxy-s22-plus",
+                "galaxy-s22-ultra",
+                "galaxy-note20",
+                "galaxy-note20-ultra",
+                "pixel-10",
+                "pixel-10-pro",
+                "pixel-10-pro-fold",
+                "pixel-10-pro-xl",
+                "pixel-9",
+                "pixel-9-pro",
+                "pixel-9-pro-fold",
+                "pixel-9-pro-xl",
+                "pixel-8",
+                "pixel-8-pro",
+                "pixel-7-pro",
+                "pixel-6-pro",
+                "pixel-fold",
+                "pixel-7"
               ]
             },
             {
@@ -863,7 +1409,20 @@
                 "iphone-17",
                 "iphone-17-pro",
                 "iphone-17-pro-max",
-                "iphone-air"
+                "iphone-air",
+                "galaxy-s25",
+                "galaxy-s25-plus",
+                "galaxy-s25-ultra",
+                "galaxy-s25-edge",
+                "galaxy-s25-fe",
+                "galaxy-s24-plus",
+                "galaxy-s24-ultra",
+                "galaxy-z-fold7",
+                "galaxy-z-fold6",
+                "galaxy-z-fold5",
+                "galaxy-z-flip7",
+                "galaxy-z-flip6",
+                "galaxy-z-flip5"
               ]
             },
             {
@@ -876,7 +1435,33 @@
                 "iphone-14-pro",
                 "iphone-14-pro-max",
                 "iphone-15",
-                "iphone-15-plus"
+                "iphone-15-plus",
+                "galaxy-z-fold4",
+                "galaxy-z-fold3",
+                "galaxy-z-flip4",
+                "galaxy-z-flip3",
+                "galaxy-s24",
+                "galaxy-s24-fe",
+                "galaxy-s23",
+                "galaxy-s23-plus",
+                "galaxy-s23-ultra",
+                "galaxy-s23-fe",
+                "galaxy-s22-plus",
+                "galaxy-s22-ultra",
+                "galaxy-note20",
+                "galaxy-note20-ultra",
+                "pixel-10",
+                "pixel-10-pro",
+                "pixel-10-pro-fold",
+                "pixel-10-pro-xl",
+                "pixel-9",
+                "pixel-9-pro",
+                "pixel-9-pro-fold",
+                "pixel-9-pro-xl",
+                "pixel-8",
+                "pixel-8-pro",
+                "pixel-7-pro",
+                "pixel-6-pro"
               ]
             },
             {
@@ -916,7 +1501,51 @@
                 "iphone-15",
                 "iphone-15-plus",
                 "iphone-15-pro",
-                "iphone-16e"
+                "iphone-16e",
+                "pixel-10",
+                "pixel-6-pro",
+                "pixel-7",
+                "pixel-7-pro",
+                "pixel-8",
+                "pixel-8-pro",
+                "pixel-9",
+                "pixel-9-pro",
+                "pixel-9-pro-xl",
+                "pixel-fold",
+                "galaxy-note20",
+                "galaxy-note20-ultra",
+                "galaxy-s20",
+                "galaxy-s20-fe",
+                "galaxy-s20-ultra",
+                "galaxy-s20-plus",
+                "galaxy-s21",
+                "galaxy-s21-fe",
+                "galaxy-s21-ultra",
+                "galaxy-s21-plus",
+                "galaxy-s22",
+                "galaxy-s22-ultra",
+                "galaxy-s22-plus",
+                "galaxy-s23",
+                "galaxy-s23-fe",
+                "galaxy-s23-ultra",
+                "galaxy-s23-plus",
+                "galaxy-s24",
+                "galaxy-s24-fe",
+                "galaxy-s24-ultra",
+                "galaxy-s24-plus",
+                "galaxy-s25",
+                "galaxy-s25-edge",
+                "galaxy-s25-fe",
+                "galaxy-s25-plus",
+                "galaxy-z-flip3",
+                "galaxy-z-flip4",
+                "galaxy-z-flip5",
+                "galaxy-z-flip6",
+                "galaxy-z-flip7",
+                "galaxy-z-fold3",
+                "galaxy-z-fold4",
+                "galaxy-z-fold5",
+                "galaxy-z-fold6"
               ]
             },
             {
@@ -1076,8 +1705,44 @@
                 "iphone-air",
                 "iphone-17",
                 "iphone-17-pro",
-                "iphone-17-pro-max"
+                "iphone-17-pro-max",
+                "galaxy-s23-ultra",
+                "galaxy-s24-plus",
+                "galaxy-s24-ultra",
+                "galaxy-z-fold5",
+                "galaxy-z-flip6",
+                "galaxy-z-fold6",
+                "galaxy-z-flip7-fe",
+                "galaxy-z-flip7",
+                "galaxy-z-fold7",
+                "galaxy-s25",
+                "galaxy-s25-fe",
+                "galaxy-s25-plus",
+                "galaxy-s25-edge",
+                "galaxy-s25-ultra",
+                "pixel-9",
+                "pixel-9-pro",
+                "pixel-9-pro-xl",
+                "pixel-9-pro-fold",
+                "pixel-10",
+                "pixel-10-pro",
+                "pixel-10-pro-xl",
+                "pixel-10-pro-fold"
               ]
+            },
+            {
+              "credit": 930,
+              "devices": [
+                "galaxy-s22-plus",
+                "galaxy-s22-ultra",
+                "galaxy-s23",
+                "galaxy-s23-plus",
+                "galaxy-s24",
+                "galaxy-s24-fe",
+                "pixel-8-pro",
+                "pixel-9a"
+              ],
+              "note": "Other phones with an AT&T trade-in value of $130–$179 get the $930 offer on Premium 2.0 and Elite 2.0 (it requires Extra 2.0 or higher)."
             },
             {
               "credit": 350,
@@ -1119,7 +1784,37 @@
                 "iphone-air",
                 "iphone-17",
                 "iphone-17-pro",
-                "iphone-17-pro-max"
+                "iphone-17-pro-max",
+                "galaxy-s23-ultra",
+                "galaxy-s24-plus",
+                "galaxy-s24-ultra",
+                "galaxy-z-fold5",
+                "galaxy-z-flip6",
+                "galaxy-z-fold6",
+                "galaxy-z-flip7-fe",
+                "galaxy-z-flip7",
+                "galaxy-z-fold7",
+                "galaxy-s25",
+                "galaxy-s25-fe",
+                "galaxy-s25-plus",
+                "galaxy-s25-edge",
+                "galaxy-s25-ultra",
+                "pixel-9",
+                "pixel-9-pro",
+                "pixel-9-pro-xl",
+                "pixel-9-pro-fold",
+                "pixel-10",
+                "pixel-10-pro",
+                "pixel-10-pro-xl",
+                "pixel-10-pro-fold",
+                "galaxy-s22-plus",
+                "galaxy-s22-ultra",
+                "galaxy-s23",
+                "galaxy-s23-plus",
+                "galaxy-s24",
+                "galaxy-s24-fe",
+                "pixel-8-pro",
+                "pixel-9a"
               ]
             },
             {
@@ -1162,7 +1857,37 @@
                 "iphone-air",
                 "iphone-17",
                 "iphone-17-pro",
-                "iphone-17-pro-max"
+                "iphone-17-pro-max",
+                "galaxy-s23-ultra",
+                "galaxy-s24-plus",
+                "galaxy-s24-ultra",
+                "galaxy-z-fold5",
+                "galaxy-z-flip6",
+                "galaxy-z-fold6",
+                "galaxy-z-flip7-fe",
+                "galaxy-z-flip7",
+                "galaxy-z-fold7",
+                "galaxy-s25",
+                "galaxy-s25-fe",
+                "galaxy-s25-plus",
+                "galaxy-s25-edge",
+                "galaxy-s25-ultra",
+                "pixel-9",
+                "pixel-9-pro",
+                "pixel-9-pro-xl",
+                "pixel-9-pro-fold",
+                "pixel-10",
+                "pixel-10-pro",
+                "pixel-10-pro-xl",
+                "pixel-10-pro-fold",
+                "galaxy-s22-plus",
+                "galaxy-s22-ultra",
+                "galaxy-s23",
+                "galaxy-s23-plus",
+                "galaxy-s24",
+                "galaxy-s24-fe",
+                "pixel-8-pro",
+                "pixel-9a"
               ]
             },
             {
@@ -1384,7 +2109,41 @@
                 "iphone-17",
                 "iphone-17-pro",
                 "iphone-17-pro-max",
-                "iphone-16e"
+                "iphone-16e",
+                "galaxy-s23",
+                "galaxy-s23-plus",
+                "galaxy-s23-fe",
+                "galaxy-s23-ultra",
+                "galaxy-s24",
+                "galaxy-s24-plus",
+                "galaxy-s24-ultra",
+                "galaxy-s24-fe",
+                "galaxy-s25",
+                "galaxy-s25-plus",
+                "galaxy-s25-ultra",
+                "galaxy-s25-edge",
+                "galaxy-s25-fe",
+                "galaxy-z-flip5",
+                "galaxy-z-fold5",
+                "galaxy-z-flip6",
+                "galaxy-z-fold6",
+                "galaxy-z-flip7",
+                "galaxy-z-flip7-fe",
+                "galaxy-z-fold7",
+                "pixel-7a",
+                "pixel-fold",
+                "pixel-8",
+                "pixel-8-pro",
+                "pixel-8a",
+                "pixel-9",
+                "pixel-9-pro",
+                "pixel-9-pro-fold",
+                "pixel-9-pro-xl",
+                "pixel-9a",
+                "pixel-10",
+                "pixel-10-pro",
+                "pixel-10-pro-fold",
+                "pixel-10-pro-xl"
               ],
               "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, as listed by Best Buy on 2026-09-22."
             },
@@ -1432,7 +2191,41 @@
                 "iphone-17",
                 "iphone-17-pro",
                 "iphone-17-pro-max",
-                "iphone-16e"
+                "iphone-16e",
+                "galaxy-s23",
+                "galaxy-s23-plus",
+                "galaxy-s23-fe",
+                "galaxy-s23-ultra",
+                "galaxy-s24",
+                "galaxy-s24-plus",
+                "galaxy-s24-ultra",
+                "galaxy-s24-fe",
+                "galaxy-s25",
+                "galaxy-s25-plus",
+                "galaxy-s25-ultra",
+                "galaxy-s25-edge",
+                "galaxy-s25-fe",
+                "galaxy-z-flip5",
+                "galaxy-z-fold5",
+                "galaxy-z-flip6",
+                "galaxy-z-fold6",
+                "galaxy-z-flip7",
+                "galaxy-z-flip7-fe",
+                "galaxy-z-fold7",
+                "pixel-7a",
+                "pixel-fold",
+                "pixel-8",
+                "pixel-8-pro",
+                "pixel-8a",
+                "pixel-9",
+                "pixel-9-pro",
+                "pixel-9-pro-fold",
+                "pixel-9-pro-xl",
+                "pixel-9a",
+                "pixel-10",
+                "pixel-10-pro",
+                "pixel-10-pro-fold",
+                "pixel-10-pro-xl"
               ],
               "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, as listed by Best Buy on 2026-09-22."
             },
@@ -1479,7 +2272,41 @@
                 "iphone-17",
                 "iphone-17-pro",
                 "iphone-17-pro-max",
-                "iphone-16e"
+                "iphone-16e",
+                "galaxy-s23",
+                "galaxy-s23-plus",
+                "galaxy-s23-fe",
+                "galaxy-s23-ultra",
+                "galaxy-s24",
+                "galaxy-s24-plus",
+                "galaxy-s24-ultra",
+                "galaxy-s24-fe",
+                "galaxy-s25",
+                "galaxy-s25-plus",
+                "galaxy-s25-ultra",
+                "galaxy-s25-edge",
+                "galaxy-s25-fe",
+                "galaxy-z-flip5",
+                "galaxy-z-fold5",
+                "galaxy-z-flip6",
+                "galaxy-z-fold6",
+                "galaxy-z-flip7",
+                "galaxy-z-flip7-fe",
+                "galaxy-z-fold7",
+                "pixel-7a",
+                "pixel-fold",
+                "pixel-8",
+                "pixel-8-pro",
+                "pixel-8a",
+                "pixel-9",
+                "pixel-9-pro",
+                "pixel-9-pro-fold",
+                "pixel-9-pro-xl",
+                "pixel-9a",
+                "pixel-10",
+                "pixel-10-pro",
+                "pixel-10-pro-fold",
+                "pixel-10-pro-xl"
               ],
               "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, as listed by Best Buy on 2026-09-22."
             },
@@ -1527,7 +2354,41 @@
                 "iphone-17",
                 "iphone-17-pro",
                 "iphone-17-pro-max",
-                "iphone-16e"
+                "iphone-16e",
+                "galaxy-s23",
+                "galaxy-s23-plus",
+                "galaxy-s23-fe",
+                "galaxy-s23-ultra",
+                "galaxy-s24",
+                "galaxy-s24-plus",
+                "galaxy-s24-ultra",
+                "galaxy-s24-fe",
+                "galaxy-s25",
+                "galaxy-s25-plus",
+                "galaxy-s25-ultra",
+                "galaxy-s25-edge",
+                "galaxy-s25-fe",
+                "galaxy-z-flip5",
+                "galaxy-z-fold5",
+                "galaxy-z-flip6",
+                "galaxy-z-fold6",
+                "galaxy-z-flip7",
+                "galaxy-z-flip7-fe",
+                "galaxy-z-fold7",
+                "pixel-7a",
+                "pixel-fold",
+                "pixel-8",
+                "pixel-8-pro",
+                "pixel-8a",
+                "pixel-9",
+                "pixel-9-pro",
+                "pixel-9-pro-fold",
+                "pixel-9-pro-xl",
+                "pixel-9a",
+                "pixel-10",
+                "pixel-10-pro",
+                "pixel-10-pro-fold",
+                "pixel-10-pro-xl"
               ],
               "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, as listed by Best Buy on 2026-09-22."
             },
@@ -1574,7 +2435,41 @@
                 "iphone-17",
                 "iphone-17-pro",
                 "iphone-17-pro-max",
-                "iphone-16e"
+                "iphone-16e",
+                "galaxy-s23",
+                "galaxy-s23-plus",
+                "galaxy-s23-fe",
+                "galaxy-s23-ultra",
+                "galaxy-s24",
+                "galaxy-s24-plus",
+                "galaxy-s24-ultra",
+                "galaxy-s24-fe",
+                "galaxy-s25",
+                "galaxy-s25-plus",
+                "galaxy-s25-ultra",
+                "galaxy-s25-edge",
+                "galaxy-s25-fe",
+                "galaxy-z-flip5",
+                "galaxy-z-fold5",
+                "galaxy-z-flip6",
+                "galaxy-z-fold6",
+                "galaxy-z-flip7",
+                "galaxy-z-flip7-fe",
+                "galaxy-z-fold7",
+                "pixel-7a",
+                "pixel-fold",
+                "pixel-8",
+                "pixel-8-pro",
+                "pixel-8a",
+                "pixel-9",
+                "pixel-9-pro",
+                "pixel-9-pro-fold",
+                "pixel-9-pro-xl",
+                "pixel-9a",
+                "pixel-10",
+                "pixel-10-pro",
+                "pixel-10-pro-fold",
+                "pixel-10-pro-xl"
               ],
               "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, as listed by Best Buy on 2026-09-22."
             },
@@ -1622,7 +2517,41 @@
                 "iphone-17",
                 "iphone-17-pro",
                 "iphone-17-pro-max",
-                "iphone-16e"
+                "iphone-16e",
+                "galaxy-s23",
+                "galaxy-s23-plus",
+                "galaxy-s23-fe",
+                "galaxy-s23-ultra",
+                "galaxy-s24",
+                "galaxy-s24-plus",
+                "galaxy-s24-ultra",
+                "galaxy-s24-fe",
+                "galaxy-s25",
+                "galaxy-s25-plus",
+                "galaxy-s25-ultra",
+                "galaxy-s25-edge",
+                "galaxy-s25-fe",
+                "galaxy-z-flip5",
+                "galaxy-z-fold5",
+                "galaxy-z-flip6",
+                "galaxy-z-fold6",
+                "galaxy-z-flip7",
+                "galaxy-z-flip7-fe",
+                "galaxy-z-fold7",
+                "pixel-7a",
+                "pixel-fold",
+                "pixel-8",
+                "pixel-8-pro",
+                "pixel-8a",
+                "pixel-9",
+                "pixel-9-pro",
+                "pixel-9-pro-fold",
+                "pixel-9-pro-xl",
+                "pixel-9a",
+                "pixel-10",
+                "pixel-10-pro",
+                "pixel-10-pro-fold",
+                "pixel-10-pro-xl"
               ],
               "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, as listed by Best Buy on 2026-09-22."
             },
@@ -1737,7 +2666,14 @@
                 "iphone-air",
                 "iphone-17",
                 "iphone-17-pro",
-                "iphone-17-pro-max"
+                "iphone-17-pro-max",
+                "galaxy-s24-ultra",
+                "galaxy-s25-plus",
+                "galaxy-s25-ultra",
+                "galaxy-s25-edge",
+                "galaxy-z-fold7",
+                "pixel-10-pro-xl",
+                "pixel-10-pro-fold"
               ],
               "note": "Full promo credit for iPhone 15 Pro and anything newer or higher. Observed at checkout 2026-09-22 (new Mobile Plus line with trade-in)."
             },
@@ -1750,7 +2686,19 @@
                 "iphone-15",
                 "iphone-15-plus",
                 "iphone-16e",
-                "pixel-9"
+                "galaxy-s23-plus",
+                "galaxy-s23-ultra",
+                "galaxy-s24",
+                "galaxy-s24-plus",
+                "galaxy-s25",
+                "galaxy-z-fold6",
+                "galaxy-z-flip7",
+                "pixel-9",
+                "pixel-9-pro",
+                "pixel-9-pro-xl",
+                "pixel-9-pro-fold",
+                "pixel-10",
+                "pixel-10-pro"
               ],
               "note": "Observed at checkout 2026-09-22 (new Mobile Plus line with trade-in). Pixel 9 last observed 2026-09-21."
             },
@@ -1762,7 +2710,16 @@
                 "iphone-13",
                 "iphone-13-pro",
                 "iphone-14",
-                "iphone-14-plus"
+                "iphone-14-plus",
+                "galaxy-s22-ultra",
+                "galaxy-s23",
+                "galaxy-s24-fe",
+                "galaxy-z-fold5",
+                "galaxy-z-flip7-fe",
+                "pixel-8",
+                "pixel-8-pro",
+                "pixel-9a",
+                "galaxy-s25-fe"
               ],
               "note": "Observed at checkout 2026-09-22 (new Mobile Plus line with trade-in)."
             },
@@ -1770,9 +2727,48 @@
               "credit": 500,
               "devices": [
                 "iphone-12",
-                "iphone-12-pro"
+                "iphone-12-pro",
+                "galaxy-s21-ultra",
+                "galaxy-s23-fe"
               ],
               "note": "Observed at checkout 2026-09-22 (new Mobile Plus line with trade-in)."
+            },
+            {
+              "credit": 450,
+              "devices": [
+                "galaxy-s20",
+                "galaxy-s20-plus",
+                "galaxy-s20-ultra",
+                "galaxy-s21",
+                "galaxy-s21-plus",
+                "galaxy-s21-fe",
+                "galaxy-s22",
+                "galaxy-s22-plus",
+                "galaxy-note20",
+                "galaxy-note20-ultra",
+                "galaxy-z-fold3",
+                "galaxy-z-fold4",
+                "galaxy-z-flip3",
+                "galaxy-z-flip4",
+                "galaxy-z-flip5",
+                "galaxy-z-flip6",
+                "pixel-6",
+                "pixel-6-pro",
+                "pixel-6a",
+                "pixel-7",
+                "pixel-7-pro",
+                "pixel-7a",
+                "pixel-8a"
+              ],
+              "note": "Observed at checkout 2026-09-22 (new Mobile Plus line with trade-in)."
+            },
+            {
+              "credit": 0,
+              "devices": [
+                "galaxy-s20-fe",
+                "pixel-fold"
+              ],
+              "note": "Not taken into the promotion: checkout offers only a one-time trade-in credit ($19 for a Galaxy S20 FE, $45 for a Pixel Fold) instead of bill credits, so the line keeps its phone and pays full price. Observed 2026-09-22."
             },
             {
               "credit": 450,

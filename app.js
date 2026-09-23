@@ -2,7 +2,7 @@
 // Loads data/pricing.json, reads the controls, renders buildScenarios() output.
 // State lives in the URL query so a result can be shared.
 
-import { buildScenarios, tierCredit, heroSummary } from "./calc.js";
+import { buildScenarios, tierCredit, heroSummary, tradeInGroups, tradeInProgram } from "./calc.js";
 import { USAGE_FLOOR, HEADLINE_SCENARIO } from "./scenario.js";
 import { MAX_PLANS, defaultPlanIds, renderPicker, renderComparison, renderSummaryChart } from "./plans.js";
 import { MAX_ROUTES, routeKey, renderCompare } from "./compare.js";
@@ -107,7 +107,12 @@ const phoneOptions = () =>
   data.phones.map((p) => `<option value="${p.id}">${esc(p.model)} · ${storageLabel(p.storageGb)} · ${usd.format(p.retail)}</option>`).join("");
 const tradeInOptions = () =>
   `<option value="${NONE}">No trade-in</option>` +
-  data.tradeIns.map((t) => `<option value="${t.id}">${esc(t.name)} · up to ${usd.format(t.appleValue)}</option>`).join("");
+  tradeInGroups(data.tradeIns)
+    .map((g) => `<optgroup label="${esc(g.brand)}">${g.items.map((t) => `<option value="${t.id}">${esc(t.name)} · up to ${usd.format(t.value)}</option>`).join("")}</optgroup>`)
+    .join("");
+
+/** The trade-in programs behind a route's lines, e.g. "Apple Trade In and Samsung Trade-In". */
+const programsOf = (r) => [...new Set(r.lineDetails.map((l) => l.tradeInProgram).filter(Boolean))].join(" and ");
 
 /** One row per line; added lines copy the first line's phone. */
 function renderLineItems(items) {
@@ -254,9 +259,9 @@ function renderRows(allRows) {
       ].join("");
       const notes = [];
       if (r.planIntro) notes.push(`Plan is ${usd.format(r.planIntro.monthly)}/mo for the first ${r.planIntro.months} months as a new customer, then ${usd.format(r.planMonthly)}/mo — ${usd.format(r.plan)} over ${r.termMonths} months.`);
-      if (r.route !== "byod" && r.tradeInValue > 0) notes.push(`Hands your ${esc(r.tradeInName)} to the carrier — that is ${usd.format(r.tradeInValue)} out of pocket, what Apple would have paid.`);
-      if (r.route === "byod" && r.appleTradeIn > 0) notes.push(`Trades ${esc([...new Set(r.lineDetails.filter((l) => l.tradeInName).map((l) => l.tradeInName))].join(", "))} in to Apple for ${usd.format(r.appleTradeIn)} off the phone${r.phones > 1 ? "s" : ""}.`);
-      if (r.lines > 1 && r.phones > 0) notes.push(r.lineDetails.map((l, i) => `Line ${i + 1}: ${l.phoneName ? esc(l.phoneName) + (l.credit ? ` − ${usd.format(l.credit)}` : "") + (l.appleTradeIn ? ` − ${usd.format(l.appleTradeIn)} Apple trade-in` : "") : "no new phone"}`).join(" · "));
+      if (r.route !== "byod" && r.tradeInValue > 0) notes.push(`Hands your ${esc(r.tradeInName)} to the carrier — that is ${usd.format(r.tradeInValue)} out of pocket, what ${esc(programsOf(r))} would have paid.`);
+      if (r.route === "byod" && r.appleTradeIn > 0) notes.push(`Trades ${esc([...new Set(r.lineDetails.filter((l) => l.tradeInName).map((l) => l.tradeInName))].join(", "))} in through ${esc(programsOf(r))} for ${usd.format(r.appleTradeIn)} off the phone${r.phones > 1 ? "s" : ""}.`);
+      if (r.lines > 1 && r.phones > 0) notes.push(r.lineDetails.map((l, i) => `Line ${i + 1}: ${l.phoneName ? esc(l.phoneName) + (l.credit ? ` − ${usd.format(l.credit)}` : "") + (l.appleTradeIn ? ` − ${usd.format(l.appleTradeIn)} ${esc(l.tradeInProgram)}` : "") : "no new phone"}`).join(" · "));
       if (r.simUnlocked) notes.push("Apple sells it unlocked — switch carriers any time, no payoff to leave.");
       if (r.stacked > 0) notes.push(`Includes the ${usd.format(r.stacked)} online new-line credit${r.lines > 1 ? ` (${r.lines} lines)` : ""}${r.planCredit > 0 ? ` — a bill credit on the line, so the ${usd.format(r.planCredit)} the phone cannot absorb comes off the plan` : ""}.`);
       if (r.creditCapped) notes.push(`Credits stop at ${r.creditedPhones} phones (carrier limit); the rest pay full price.`);
@@ -318,7 +323,7 @@ function render() {
     $(`#tradein-help-${i}`).textContent = !li.phoneId
       ? ""
       : tradeIn
-        ? `Apple pays up to ${usd.format(tradeIn.appleValue)}; handing it to a carrier deal costs that much.`
+        ? `${tradeInProgram(tradeIn)} pays up to ${usd.format(tradeIn.value)}; handing it to a carrier deal costs that much.`
         : "Trade-in deals need a phone; without one this line pays full price.";
     const unlisted = !!tradeIn && !xfPromo.tiers.some((t) => t.devices?.includes(tradeIn.id));
     const field = $(`#xf-field-${i}`);

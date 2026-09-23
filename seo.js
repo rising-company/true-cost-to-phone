@@ -66,7 +66,7 @@ function dealsFor(data, carrierId) {
   const tradeIn = data.tradeIns.find((t) => t.id === SWITCHER_SCENARIO.lineItems[0].tradeInId);
   return {
     tradeInName: tradeIn.name,
-    tradeInValue: tradeIn.appleValue,
+    tradeInValue: tradeIn.value,
     baseline: mine.find((r) => r.route === "byod") || null,
     routes: mine
       .filter((r) => r.route !== "byod")

@@ -11,6 +11,7 @@ The tool's value is reading past that, so read past it.
 ## Contents
 
 - [Apple — the baseline](#apple--the-baseline)
+- [Samsung and Google — the other trade-ins](#samsung-and-google--the-other-trade-ins)
 - [T-Mobile](#t-mobile)
 - [AT&T](#att)
 - [Verizon](#verizon)
@@ -32,6 +33,29 @@ every promotion's true cost moves with them.
 
 Carriers list the same retail price as Apple, shown as `$x.99`. Xfinity publishes none,
 so Apple's is used everywhere.
+
+## Samsung and Google — the other trade-ins
+
+| Source key | What to read |
+|---|---|
+| `samsung-tradein` | Samsung's standalone trade-in (Likewize) — `tradeIns[]` for Galaxy phones |
+| `google-tradein` | Google Store's trade-in estimator — `tradeIns[]` for Pixels |
+
+Samsung and Google set the value of their own phones, the way Apple does for iPhones.
+
+- Samsung's search box does nothing under automation. Call the page's own
+  `fetchDevicesByModel("Galaxy S2")` (and `"Galaxy Z"`, `"Galaxy Note"`) from `eval` —
+  it uses the site's guest token — and read `initialTradeInOffer` for each phone.
+- Google's estimator sits in a Pixel's buy flow and stays disabled until colour, storage
+  and carrier are chosen. Quote each Pixel at its top storage in good condition. The value
+  does not depend on which Pixel is bought (checked against the 11 and 11 Pro).
+- A phone missing from its maker's program (today: Galaxy S26, Pixel 11) has no value to
+  count, so it is left out rather than priced from a reseller.
+- Each carrier lists Samsung and Google phones per tier, alongside the iPhones: T-Mobile in
+  every promotion's "Eligible trade-in phones", AT&T by minimum trade-in value ($180 /
+  $130 / $35–129) in the offer terms, Verizon in Best Buy's tier table, Xfinity only at
+  checkout. Xfinity turns some phones away with a one-time credit instead of bill credits;
+  those go in its `$0` tier.
 
 ## T-Mobile
 
@@ -114,6 +138,8 @@ Traps:
   in `tradeIns[]`, and mark anything not observed `verified: false`; the page lets a
   reader override those. The credit depends only on the phone traded in, not on which
   new iPhone is bought, but it is capped at retail (a 256 GB Pro shows $1,200).
+- Xfinity's page stops taking clicks after a few reloads in one browser. Restart the
+  browser (`close`, then `--headed open`) before each quote rather than debugging it.
 - The shop page is sometimes down ("Check back soon to view this item"). The product URL
   has also changed once already. If `xfinity-checkout` 404s or stays blank, find the
   current link from the shop listing.

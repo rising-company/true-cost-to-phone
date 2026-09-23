@@ -190,7 +190,7 @@ function renderCompare(page, index) {
 <h2>If you are switching with a phone to trade</h2>
 <p>Every phone promotion at both carriers needs a port-in, a trade-in or both, so none of
 them apply to the figures above. Priced again as a switcher trading in an iPhone 16 Pro —
-which Apple values at ${money(data.tradeIns.find((t) => t.id === "iphone-16-pro").appleValue)} —
+which Apple values at ${money(data.tradeIns.find((t) => t.id === "iphone-16-pro").value)} —
 <b>${esc(sw.cheaper.carrierName)} comes out ${cheaperBy(sw.gap)}</b>: ${money(sw.cheaper.total)} on
 ${esc(sw.cheaper.planName)} against ${money(sw.pricier.total)} on ${esc(sw.pricier.planName)}.</p>
 <p>Both of those winning routes still buy the phone from Apple. That is the usual result:

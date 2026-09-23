@@ -40,7 +40,7 @@ export function renderCompare(rows, keys) {
       ${row("Plan", (r) => `${usd.format(r.plan + (r.planCredit || 0))}<span class="delta">${r.planIntro ? `${usd.format(r.planIntro.monthly)}/mo × ${r.planIntro.months}, then ` : ""}${usd.format(r.planMonthly)}/mo${r.lines > 1 ? ` · ${r.lines} lines` : ""}</span>`)}
       ${row("Phones", (r) => (r.phones ? `${usd.format(r.phone)}<span class="delta">${r.phones} phone${r.phones > 1 ? "s" : ""}</span>` : "—"))}
       ${row("Credits", (r) => (r.credits ? `−${usd.format(r.credits)}` : "—"))}
-      ${row("Apple trade-in", (r) => (r.appleTradeIn ? `−${usd.format(r.appleTradeIn)}` : "—"))}
+      ${row("Trade-in value", (r) => (r.appleTradeIn ? `−${usd.format(r.appleTradeIn)}` : "—"))}
       ${row("One-time fees", (r) => (r.fees ? usd.format(r.fees) : r.feesWaived ? "Waived" : "—"))}
       ${row("Trade-in into the deal", (r) => (r.tradeInValue ? `${usd.format(r.tradeInValue)}<span class="delta">${esc(r.tradeInName || "")}</span>` : "—"))}
       ${row("Costco", (r) => (r.costcoValue ? `−${usd.format(r.costcoValue)}` : "—"))}

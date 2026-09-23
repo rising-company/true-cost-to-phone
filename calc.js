@@ -7,20 +7,21 @@
 //
 //   total = plan × term                 (account total for the line count)
 //         + phones × (phone − credits)  (carrier credits never exceed the phone;
-//                                        buying from Apple takes Apple Trade In
-//                                        off the price instead)
+//                                        buying from Apple takes the old phone's
+//                                        trade-in value off the price instead)
 //         + one-time fees × lines
-//         + phones × trade-in into deal (Apple Trade In estimate of the phone a
-//                                        carrier promo takes from you)
+//         + phones × trade-in into deal (the maker's trade-in estimate of the
+//                                        phone a carrier promo takes from you)
 //
 // `lines` is how many lines the plan carries; `phones` is how many of them get
 // the new phone (each with the same trade-in). A promo's `maxDevices` caps how
 // many of those phones earn credits.
 //
 // The last line is what makes "on us" honest: a phone handed to a carrier for
-// bill credits is extra out-of-pocket at what Apple would have paid for it.
-// Selling it to Apple on the buy-from-Apple route is not a cost — it is money
-// off the phone.
+// bill credits is extra out-of-pocket at what its maker's own trade-in program
+// would have paid for it: Apple Trade In for an iPhone, Samsung's for a Galaxy,
+// Google Store's for a Pixel. Trading it in there on the buy-from-Apple route is
+// not a cost — it is money off the phone.
 
 const round2 = (n) => Math.round(n * 100) / 100;
 
@@ -69,6 +70,24 @@ function planFits(plan, { minDataGb = 0, minutes = 0 }) {
   return rank(plan.premiumDataGb) >= rank(minDataGb) && rank(plan.minutes) >= rank(minutes);
 }
 
+/** The program that sets a trade-in's value, as a reader would name it. */
+export const TRADE_IN_PROGRAMS = {
+  "apple-tradein": "Apple Trade In",
+  "samsung-tradein": "Samsung Trade-In",
+  "google-tradein": "Google Store trade-in",
+};
+
+export const tradeInProgram = (tradeIn) => TRADE_IN_PROGRAMS[tradeIn?.valueSource] || TRADE_IN_PROGRAMS["apple-tradein"];
+
+const BRAND_ORDER = ["Apple", "Samsung", "Google"];
+
+/** Trade-ins grouped by maker for the picker, keeping the data's newest-first order. */
+export function tradeInGroups(tradeIns) {
+  const brands = [...new Set(tradeIns.map((t) => t.brand || "Apple"))];
+  brands.sort((a, b) => (BRAND_ORDER.indexOf(a) + 1 || 99) - (BRAND_ORDER.indexOf(b) + 1 || 99));
+  return brands.map((brand) => ({ brand, items: tradeIns.filter((t) => (t.brand || "Apple") === brand) }));
+}
+
 function requirementsFor(carrier, plan, promo, input) {
   const out = [...(carrier.requires || [])];
   const r = promo?.requires || {};
@@ -77,7 +96,7 @@ function requirementsFor(carrier, plan, promo, input) {
   else if (r.portIn) out.push("Port-in");
   else if (r.existingLine) out.push("Existing line");
   if (r.tradeIn) out.push(`Trade-in · ${r.tradeInCondition || "eligible"} condition`);
-  if (!promo && input.tradeInId) out.push("Apple Trade In");
+  if (!promo) for (const program of input.tradeInPrograms || []) out.push(program);
   if (planIntro(plan, input)) out.push("New customer intro price");
   return out;
 }
@@ -146,6 +165,7 @@ export function buildScenarios(data, input) {
   const withPhone = items.filter((li) => li.phone);
   const phones = withPhone.length;
   const anyTradeIn = withPhone.some((li) => li.tradeIn);
+  const tradeInPrograms = [...new Set(withPhone.filter((li) => li.tradeIn).map((li) => tradeInProgram(li.tradeIn)))];
   const rows = [];
 
   for (const carrier of data.carriers) {
@@ -169,9 +189,9 @@ export function buildScenarios(data, input) {
         const lineDetails = items.map((li) => {
           if (!li.phone) return { phoneName: null, tradeInName: null, retail: 0, credit: 0, appleTradeIn: 0, tradeInValue: 0 };
           const retail = li.phone.retail;
-          const tradeInValue = li.tradeIn?.appleValue || 0;
+          const tradeInValue = li.tradeIn?.value || 0;
           if (byod) {
-            return { phoneName: phoneName(li.phone), tradeInName: li.tradeIn?.name || null, retail, credit: 0, appleTradeIn: Math.min(tradeInValue, retail), tradeInValue: 0 };
+            return { phoneName: phoneName(li.phone), tradeInName: li.tradeIn?.name || null, tradeInProgram: li.tradeIn ? tradeInProgram(li.tradeIn) : null, retail, credit: 0, appleTradeIn: Math.min(tradeInValue, retail), tradeInValue: 0 };
           }
           const needsTrade = !!promo.requires?.tradeIn;
           const tier = needsTrade ? (li.tradeIn ? tierFor(promo, li.tradeIn.id) : null) : tierFor(promo, null);
@@ -184,7 +204,7 @@ export function buildScenarios(data, input) {
           }
           // The phone only goes to the carrier when the promo actually takes it.
           const surrendered = needsTrade && credit > 0;
-          return { phoneName: phoneName(li.phone), tradeInName: surrendered ? li.tradeIn.name : null, retail, credit, appleTradeIn: 0, tradeInValue: surrendered ? tradeInValue : 0 };
+          return { phoneName: phoneName(li.phone), tradeInName: surrendered ? li.tradeIn.name : null, tradeInProgram: surrendered ? tradeInProgram(li.tradeIn) : null, retail, credit, appleTradeIn: 0, tradeInValue: surrendered ? tradeInValue : 0 };
         });
         const phoneCost = round2(lineDetails.reduce((s, l) => s + l.retail, 0));
         const appleTradeIn = round2(lineDetails.reduce((s, l) => s + l.appleTradeIn, 0));
@@ -239,7 +259,7 @@ export function buildScenarios(data, input) {
           tradeInCondition: promo?.requires?.tradeInCondition || null,
           unverified: !!unverified,
           endsOn: promo?.endsOn || null,
-          requires: requirementsFor(carrier, plan, promo, { ...input, tradeInId: anyTradeIn ? "any" : null }),
+          requires: requirementsFor(carrier, plan, promo, { ...input, tradeInPrograms }),
           total,
           perMonth: round2(total / termMonths),
         });

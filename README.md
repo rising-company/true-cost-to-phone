@@ -10,9 +10,9 @@ A static tool in the Rising Company **Daylight** theme. No build step: `index.ht
 
 ```
 total = monthly plan × 36
-      + phone price − promo credits        (buying from Apple: − Apple Trade In instead)
+      + phone price − promo credits        (buying from Apple: − trade-in value instead)
       + one-time fees                       (activation · device connection charge)
-      + trade-in into the deal              (Apple Trade In estimate of the phone the carrier takes)
+      + trade-in into the deal              (maker's trade-in estimate of the phone the carrier takes)
 ```
 
 A phone handed to a carrier for bill credits is extra out-of-pocket at what Apple would
@@ -82,7 +82,12 @@ What's in it:
 - `phones` — iPhone 18 Pro and iPhone 18 Pro Max storage tiers with one retail price each.
   Apple, T-Mobile, AT&T and Verizon list the same figure (carriers show it as $x.99); Xfinity does
   not publish one, so Apple's is used everywhere.
-- `tradeIns` — Apple's full iPhone trade-in table ("up to" values).
+- `tradeIns` — the phone you hand over, valued by its maker's own trade-in program ("up to"
+  values, top storage, good condition): Apple Trade In's full iPhone table; Samsung's
+  standalone trade-in (run by Likewize, pays without a purchase) for Galaxy S20–S25, Note20,
+  Z Fold3–7 and Z Flip3–7; the Google Store estimator for Pixel 6–10 (Google pays the same
+  whichever Pixel is bought). Each entry names its `brand` and `valueSource`. Galaxy S26 and
+  Pixel 11 are in neither maker's program yet, so they are not offered.
 - `carriers[].plans` — `monthly` is the account total keyed by **line count** (`"1"`…`"5"`,
   T-Mobile Beyond to `"8"`). T-Mobile and AT&T totals were read from their plan pages per
   line count; Xfinity, Tello and Mint charge the same per line. A plan with no price for the
@@ -97,7 +102,9 @@ What's in it:
   new Mobile Plus line: the full $1,300 for iPhone 15 Pro and anything newer or higher (16,
   16 Plus/Pro/Pro Max, Air, 17 series) · $700 iPhone 15, 15 Plus, 16e, 14 Pro/Pro Max,
   13 Pro Max and Pixel 9 · $600 iPhone 14, 14 Plus, 13 series and 12 Pro Max · $500 iPhone 12
-  and 12 Pro · $450 every older iPhone. Credits only kick in on Mobile Plus.
+  and 12 Pro · $450 every older iPhone. Every Samsung and Google trade-in was quoted the same
+  way; two are turned away (Galaxy S20 FE, Pixel Fold get only a one-time credit), so those
+  lines keep their phone and pay full price. Credits only kick in on Mobile Plus.
   Every iPhone in Apple's trade-in table has been quoted, so none needs an override; a tier
   marked `verified: false` is one read nowhere, and the page lets you override it.
 

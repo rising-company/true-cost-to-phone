@@ -3,7 +3,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
-import { buildScenarios, tierCredit, planTotal, comparePlans, cashflow, heroSummary } from "../calc.js";
+import { buildScenarios, tierCredit, planTotal, comparePlans, cashflow, heroSummary, tradeInGroups } from "../calc.js";
 
 const data = JSON.parse(readFileSync(new URL("../data/pricing.json", import.meta.url), "utf8"));
 
@@ -53,6 +53,51 @@ test("a trade-in into a carrier deal is added to out-of-pocket at its Apple valu
   const apple = find(rows, "tmobile", "tmo-beyond-2", "byod");
   assert.equal(apple.phoneNet, 1199 - 510);
   assert.equal(apple.tradeInValue, 0);
+});
+
+test("a Galaxy handed to a carrier deal costs what Samsung's own trade-in pays for it", () => {
+  const rows = buildScenarios(data, { ...baseInput, tradeInId: "galaxy-s25-ultra" });
+  const promo = find(rows, "tmobile", "tmo-beyond-2", "tmo-ID260835");
+  assert.equal(promo.credits, 1199, "the S25 Ultra is in T-Mobile's $1,200 tier, capped at the phone");
+  assert.equal(promo.tradeInValue, 569, "Samsung's standalone trade-in pays up to $569");
+  const outright = find(rows, "tmobile", "tmo-beyond-2", "byod");
+  assert.equal(outright.phoneNet, 1199 - 569, "not handed to a carrier, the phone's value comes off the new one");
+});
+
+test("buying outright with a Galaxy names Samsung's trade-in, not Apple's", () => {
+  const rows = buildScenarios(data, { ...baseInput, tradeInId: "galaxy-s24" });
+  const outright = find(rows, "tello", "tello-unl-unl", "byod");
+  assert.ok(outright.requires.includes("Samsung Trade-In"));
+  assert.ok(!outright.requires.includes("Apple Trade In"));
+  assert.equal(outright.lineDetails[0].tradeInProgram, "Samsung Trade-In", "each line says whose trade-in priced it");
+  const iphone = find(buildScenarios(data, baseInput), "tello", "tello-unl-unl", "byod");
+  assert.ok(iphone.requires.includes("Apple Trade In"));
+});
+
+test("the trade-in picker groups phones by maker: Apple, then Samsung, then Google, each newest first", () => {
+  const groups = tradeInGroups(data.tradeIns);
+  assert.deepEqual(groups.map((g) => g.brand), ["Apple", "Samsung", "Google"]);
+  assert.equal(groups[1].items[0].id, "galaxy-s25-ultra");
+  assert.equal(groups[2].items[0].id, "pixel-10-pro-fold");
+  assert.equal(groups.reduce((n, g) => n + g.items.length, 0), data.tradeIns.length, "every trade-in appears once");
+});
+
+test("Xfinity turns some phones away: a Galaxy S20 FE earns no credit, so the line keeps it and pays full price", () => {
+  const rows = buildScenarios(data, { ...baseInput, tradeInId: "galaxy-s20-fe" });
+  const row = find(rows, "xfinity", "xf-plus", "xf-tradein-1300");
+  assert.equal(row.credits, 0);
+  assert.equal(row.tradeInValue, 0, "a phone the carrier does not take is not handed over");
+  assert.equal(row.unverified, false, "observed at checkout, not an override");
+  const promo = data.carriers.find((c) => c.id === "xfinity").promos.find((p) => p.id === "xf-tradein-1300");
+  assert.equal(tierCredit(promo, "galaxy-s25-ultra"), 1300);
+  assert.equal(tierCredit(promo, "pixel-8"), 600);
+});
+
+test("AT&T Premium 2.0: a Galaxy S24 is under AT&T's $180 bar, so it gets the $930 offer", () => {
+  const promo = data.carriers.find((c) => c.id === "att").promos.find((p) => p.id === "att-tradein-1200");
+  assert.equal(tierCredit(promo, "galaxy-s24"), 930);
+  assert.equal(tierCredit(promo, "galaxy-s24-ultra"), 1200);
+  assert.equal(tierCredit(promo, "pixel-7"), 350);
 });
 
 test("T-Mobile Beyond 2.0 with an iPhone 14 lands in the $930 tier, not the $1,200 headline", () => {
