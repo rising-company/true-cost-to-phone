@@ -174,3 +174,13 @@ test("generated pages carry the design system's landing nav: wordmark, then the 
     );
   }
 });
+
+test("generated pages keep the shell's 24px gutters: .page sets only vertical padding", () => {
+  for (const p of [...comparePages(data), ...carrierPages(data)]) {
+    const dir = p.kind === "compare" ? "compare" : "carrier";
+    const html = page(`${dir}/${p.slug}.html`);
+    const rules = [...html.matchAll(/\.page\s*\{([^}]*)\}/g)].map((m) => m[1]);
+    assert.ok(rules.length > 0, `${p.slug} styles .page`);
+    for (const rule of rules) assert.ok(!/(^|[\s;])padding\s*:/.test(rule), `${p.slug} .page overrides the shell's side padding: ${rule.trim()}`);
+  }
+});
