@@ -162,3 +162,15 @@ test("internal links between generated pages resolve to real files", () => {
     for (const href of hrefs) assert.ok(known.has(href), `${slug} links to ${href}, which is not a generated page`);
   }
 });
+
+test("generated pages carry the design system's landing nav: wordmark, then the byline home", () => {
+  for (const p of [...comparePages(data), ...carrierPages(data)]) {
+    const dir = p.kind === "compare" ? "compare" : "carrier";
+    const nav = page(`${dir}/${p.slug}.html`).match(/<nav class="nav">[\s\S]*?<\/nav>/)?.[0] ?? "";
+    assert.match(
+      nav,
+      /<div class="shell nav-inner">\s*<div class="nav-brand">\s*<a class="wordmark" href="\/">True Cost to Phone<\/a>\s*<a class="app-byline" href="https:\/\/rising\.company">/,
+      `${p.slug} groups the wordmark and byline in .nav-brand`,
+    );
+  }
+});
