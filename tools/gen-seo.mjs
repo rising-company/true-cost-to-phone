@@ -105,9 +105,11 @@ function shell({ title, description, slug, jsonLd, body }) {
 </head>
 <body>
   <nav class="nav">
-    <div class="shell">
-      <a class="app-title" href="/">True Cost to Phone</a>
-      <a class="app-byline" href="https://rising.company">by <span>rising.company</span></a>
+    <div class="shell nav-inner">
+      <div class="nav-brand">
+        <a class="wordmark" href="/">True Cost to Phone</a>
+        <a class="app-byline" href="https://rising.company">by <span>rising.company</span></a>
+      </div>
     </div>
   </nav>
   <main class="shell page">
