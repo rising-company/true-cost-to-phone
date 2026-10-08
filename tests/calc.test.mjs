@@ -30,7 +30,7 @@ const withUnverifiedXfinityFallback = (source) => {
 const find = (rows, carrierId, planId, route) =>
   rows.find((r) => r.carrierId === carrierId && r.planId === planId && r.route === route);
 
-test("Tello unlimited + Apple outright: plan × term + (Apple retail − Apple trade-in); nothing added back", () => {
+test("Tello unlimited + Apple outright: plan × term + (Apple retail − Apple trade-in) + the phone traded to Apple", () => {
   const rows = buildScenarios(data, baseInput);
   const row = find(rows, "tello", "tello-unl-unl", "byod");
   assert.ok(row, "Tello unlimited BYOD scenario exists");
@@ -40,8 +40,9 @@ test("Tello unlimited + Apple outright: plan × term + (Apple retail − Apple t
   assert.equal(row.credits, 0, "no carrier credits");
   assert.equal(row.phoneNet, 1199 - 195);
   assert.equal(row.fees, 0);
-  assert.equal(row.tradeInValue, 0, "selling to Apple is not an out-of-pocket cost; only a trade-in into a carrier deal is");
-  assert.equal(row.total, 900 + 1199 - 195);
+  assert.equal(row.tradeInValue, 195, "the phone traded to Apple is given up at its Apple value, as on a carrier deal");
+  assert.equal(row.total, 900 + (1199 - 195) + 195);
+  assert.equal(row.plan + row.phoneNet + row.fees + row.tradeInValue, row.total, "the bars still add up to the total");
 });
 
 test("a trade-in into a carrier deal is added to out-of-pocket at its Apple value", () => {
@@ -52,7 +53,7 @@ test("a trade-in into a carrier deal is added to out-of-pocket at its Apple valu
   assert.equal(promo.total, +(3600 + 0 + 35 + 510).toFixed(2));
   const apple = find(rows, "tmobile", "tmo-beyond-2", "byod");
   assert.equal(apple.phoneNet, 1199 - 510);
-  assert.equal(apple.tradeInValue, 0);
+  assert.equal(apple.tradeInValue, 510, "trading to Apple gives the same phone up at the same value");
 });
 
 test("a Galaxy handed to a carrier deal costs what Samsung's own trade-in pays for it", () => {
@@ -254,7 +255,7 @@ test("Mint Mobile: 12-month prepaid unlimited, $15 intro year for new customers,
   assert.equal(row.phoneNet, 1199 - 195);
   assert.equal(row.fees, 0);
   assert.equal(row.simUnlocked, true);
-  assert.equal(row.total, 900 + 1004);
+  assert.equal(row.total, 900 + 1004 + 195);
   const existing = find(buildScenarios(data, { ...baseInput, switching: false }), "mint", "mint-unlimited-12", "byod");
   assert.equal(existing.plan, 30 * 36, "no intro price without being a new customer");
   assert.equal(find(rows, "mint", "mint-23gb-12", "byod"), undefined, "23 GB is below the 50 GB floor");
@@ -425,8 +426,8 @@ test("cashflow: cumulative out-of-pocket by month; upfront differs by route, mon
   const apple = find(rows, "tello", "tello-unl-unl", "byod");
   const cf = cashflow(apple);
   assert.equal(cf.length, 37);
-  assert.equal(cf[0], 1199 - 195, "Apple route pays the phone up front, less the Apple trade-in");
-  assert.equal(cf[1], 1004 + 25);
+  assert.equal(cf[0], 1199 - 195 + 195, "Apple route pays the phone up front, less the Apple trade-in, plus the phone traded in");
+  assert.equal(cf[1], 1199 + 25);
   assert.equal(cf[36], apple.total);
 
   const promo = find(rows, "tmobile", "tmo-beyond-2", "tmo-ID260835");

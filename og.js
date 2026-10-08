@@ -18,7 +18,7 @@ const SEGMENTS = [
   { label: "Plan", key: "plan", seg: "var(--seg-plan)" },
   { label: "Phone after credits", key: "phoneNet", seg: "var(--seg-phone)" },
   { label: "One-time fees", key: "fees", seg: "var(--seg-fees)" },
-  { label: "Trade-in into the deal", key: "tradeInValue", seg: "var(--seg-tradein)" },
+  { label: "Trade-in given up", key: "tradeInValue", seg: "var(--seg-tradein)" },
 ];
 
 /** Rows for the card — one per carrier, cheapest first, with stacked segments. */

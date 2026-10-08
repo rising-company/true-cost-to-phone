@@ -10,8 +10,9 @@
 //                                        buying from Apple takes the old phone's
 //                                        trade-in value off the price instead)
 //         + one-time fees × lines
-//         + phones × trade-in into deal (the maker's trade-in estimate of the
-//                                        phone a carrier promo takes from you)
+//         + phones × trade-in given up  (the maker's trade-in estimate of the old
+//                                        phone, whether a carrier promo or Apple
+//                                        takes it)
 //
 // `lines` is how many lines the plan carries; `phones` is how many of them get
 // the new phone (each with the same trade-in). A promo's `maxDevices` caps how
@@ -20,8 +21,9 @@
 // The last line is what makes "on us" honest: a phone handed to a carrier for
 // bill credits is extra out-of-pocket at what its maker's own trade-in program
 // would have paid for it: Apple Trade In for an iPhone, Samsung's for a Galaxy,
-// Google Store's for a Pixel. Trading it in there on the buy-from-Apple route is
-// not a cost — it is money off the phone.
+// Google Store's for a Pixel. Trading it in there on the buy-from-Apple route
+// takes that value off the phone, and the phone is still given up — so the
+// route costs plan + (phone − trade-in) + trade-in, the same footing as a deal.
 
 const round2 = (n) => Math.round(n * 100) / 100;
 
@@ -191,7 +193,9 @@ export function buildScenarios(data, input) {
           const retail = li.phone.retail;
           const tradeInValue = li.tradeIn?.value || 0;
           if (byod) {
-            return { phoneName: phoneName(li.phone), tradeInName: li.tradeIn?.name || null, tradeInProgram: li.tradeIn ? tradeInProgram(li.tradeIn) : null, retail, credit: 0, appleTradeIn: Math.min(tradeInValue, retail), tradeInValue: 0 };
+            // The old phone comes off the price, but it is still given up: count it at that value.
+            const appleTradeIn = Math.min(tradeInValue, retail);
+            return { phoneName: phoneName(li.phone), tradeInName: li.tradeIn?.name || null, tradeInProgram: li.tradeIn ? tradeInProgram(li.tradeIn) : null, retail, credit: 0, appleTradeIn, tradeInValue: appleTradeIn };
           }
           const needsTrade = !!promo.requires?.tradeIn;
           const tier = needsTrade ? (li.tradeIn ? tierFor(promo, li.tradeIn.id) : null) : tierFor(promo, null);
