@@ -13,3 +13,9 @@ test("the page tells iPhone Duo shoppers support follows the 10/16 pre-order", (
   assert.match(text, /10\/16/);
   assert.match(text, /pre-order/i);
 });
+
+test("every Buy me a coffee link goes to buymeacoffee.com/risingben", () => {
+  const links = [...html.matchAll(/https:\/\/buymeacoffee\.com\/[\w-]+/g)].map((m) => m[0]);
+  assert.ok(links.length > 0, "the page links to Buy me a coffee");
+  for (const l of links) assert.equal(l, "https://buymeacoffee.com/risingben");
+});
