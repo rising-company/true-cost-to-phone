@@ -114,6 +114,17 @@
       text-transform: uppercase; color: var(--text-label); margin-top: 24px;
     }
     .hero-trust b { font-weight: normal; color: var(--accent-ink); }
+    /* ── Banner ──
+       One line of news above the hero: what the tool doesn't price yet and when it
+       will. Remove it once the phone is in data/pricing.json. */
+    .banner {
+      position: relative; z-index: 1; margin-top: 24px; padding: 12px 16px;
+      border: 1px solid var(--accent-line); border-radius: 4px; background: var(--accent-wash);
+      font-family: "Share Tech Mono", monospace; font-size: 13px; letter-spacing: 0.04em;
+      line-height: 1.6; color: var(--text-body);
+    }
+    .banner b { font-weight: normal; color: var(--accent-ink); text-transform: uppercase; letter-spacing: 0.15em; margin-right: 8px; }
+    @media (max-width: 640px) { .banner { margin-top: 16px; font-size: 12px; } }
     .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
     /* ── Folds ──
@@ -189,6 +200,15 @@
     .summary .big small { font-family: "Share Tech Mono", monospace; font-size: 13px; letter-spacing: 0.06em; color: var(--text-subtle); }
     .summary .route { font-size: 14px; font-weight: 500; color: var(--text-muted); line-height: 1.4; }
     .summary .card.is-best { border-color: var(--accent-line); background: var(--accent-wash); }
+    /* Each card is a link to its route in "Every combination". */
+    a.card { color: inherit; text-decoration: none; cursor: pointer; transition: border-color 0.2s; }
+    a.card:hover { border-color: var(--border-hover); }
+    a.card.is-best:hover { border-color: var(--accent-ink); }
+    a.card:focus-visible { outline: 1px solid var(--accent-ink); outline-offset: 2px; }
+    /* The row a card jumped to: a short accent ring, so the eye lands on it. */
+    @keyframes row-flash { from { box-shadow: 0 0 0 2px var(--accent-ink); } to { box-shadow: 0 0 0 2px transparent; } }
+    .row.is-flash { animation: row-flash 1.6s ease-out; }
+    @media (prefers-reduced-motion: reduce) { .row.is-flash { animation-duration: 0.01s; } }
 
     /* ── Summary chart: one stacked bar per carrier, cheapest first ── */
     .summary-chart { margin-bottom: 32px; padding: 20px 24px; }
@@ -485,6 +505,9 @@
   </nav>
 
   <main>
+    <div class="shell">
+      <aside class="banner" aria-label="Coming soon"><b>Coming soon</b>iPhone Duo support arrives shortly after pre-orders open on 10/16.</aside>
+    </div>
     <section class="shell hero reveal" aria-labelledby="hero-title">
       <div class="eyebrow">// Rising Company</div>
       <h1 class="hero-title" id="hero-title">Upgrading your iPhone shouldn't take a spreadsheet.</h1>

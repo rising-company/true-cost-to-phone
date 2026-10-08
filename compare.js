@@ -13,6 +13,8 @@ export const MAX_ROUTES = 5;
 const SERIES = ["#0b7a4e", "#1f5fbf", "#c46a12", "#8a3f9e", "#c2185b"];
 
 export const routeKey = (r) => `${r.carrierId}|${r.planId}|${r.route}`;
+/** The id of a route's row in "Every combination", so a summary card can point at it. */
+export const routeAnchor = (r) => `route-${routeKey(r)}`.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
 export function renderCompare(rows, keys) {
   const picked = keys.map((k) => rows.find((r) => routeKey(r) === k)).filter(Boolean);

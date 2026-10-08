@@ -5,7 +5,7 @@
 import { buildScenarios, tierCredit, heroSummary, tradeInGroups, tradeInProgram } from "./calc.js";
 import { USAGE_FLOOR, HEADLINE_SCENARIO } from "./scenario.js";
 import { MAX_PLANS, defaultPlanIds, renderPicker, renderComparison, renderSummaryChart } from "./plans.js";
-import { MAX_ROUTES, routeKey, renderCompare } from "./compare.js";
+import { MAX_ROUTES, routeKey, routeAnchor, renderCompare } from "./compare.js";
 import { init as initAnalytics, track, situationProps, situationIsNew } from "./analytics.js";
 
 const $ = (sel) => document.querySelector(sel);
@@ -214,11 +214,11 @@ function renderSummary(rows) {
       const r = best.get(c.id);
       if (!r) return `<div class="card"><div class="stat-label">${esc(c.name)}</div><div class="route">No plan fits the current filters.</div></div>`;
       const isBest = r === cheapest; // the wash and the first position say "cheapest"; a label would only crowd the card
-      return `<div class="card${isBest ? " is-best" : ""}">
+      return `<a class="card${isBest ? " is-best" : ""}" href="#${routeAnchor(r)}" data-jump="${routeAnchor(r)}" data-carrier-id="${c.id}">
         <div class="stat-label"><span>${esc(c.name)}${isBest ? '<span class="sr-only"> — cheapest</span>' : ""}</span></div>
         <div class="big">${usd.format(r.total)}<small>${usd.format(r.perMonth)}/mo</small></div>
         <div class="route">${esc(r.planName)} · ${esc(r.routeName)}${r.unverified ? " · <em>credit unverified</em>" : ""}</div>
-      </div>`;
+      </a>`;
     })
     .join("");
 }
@@ -273,7 +273,7 @@ function renderRows(allRows) {
       const src = r.sourceKey && data.meta.sources[r.sourceKey];
       if (src) notes.push(`<a href="${esc(src)}" target="_blank" rel="noopener noreferrer">Offer terms ↗</a>`);
       const delta = r.total - cheapest;
-      return `<article class="card row${r.rank === 1 ? " is-best" : ""}">
+      return `<article class="card row${r.rank === 1 ? " is-best" : ""}" id="${routeAnchor(r)}">
         <div class="rank">${String(r.rank).padStart(2, "0")}</div>
         <div class="row-body">
           <div class="card-tag"><span>${esc(r.carrierName)} · ${esc(r.planName)}</span><span class="plan-monthly">${planPriceLabel(r)} · ${esc(r.network)} network</span></div>
@@ -466,6 +466,22 @@ async function main() {
     track("compare_tray_used", { picked: compareKeys.length });
     selectTab("compare");
     $(".tabs").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  // A carrier's card jumps to its cheapest route below. That row is always among the
+  // ones shown, unless the list is filtered to another carrier — then the filter goes.
+  $("#summary").addEventListener("click", (e) => {
+    const card = e.target.closest("[data-jump]");
+    if (!card) return;
+    e.preventDefault();
+    if (carrierFilter && carrierFilter !== card.dataset.carrierId) { carrierFilter = ""; render(); }
+    const row = document.getElementById(card.dataset.jump);
+    if (!row) return;
+    track("summary_card_jumped", { carrier: card.dataset.carrierId });
+    row.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
+    row.classList.remove("is-flash");
+    void row.offsetWidth; // restart the highlight on a repeat click
+    row.classList.add("is-flash");
+    row.addEventListener("animationend", () => row.classList.remove("is-flash"), { once: true });
   });
   $("#carrier-filter").addEventListener("click", (e) => {
     const chip = e.target.closest("[data-carrier]");
