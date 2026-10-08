@@ -30,16 +30,17 @@ cheapest first.
 own new phone (or none) and its own trade-in (or none). Promotions credit each line on its
 own trade-in; a line without a qualifying trade-in pays full price on that route. One-time
 fees are per line regardless. T-Mobile promotions credit at most four devices per account.
-Xfinity's first-year price covers one line; Mint's $15 intro year applies per line. Verizon's
+Xfinity's first-year price covers one line; Mint's $10 intro 6 months applies per line. Verizon's
 myPlan gives new 3+-line accounts a $10/mo account credit for 36 months; Simplicity is one
 flat price per line.
 
 The **Extra savings** card holds account-level toggles:
 
 - **Switching carriers** — new line + port-in, which unlocks port-in deals and intro prices.
-- **Costco member** — buy through Costco. T-Mobile: $150 Shop Card per financed phone on an
-  $85+ plan, $250 prepaid Visa per financed phone on a new $100+ account with port-in (max 4),
-  $75 Shop Card per new line without a financed phone, device connection charge waived.
+- **Costco member** — buy through Costco. T-Mobile: $150 Shop Card + $250 prepaid Visa
+  per financed phone when switching to Experience Beyond with a port-in (Visa max 4), $75
+  Shop Card per new line without a financed phone, $100 Shop Card per financed phone when
+  upgrading an existing line, device connection charge waived.
   AT&T: $250 bill credits + $100 Shop Card per ported line with a financed phone (replaces
   the $200 online credit), activation waived; bring-your-own does not qualify. Cards are
   counted at face value. Costco sells no Verizon, Xfinity, Tello or Mint plans.
@@ -110,21 +111,22 @@ What's in it:
 
 Things worth knowing that the marketing copy hides:
 
-- T-Mobile's "iPhone 18 Pro on Us" needs an iPhone 15 Pro or newer. An iPhone 14 lands in
-  the $930 tier on Beyond 2.0, $730 on Experience More 2.0, $300 on Essentials 2.0.
+- T-Mobile's "up to $1,000 off" needs an iPhone 15 Pro or newer. An iPhone 14 lands in
+  the $730 tier on Beyond 2.0, $630 on Experience More 2.0, $300 on Essentials 2.0.
 - AT&T's $1,200 takes any iPhone 14 or newer in any condition, but only on Premium 2.0 or
   Elite 2.0; Extra 2.0 gets $930, Value 2.0 gets $500.
 - Xfinity's deals require Xfinity Internet and the Mobile Plus line; Mobile Select is
   cheaper but unlocks no phone deals. Its "up to $1,300" is $600 for an iPhone 14, $700 for
   an iPhone 15, and only reaches $1,300 from iPhone 15 Pro up.
-- Verizon's "up to $1,200" is the new-line credit on Unlimited Ultimate for an iPhone 14
-  or newer (any working condition); upgrading an existing line gets $1,020. Unlimited Plus
-  pays $840 / $660, Unlimited Welcome $480 / $300, and any older phone lands in a tier
-  worth half. Simplicity has no phone deals at all — its pitch is the flat $30/line
+- Verizon's "up to $1,000" is the new-line credit on Unlimited Ultimate for an iPhone 14
+  or newer (any working condition); upgrading an existing line gets $840. Unlimited Plus
+  pays $840 / $660, Unlimited Welcome $480 / $300. An older phone gets half on a new line
+  and nothing on an upgrade. Simplicity has no phone deals at all — its pitch is the flat $30/line
   switcher price with the phone bought from Apple. Simplicity Pro ($50/mo on top, phone
   returned every year) is a lease, so it is not a route.
-- Mint Mobile is priced on its 12-month prepaid plans; new customers get $15/mo for the
-  first year on any plan, then $30/mo for Unlimited. 3- and 6-month terms cost more.
+- Mint Mobile is priced on its 12-month prepaid plans; new customers get any 6-month plan
+  for $10/mo for the first 6 months, then $30/mo for Unlimited on a 12-month plan. 3-month
+  terms cost more.
 - Taxes are excluded everywhere. T-Mobile, AT&T and Verizon prices are with AutoPay (AT&T
   and Verizon also paperless); Xfinity prices include the $10 internet-customer discount.
   Verizon's $40 activation fee is counted as $0 because the free Loyalty opt-in waives it.

@@ -117,6 +117,7 @@ function costcoFor(carrier, plan, { byod, financed, lines, input }) {
     const r = o.requires || {};
     if (r.minPlanMonthly && tier < r.minPlanMonthly) continue;
     if ((r.portIn || r.newLine) && !input.switching) continue;
+    if (r.existingLine && input.switching) continue;
     const count = o.perLine === "financed" ? financed : Math.max(0, lines - financed);
     const n = Math.min(count, o.maxPerAccount ?? count);
     if (n > 0) items.push({ id: o.id, name: o.name, value: o.value * n, count: n });

@@ -1,6 +1,6 @@
 {
   "meta": {
-    "crawledAt": "2026-09-22",
+    "crawledAt": "2026-10-08",
     "currency": "USD",
     "defaultTermMonths": 36,
     "notes": [
@@ -10,12 +10,12 @@
       "Verizon prices are after the Auto Pay + paper-free billing discount ($10/line more without). myPlan 1- and 2-line figures follow the May 2026 Unlimited Ultimate increase (+$5); 3- and 4+-line standard rates are from Verizon's plan page, and the $10/mo account credit it gives new 3+-line accounts for 36 months is applied when switching. Simplicity is one flat price per line; its $15/line switch discount has no published end date and is applied for the whole term. Simplicity Pro ($50/mo on top, phone installment credited, phone returned every year) is a lease, not a purchase, so it is not a route. Verizon's $40 activation/upgrade fee is waived with the free Loyalty opt-in and is counted as $0. Costco sells no Verizon plans.",
       "Bill-credit promotions pay out monthly over the term. Leaving early forfeits the remaining credits and the device balance is due.",
       "Trade-in value counts as a cost: when a promotion takes your old phone, its Apple Trade In estimate is added to the total so every route is compared on the same footing.",
-      "Mint Mobile is priced on its 12-month prepaid plans (the cheapest term). New customers pay $15/mo for the first 12 months on any plan ($180 upfront), then the regular 12-month rate. 3- and 6-month terms cost more per month and are not modeled.",
-      "Multi-line: plan prices are account totals per line count with AutoPay. T-Mobile and AT&T were read from their plan pages for 1–5 lines (T-Mobile Beyond to 8; Essentials 2.0 is shown only at 1, 3, 4 and 5 lines — the 4- and 5-line prices are its 4 Line Offer, Essentials Saver at 1 and 2). Xfinity, Tello and Mint charge the same per line, so those totals are per-line price × lines.",
-      "Xfinity's first-year price applies to one line per account; extra lines pay the regular rate. Mint's $15 new-customer year is applied to every line (family lines are priced like single 12-month lines).",
+      "Mint Mobile is priced on its 12-month prepaid plans (the cheapest regular term). New customers can take any 6-month plan for $10/mo for the first 6 months ($60 upfront), then move to the regular 12-month rate; that is modeled as a 6-month intro on each plan. The 12-month plans no longer carry a new-customer discount. 3-month terms cost more per month and are not modeled.",
+      "Multi-line: plan prices are account totals per line count with AutoPay. T-Mobile and AT&T were read from their plan pages for 1–5 lines (T-Mobile Beyond to 8; Essentials 2.0 at 1–5 lines — the 4- and 5-line prices are its 4 Line Offer; Essentials Saver only at 1 and 2). Xfinity, Tello and Mint charge the same per line, so those totals are per-line price × lines.",
+      "Xfinity's first-year price applies to one line per account; extra lines pay the regular rate. Mint's $10 new-customer 6 months is applied to every line (family lines are priced like single 12-month lines).",
       "T-Mobile promotions cover at most four discounted devices per account; phones beyond that pay full price.",
-      "Costco: member benefits read from Costco's AT&T and T-Mobile showcases on 2026-09-22. Shop Cards and prepaid Visa cards are counted at face value against the total. Costco sells no Xfinity, Tello or Mint plans.",
-      "Trade-in values come from each phone maker's own program: Apple Trade In for iPhones, Samsung's standalone trade-in (run by Likewize, pays without a purchase) for Galaxy phones, and the Google Store estimator for Pixels, each at top storage in good condition. Google pays the same for a phone whichever Pixel is bought. Galaxy S26 and Pixel 11 are not in either maker's program yet, so they are not offered as trade-ins."
+      "Costco: member benefits read from Costco's AT&T and T-Mobile showcases on 2026-10-08. Shop Cards and prepaid Visa cards are counted at face value against the total. Costco sells no Xfinity, Tello or Mint plans.",
+      "Trade-in values come from each phone maker's own program: Apple Trade In for iPhones, Samsung's standalone trade-in (run by Likewize, pays without a purchase) for Galaxy phones, and the Google Store estimator for Pixels, each at top storage in good condition. Google pays the same for a phone whichever Pixel is bought. Galaxy S26 and Pixel 11 are not in either maker's program yet, so they are not offered as trade-ins. Samsung and Google values were last read on 2026-09-22: neither estimator answered automated requests on 2026-10-08."
     ],
     "sources": {
       "tello": "https://tello.com/buy/custom_plans",
@@ -973,13 +973,13 @@
             "5": 75
           },
           "intro": {
-            "months": 12,
+            "months": 6,
             "monthly": {
-              "1": 15,
-              "2": 30,
-              "3": 45,
-              "4": 60,
-              "5": 75
+              "1": 10,
+              "2": 20,
+              "3": 30,
+              "4": 40,
+              "5": 50
             },
             "requires": {
               "newLine": true
@@ -1001,19 +1001,19 @@
             "5": 100
           },
           "intro": {
-            "months": 12,
+            "months": 6,
             "monthly": {
-              "1": 15,
-              "2": 30,
-              "3": 45,
-              "4": 60,
-              "5": 75
+              "1": 10,
+              "2": 20,
+              "3": 30,
+              "4": 40,
+              "5": 50
             },
             "requires": {
               "newLine": true
             }
           },
-          "notes": "Prepaid 12 months ($240 after the intro year) · hotspot from plan data"
+          "notes": "Prepaid 12 months ($240) · hotspot from plan data"
         },
         {
           "id": "mint-23gb-12",
@@ -1029,19 +1029,19 @@
             "5": 125
           },
           "intro": {
-            "months": 12,
+            "months": 6,
             "monthly": {
-              "1": 15,
-              "2": 30,
-              "3": 45,
-              "4": 60,
-              "5": 75
+              "1": 10,
+              "2": 20,
+              "3": 30,
+              "4": 40,
+              "5": 50
             },
             "requires": {
               "newLine": true
             }
           },
-          "notes": "Prepaid 12 months ($300 after the intro year) · hotspot from plan data"
+          "notes": "Prepaid 12 months ($300) · hotspot from plan data"
         },
         {
           "id": "mint-unlimited-12",
@@ -1057,19 +1057,19 @@
             "5": 150
           },
           "intro": {
-            "months": 12,
+            "months": 6,
             "monthly": {
-              "1": 15,
-              "2": 30,
-              "3": 45,
-              "4": 60,
-              "5": 75
+              "1": 10,
+              "2": 20,
+              "3": 30,
+              "4": 40,
+              "5": 50
             },
             "requires": {
               "newLine": true
             }
           },
-          "notes": "Prepaid 12 months ($360 after the intro year) · may slow past 50 GB when busy · 20 GB hotspot · SD video"
+          "notes": "Prepaid 12 months ($360) · may slow past 50 GB when busy · 20 GB hotspot · SD video"
         }
       ],
       "promos": []
@@ -1127,6 +1127,7 @@
           "minutes": "unlimited",
           "monthly": {
             "1": 60,
+            "2": 90,
             "3": 90,
             "4": 100,
             "5": 125
@@ -1149,7 +1150,7 @@
       "promos": [
         {
           "id": "tmo-ID260835",
-          "name": "iPhone 18 Pro on Us — any-condition trade-in",
+          "name": "Up to $1,000 off — any-condition trade-in, Experience Beyond",
           "sourceKey": "tmobile-iphone",
           "plans": [
             "tmo-beyond-2"
@@ -1164,7 +1165,7 @@
           },
           "tiers": [
             {
-              "credit": 1200,
+              "credit": 1000,
               "devices": [
                 "iphone-17",
                 "iphone-17-pro",
@@ -1193,7 +1194,7 @@
               ]
             },
             {
-              "credit": 930,
+              "credit": 730,
               "devices": [
                 "iphone-15",
                 "iphone-15-plus",
@@ -1241,7 +1242,7 @@
         },
         {
           "id": "tmo-ID260824",
-          "name": "iPhone 18 Pro on Us — new line and port-in, no trade-in",
+          "name": "Up to $1,000 off — new line and port-in, no trade-in",
           "sourceKey": "tmobile-iphone",
           "plans": [
             "tmo-beyond-2"
@@ -1255,7 +1256,7 @@
           },
           "tiers": [
             {
-              "credit": 1200,
+              "credit": 1000,
               "otherwise": true
             }
           ],
@@ -1263,7 +1264,7 @@
         },
         {
           "id": "tmo-ID260838",
-          "name": "Up to $930 off — trade-in, Experience More or Beyond",
+          "name": "Up to $830 off — trade-in, Experience More or Beyond",
           "sourceKey": "tmobile-iphone",
           "plans": [
             "tmo-more-2",
@@ -1279,7 +1280,7 @@
           },
           "tiers": [
             {
-              "credit": 930,
+              "credit": 830,
               "devices": [
                 "iphone-17-pro-max",
                 "iphone-17-pro",
@@ -1308,7 +1309,7 @@
               ]
             },
             {
-              "credit": 730,
+              "credit": 630,
               "devices": [
                 "iphone-15-plus",
                 "iphone-15",
@@ -1344,8 +1345,7 @@
                 "pixel-8-pro",
                 "pixel-7-pro",
                 "pixel-6-pro",
-                "pixel-fold",
-                "pixel-7"
+                "pixel-fold"
               ]
             },
             {
@@ -1357,7 +1357,7 @@
         },
         {
           "id": "tmo-more-port",
-          "name": "Up to $930 off — new line and port-in, no trade-in",
+          "name": "Up to $830 off — new line and port-in, no trade-in",
           "sourceKey": "tmobile-iphone",
           "plans": [
             "tmo-more-2",
@@ -1372,7 +1372,7 @@
           },
           "tiers": [
             {
-              "credit": 930,
+              "credit": 830,
               "otherwise": true
             }
           ],
@@ -1559,7 +1559,7 @@
       "costco": {
         "sourceKey": "costco-tmobile",
         "feeWaivedWithFinancedPhone": true,
-        "note": "Costco member benefits stack on T-Mobile's own promotions. Device connection charge is waived on financed phones bought through Costco.",
+        "note": "Costco member benefits stack on T-Mobile's own promotions. Switching to Experience Beyond with a financed phone and a port-in earns a $150 Shop Card plus a $250 prepaid Visa; upgrading an existing line earns a $100 Shop Card. Device connection charge is waived on financed phones bought through Costco.",
         "offers": [
           {
             "id": "tmo-costco-shopcard-150",
@@ -1568,7 +1568,8 @@
             "perLine": "financed",
             "maxPerAccount": 12,
             "requires": {
-              "minPlanMonthly": 85
+              "minPlanMonthly": 100,
+              "portIn": true
             }
           },
           {
@@ -1591,6 +1592,15 @@
             "requires": {
               "minPlanMonthly": 85,
               "newLine": true
+            }
+          },
+          {
+            "id": "tmo-costco-shopcard-upgrade-100",
+            "name": "$100 Costco Shop Card (upgrade)",
+            "value": 100,
+            "perLine": "financed",
+            "requires": {
+              "existingLine": true
             }
           }
         ]
@@ -1990,7 +2000,7 @@
               "newLine": true
             }
           },
-          "notes": "Unlimited premium data · 200 GB hotspot · 3-year price lock · the full $1,200 trade-in tier"
+          "notes": "Unlimited premium data · 200 GB hotspot · 3-year price lock · the full $1,000 trade-in tier"
         },
         {
           "id": "vz-plus",
@@ -2076,7 +2086,7 @@
       "promos": [
         {
           "id": "vz-tradein-ultimate-new",
-          "name": "Up to $1,200 off — tier 1 trade-in, new line",
+          "name": "Up to $1,000 off — tier 1 trade-in, new line",
           "sourceKey": "bestbuy-verizon-tradein",
           "plans": [
             "vz-ultimate"
@@ -2091,7 +2101,7 @@
           },
           "tiers": [
             {
-              "credit": 1200,
+              "credit": 1000,
               "devices": [
                 "iphone-14",
                 "iphone-14-plus",
@@ -2143,12 +2153,20 @@
                 "pixel-10",
                 "pixel-10-pro",
                 "pixel-10-pro-fold",
-                "pixel-10-pro-xl"
+                "pixel-10-pro-xl",
+                "galaxy-s22",
+                "galaxy-s22-plus",
+                "galaxy-s22-ultra",
+                "galaxy-z-flip4",
+                "galaxy-z-fold4",
+                "pixel-6a",
+                "pixel-7",
+                "pixel-7-pro"
               ],
-              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, as listed by Best Buy on 2026-09-22."
+              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, Galaxy S22 and newer, Z Flip4/Fold4 and newer, Pixel 6a, 7 and newer, as listed by Best Buy on 2026-10-08."
             },
             {
-              "credit": 600,
+              "credit": 500,
               "otherwise": true,
               "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone."
             }
@@ -2157,7 +2175,7 @@
         },
         {
           "id": "vz-tradein-ultimate-upgrade",
-          "name": "Up to $1,020 off — tier 1 trade-in, upgrade an existing line",
+          "name": "Up to $840 off — tier 1 trade-in, upgrade an existing line",
           "sourceKey": "bestbuy-verizon-tradein",
           "plans": [
             "vz-ultimate"
@@ -2173,7 +2191,7 @@
           },
           "tiers": [
             {
-              "credit": 1020,
+              "credit": 840,
               "devices": [
                 "iphone-14",
                 "iphone-14-plus",
@@ -2225,14 +2243,22 @@
                 "pixel-10",
                 "pixel-10-pro",
                 "pixel-10-pro-fold",
-                "pixel-10-pro-xl"
+                "pixel-10-pro-xl",
+                "galaxy-s22",
+                "galaxy-s22-plus",
+                "galaxy-s22-ultra",
+                "galaxy-z-flip4",
+                "galaxy-z-fold4",
+                "pixel-6a",
+                "pixel-7",
+                "pixel-7-pro"
               ],
-              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, as listed by Best Buy on 2026-09-22."
+              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, Galaxy S22 and newer, Z Flip4/Fold4 and newer, Pixel 6a, 7 and newer, as listed by Best Buy on 2026-10-08."
             },
             {
-              "credit": 510,
+              "credit": 0,
               "otherwise": true,
-              "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone."
+              "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone. Best Buy lists no tier 2 credit for an upgrade, only for a new line."
             }
           ],
           "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen."
@@ -2306,9 +2332,17 @@
                 "pixel-10",
                 "pixel-10-pro",
                 "pixel-10-pro-fold",
-                "pixel-10-pro-xl"
+                "pixel-10-pro-xl",
+                "galaxy-s22",
+                "galaxy-s22-plus",
+                "galaxy-s22-ultra",
+                "galaxy-z-flip4",
+                "galaxy-z-fold4",
+                "pixel-6a",
+                "pixel-7",
+                "pixel-7-pro"
               ],
-              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, as listed by Best Buy on 2026-09-22."
+              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, Galaxy S22 and newer, Z Flip4/Fold4 and newer, Pixel 6a, 7 and newer, as listed by Best Buy on 2026-10-08."
             },
             {
               "credit": 420,
@@ -2388,14 +2422,22 @@
                 "pixel-10",
                 "pixel-10-pro",
                 "pixel-10-pro-fold",
-                "pixel-10-pro-xl"
+                "pixel-10-pro-xl",
+                "galaxy-s22",
+                "galaxy-s22-plus",
+                "galaxy-s22-ultra",
+                "galaxy-z-flip4",
+                "galaxy-z-fold4",
+                "pixel-6a",
+                "pixel-7",
+                "pixel-7-pro"
               ],
-              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, as listed by Best Buy on 2026-09-22."
+              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, Galaxy S22 and newer, Z Flip4/Fold4 and newer, Pixel 6a, 7 and newer, as listed by Best Buy on 2026-10-08."
             },
             {
-              "credit": 330,
+              "credit": 0,
               "otherwise": true,
-              "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone."
+              "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone. Best Buy lists no tier 2 credit for an upgrade, only for a new line."
             }
           ],
           "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen."
@@ -2469,9 +2511,17 @@
                 "pixel-10",
                 "pixel-10-pro",
                 "pixel-10-pro-fold",
-                "pixel-10-pro-xl"
+                "pixel-10-pro-xl",
+                "galaxy-s22",
+                "galaxy-s22-plus",
+                "galaxy-s22-ultra",
+                "galaxy-z-flip4",
+                "galaxy-z-fold4",
+                "pixel-6a",
+                "pixel-7",
+                "pixel-7-pro"
               ],
-              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, as listed by Best Buy on 2026-09-22."
+              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, Galaxy S22 and newer, Z Flip4/Fold4 and newer, Pixel 6a, 7 and newer, as listed by Best Buy on 2026-10-08."
             },
             {
               "credit": 240,
@@ -2551,14 +2601,22 @@
                 "pixel-10",
                 "pixel-10-pro",
                 "pixel-10-pro-fold",
-                "pixel-10-pro-xl"
+                "pixel-10-pro-xl",
+                "galaxy-s22",
+                "galaxy-s22-plus",
+                "galaxy-s22-ultra",
+                "galaxy-z-flip4",
+                "galaxy-z-fold4",
+                "pixel-6a",
+                "pixel-7",
+                "pixel-7-pro"
               ],
-              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, as listed by Best Buy on 2026-09-22."
+              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, Galaxy S22 and newer, Z Flip4/Fold4 and newer, Pixel 6a, 7 and newer, as listed by Best Buy on 2026-10-08."
             },
             {
-              "credit": 150,
+              "credit": 0,
               "otherwise": true,
-              "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone."
+              "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone. Best Buy lists no tier 2 credit for an upgrade, only for a new line."
             }
           ],
           "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen."
@@ -2576,7 +2634,7 @@
       ],
       "fees": {
         "perLineOneTime": 25,
-        "label": "$25 activation fee per line (waived on a first order through 2026-09-21)"
+        "label": "$25 activation fee per line"
       },
       "plans": [
         {
