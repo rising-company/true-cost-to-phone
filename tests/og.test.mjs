@@ -15,9 +15,9 @@ const data = JSON.parse(readFileSync(new URL("../data/pricing.json", import.meta
 const ON_THE_CARD = {
   crawledAt: "2026-09-22",
   cheapestCarrier: "tello",
-  cheapestTotal: 1589,
-  priciestTotal: 3244,
-  spread: 1655,
+  cheapestTotal: 2099,
+  priciestTotal: 3334,
+  spread: 1235,
   carriers: 6,
 };
 

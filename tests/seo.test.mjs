@@ -100,10 +100,10 @@ test("a carrier page shows its promos, each against buying outright on that same
   assert.ok(att.deals.routes.every((r) => r.route !== "byod"), "the baseline is not itself a deal");
   const extra930 = att.deals.routes.find((r) => r.planId === "att-extra-2");
   assert.equal(extra930.total, 3134);
-  assert.equal(extra930.samePlanBaseline, 3044, "Extra 2.0 with the phone bought outright");
-  assert.equal(extra930.vsSamePlan, 90, "the $930-off deal still costs $90 more than declining it");
+  assert.equal(extra930.samePlanBaseline, 3554, "Extra 2.0 with the phone bought outright, the iPhone 16 Pro traded to Apple");
+  assert.equal(extra930.vsSamePlan, -420, "the $930-off deal beats trading the same phone to Apple by $420");
   const premium = att.deals.routes.find((r) => r.planId === "att-premium-2");
-  assert.equal(premium.vsSamePlan, -179, "the $1,200 deal wins once the $200 online line credit is not lost against the phone");
+  assert.equal(premium.vsSamePlan, -689, "the $1,200 deal wins, the $200 online line credit not lost against the phone");
 });
 
 test("a carrier with no promotions says so rather than inventing one", () => {

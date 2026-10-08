@@ -193,7 +193,7 @@ function segments(row) {
     { key: "plan", label: "Plan", value: row.plan, seg: "var(--seg-plan)" },
     { key: "phone", label: row.phones > 1 ? `Phones ×${row.phones}` : "Phone", value: row.phoneNet, seg: "var(--seg-phone)" },
     { key: "fees", label: "Fees", value: row.fees, seg: "var(--seg-fees)" },
-    { key: "tradein", label: "Trade-in to deal", value: row.tradeInValue, seg: "var(--seg-tradein)" },
+    { key: "tradein", label: row.route === "byod" ? "Trade-in to Apple" : "Trade-in to deal", value: row.tradeInValue, seg: "var(--seg-tradein)" },
   ];
 }
 
@@ -260,7 +260,7 @@ function renderRows(allRows) {
       const notes = [];
       if (r.planIntro) notes.push(`Plan is ${usd.format(r.planIntro.monthly)}/mo for the first ${r.planIntro.months} months as a new customer, then ${usd.format(r.planMonthly)}/mo — ${usd.format(r.plan)} over ${r.termMonths} months.`);
       if (r.route !== "byod" && r.tradeInValue > 0) notes.push(`Hands your ${esc(r.tradeInName)} to the carrier — that is ${usd.format(r.tradeInValue)} out of pocket, what ${esc(programsOf(r))} would have paid.`);
-      if (r.route === "byod" && r.appleTradeIn > 0) notes.push(`Trades ${esc([...new Set(r.lineDetails.filter((l) => l.tradeInName).map((l) => l.tradeInName))].join(", "))} in through ${esc(programsOf(r))} for ${usd.format(r.appleTradeIn)} off the phone${r.phones > 1 ? "s" : ""}.`);
+      if (r.route === "byod" && r.appleTradeIn > 0) notes.push(`Trades ${esc([...new Set(r.lineDetails.filter((l) => l.tradeInName).map((l) => l.tradeInName))].join(", "))} in through ${esc(programsOf(r))} for ${usd.format(r.appleTradeIn)} off the phone${r.phones > 1 ? "s" : ""} — and gives it up, so that ${usd.format(r.appleTradeIn)} is counted back in.`);
       if (r.lines > 1 && r.phones > 0) notes.push(r.lineDetails.map((l, i) => `Line ${i + 1}: ${l.phoneName ? esc(l.phoneName) + (l.credit ? ` − ${usd.format(l.credit)}` : "") + (l.appleTradeIn ? ` − ${usd.format(l.appleTradeIn)} ${esc(l.tradeInProgram)}` : "") : "no new phone"}`).join(" · "));
       if (r.simUnlocked) notes.push("Apple sells it unlocked — switch carriers any time, no payoff to leave.");
       if (r.stacked > 0) notes.push(`Includes the ${usd.format(r.stacked)} online new-line credit${r.lines > 1 ? ` (${r.lines} lines)` : ""}${r.planCredit > 0 ? ` — a bill credit on the line, so the ${usd.format(r.planCredit)} the phone cannot absorb comes off the plan` : ""}.`);

@@ -42,7 +42,7 @@ export function renderCompare(rows, keys) {
       ${row("Credits", (r) => (r.credits ? `−${usd.format(r.credits)}` : "—"))}
       ${row("Trade-in value", (r) => (r.appleTradeIn ? `−${usd.format(r.appleTradeIn)}` : "—"))}
       ${row("One-time fees", (r) => (r.fees ? usd.format(r.fees) : r.feesWaived ? "Waived" : "—"))}
-      ${row("Trade-in into the deal", (r) => (r.tradeInValue ? `${usd.format(r.tradeInValue)}<span class="delta">${esc(r.tradeInName || "")}</span>` : "—"))}
+      ${row("Trade-in given up", (r) => (r.tradeInValue ? `${usd.format(r.tradeInValue)}<span class="delta">${esc(r.tradeInName || "")}</span>` : "—"))}
       ${row("Costco", (r) => (r.costcoValue ? `−${usd.format(r.costcoValue)}` : "—"))}
       ${row("Requires", (r) => (r.requires.length ? esc(r.requires.join(" · ")) : "—"))}
       ${row("Phone lock", (r) => (r.phones === 0 ? "—" : r.simUnlocked ? "SIM unlocked" : "Locked until paid off"))}

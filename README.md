@@ -12,13 +12,13 @@ A static tool in the Rising Company **Daylight** theme. No build step: `index.ht
 total = monthly plan × 36
       + phone price − promo credits        (buying from Apple: − trade-in value instead)
       + one-time fees                       (activation · device connection charge)
-      + trade-in into the deal              (maker's trade-in estimate of the phone the carrier takes)
+      + trade-in given up                   (maker's trade-in estimate of the phone the carrier or Apple takes)
 ```
 
-A phone handed to a carrier for bill credits is extra out-of-pocket at what Apple would
-have paid for it — trading an iPhone 16 Pro into a deal costs you the $510 Apple offers.
-Buying from Apple instead trades that phone in to Apple, so its value simply comes off the
-price.
+The phone you trade in is out-of-pocket at what Apple would pay for it, whichever route
+takes it. Handed to a carrier for bill credits, an iPhone 16 Pro costs you the $510 Apple
+offers. Traded to Apple, the $510 comes off the new phone and is counted back as the phone
+given up — so Tello unlimited with an iPhone 18 Pro Max is $25 × 36 + ($1,299 − $510) + $510.
 
 Every (carrier, plan, route) combination is priced: the "buy from Apple with trade-in,
 bring your own" route on every plan, plus each promotion the plan qualifies for. Sorted

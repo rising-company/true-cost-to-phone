@@ -132,10 +132,10 @@ ${body}
 function method(page) {
   return `<h2>How this is counted</h2>
 <p>Everything over ${page.termMonths} months: the plan, the phone after any bill credits,
-one-time fees, and — the step most comparisons skip — the phone you hand the carrier.
-A phone traded into a deal for bill credits is money out of your pocket at exactly what
-Apple would have paid you for it. Buying from Apple instead sells that phone to Apple,
-so its value comes off the price rather than being given away.</p>
+one-time fees, and — the step most comparisons skip — the phone you trade in. Whether
+it goes to the carrier for bill credits or to Apple for money off the new phone, it is
+counted as out-of-pocket at exactly what Apple would pay you for it, so every route
+gives up the same phone at the same value.</p>
 <p>Taxes are excluded. T-Mobile, AT&amp;T and Verizon prices assume AutoPay; Xfinity's
 include the internet-customer discount. Anything a carrier does not publish is flagged
 rather than guessed.</p>`;
@@ -197,9 +197,13 @@ them apply to the figures above. Priced again as a switcher trading in an iPhone
 which Apple values at ${money(data.tradeIns.find((t) => t.id === "iphone-16-pro").value)} —
 <b>${esc(sw.cheaper.carrierName)} comes out ${cheaperBy(sw.gap)}</b>: ${money(sw.cheaper.total)} on
 ${esc(sw.cheaper.planName)} against ${money(sw.pricier.total)} on ${esc(sw.pricier.planName)}.</p>
-<p>Both of those winning routes still buy the phone from Apple. That is the usual result:
-once the phone you hand over is counted at what Apple would have paid for it, the bill
-credits rarely cover what the deal costs you.</p>
+<p>${
+  sw.cheaper.route === "byod" && sw.pricier.route === "byod"
+    ? "Both of those winning routes still buy the phone from Apple: the bill credits do not cover what the deals cost in plan and phone."
+    : sw.cheaper.route !== "byod" && sw.pricier.route !== "byod"
+      ? "Both of those winning routes take a carrier deal: with the trade-in counted the same on every route, the bill credits beat trading the phone to Apple."
+      : `${esc(sw.cheaper.route === "byod" ? sw.cheaper.carrierName : sw.pricier.carrierName)}'s best route buys from Apple; ${esc(sw.cheaper.route === "byod" ? sw.pricier.carrierName : sw.cheaper.carrierName)}'s takes a carrier deal.`
+}</p>
 
 <div class="cta"><a class="btn btn-primary" href="${esc(page.toolUrl)}">Compare these two side by side</a></div>
 
@@ -275,7 +279,7 @@ is the deal and nothing else.</p>
 <p>${
         worstDeal.vsSamePlan > 0
           ? `The worst of them, ${esc(worstDeal.routeName)}, costs ${delta(worstDeal.vsSamePlan)} than simply declining it and buying the phone from Apple on the same plan.`
-          : `Unusually, ${esc(bestDeal.routeName)} comes out ${delta(bestDeal.vsSamePlan)} than buying the phone outright on the same plan — worth taking.`
+          : `${esc(bestDeal.routeName)} comes out ${delta(bestDeal.vsSamePlan)} than buying the phone outright on the same plan — worth taking.`
       }${
         bestDeal.vsSamePlan < 0 && worstDeal.vsSamePlan > 0
           ? ` ${esc(bestDeal.routeName)} is the exception, at ${delta(bestDeal.vsSamePlan)}.`
