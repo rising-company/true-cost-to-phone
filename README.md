@@ -239,7 +239,7 @@ Alongside PostHog's automatic pageviews and click autocapture:
   Debounced, and a situation already reported is not reported again until something
   changes — tab switches re-render without being a new data point.
 - `tab_selected` · `route_compared` / `route_uncompared` · `carrier_filtered` ·
-  `routes_expanded` · `compare_tray_used`
+  `routes_expanded` · `compare_tray_used` · `summary_card_jumped`
 
 Counts and ids only. No prices typed by the reader, no free text, no identifiers.
 
