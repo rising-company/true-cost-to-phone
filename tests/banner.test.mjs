@@ -19,3 +19,12 @@ test("every Buy me a coffee link goes to buymeacoffee.com/risingben", () => {
   assert.ok(links.length > 0, "the page links to Buy me a coffee");
   for (const l of links) assert.equal(l, "https://buymeacoffee.com/risingben");
 });
+
+test("the Method section links to the blog post with the deeper data analysis", () => {
+  const method = html.match(/<section[^>]*id="method"[^>]*>([\s\S]*?)<\/section>/);
+  assert.ok(method, "index.html has a #method section");
+  assert.match(
+    method[1],
+    /<a [^>]*href="https:\/\/blog\.bencao\.it\/posts\/true-cost-to-phone-what-a-free-iphone-actually-costs"/,
+  );
+});
