@@ -19,11 +19,12 @@ const baseInput = {
 };
 
 // Every Xfinity trade-in is now observed at checkout, so the override path is exercised
-// against a copy whose fallback tier is still an unverified guess.
+// against a copy where the iPhone 11 falls to an unverified fallback tier.
 const withUnverifiedXfinityFallback = (source) => {
   const copy = structuredClone(source);
-  const promo = copy.carriers.find((c) => c.id === "xfinity").promos.find((p) => p.id === "xf-tradein-1300");
-  promo.tiers = promo.tiers.map((t) => (t.otherwise ? { credit: 1300, otherwise: true, verified: false } : t));
+  const promo = copy.carriers.find((c) => c.id === "xfinity").promos.find((p) => p.id === "xf-tradein-930");
+  promo.tiers = promo.tiers.map((t) => (t.devices ? { ...t, devices: t.devices.filter((id) => id !== "iphone-11") } : t));
+  promo.tiers.push({ credit: 930, otherwise: true, verified: false });
   return copy;
 };
 
@@ -83,15 +84,13 @@ test("the trade-in picker groups phones by maker: Apple, then Samsung, then Goog
   assert.equal(groups.reduce((n, g) => n + g.items.length, 0), data.tradeIns.length, "every trade-in appears once");
 });
 
-test("Xfinity turns some phones away: a Galaxy S20 FE earns no credit, so the line keeps it and pays full price", () => {
-  const rows = buildScenarios(data, { ...baseInput, tradeInId: "galaxy-s20-fe" });
-  const row = find(rows, "xfinity", "xf-plus", "xf-tradein-1300");
-  assert.equal(row.credits, 0);
-  assert.equal(row.tradeInValue, 0, "a phone the carrier does not take is not handed over");
+test("Xfinity's $930 pays the same for every trade-in, phones it used to turn away included", () => {
+  const row = find(buildScenarios(data, { ...baseInput, tradeInId: "galaxy-s20-fe" }), "xfinity", "xf-plus", "xf-tradein-930");
+  assert.equal(row.credits, 930);
+  assert.equal(row.tradeInValue, data.tradeIns.find((t) => t.id === "galaxy-s20-fe").value, "the phone is handed over at its maker's value");
   assert.equal(row.unverified, false, "observed at checkout, not an override");
-  const promo = data.carriers.find((c) => c.id === "xfinity").promos.find((p) => p.id === "xf-tradein-1300");
-  assert.equal(tierCredit(promo, "galaxy-s25-ultra"), 1300);
-  assert.equal(tierCredit(promo, "pixel-8"), 600);
+  const promo = data.carriers.find((c) => c.id === "xfinity").promos.find((p) => p.id === "xf-tradein-930");
+  for (const t of data.tradeIns) assert.equal(tierCredit(promo, t.id), 930, `${t.id} quoted $930`);
 });
 
 test("AT&T Premium 2.0: a Galaxy S24 is under AT&T's $180 bar, so it gets the $930 offer", () => {
@@ -121,9 +120,10 @@ test("T-Mobile Beyond 2.0 trade-in route: plan + (retail − credit) + $35 + sur
 });
 
 test("credits never exceed the phone price", () => {
-  const rows = buildScenarios(data, { ...baseInput, tradeInId: "iphone-16" });
-  const row = find(rows, "xfinity", "xf-plus", "xf-tradein-1300");
-  assert.equal(row.credits, 1199, "Xfinity's $1,300 tier is capped at the $1,199 phone");
+  // An upgrade, so AT&T's stackable new-line credit stays out of the sum.
+  const rows = buildScenarios(data, { ...baseInput, tradeInId: "iphone-16", switching: false });
+  const row = find(rows, "att", "att-premium-2", "att-tradein-1200");
+  assert.equal(row.credits, 1199, "AT&T's $1,200 tier is capped at the $1,199 phone");
   assert.equal(row.phoneNet, 0);
 });
 
@@ -158,8 +158,8 @@ test("a new AT&T line keeping its own phone still gets the $200 online credit", 
 });
 
 test("Xfinity: intro pricing for the first 12 months, published tiers win over the override, unlisted devices stay editable", () => {
-  const rows = buildScenarios(data, { ...baseInput, overrides: { "xf-tradein-1300": 1300 } });
-  const row = find(rows, "xfinity", "xf-plus", "xf-tradein-1300");
+  const rows = buildScenarios(data, { ...baseInput, overrides: { "xf-tradein-930": 100 } });
+  const row = find(rows, "xfinity", "xf-plus", "xf-tradein-930");
   assert.equal(row.plan, 15 * 12 + 45 * 24);
   assert.deepEqual(row.planIntro, { months: 12, monthly: 15 }, "the intro price is reported so the page can show the math");
   const select = find(rows, "xfinity", "xf-select", "byod");
@@ -167,30 +167,18 @@ test("Xfinity: intro pricing for the first 12 months, published tiers win over t
   assert.deepEqual(select.planIntro, { months: 12, monthly: 0 });
   assert.equal(find(buildScenarios(data, { ...baseInput, switching: false }), "xfinity", "xf-select", "byod").planIntro, null, "no intro price without a new line");
   assert.equal(find(rows, "tello", "tello-unl-unl", "byod").planIntro, null);
-  assert.equal(row.credits, 600, "iPhone 14 is a published $600 tier; the override must not touch it");
+  assert.equal(row.credits, 930, "iPhone 14 quoted $930 at checkout; the override must not touch it");
   assert.equal(row.unverified, false);
   assert.equal(row.phone, 1199);
   assert.ok(row.requires.includes("Xfinity Internet"));
-
-  const promo = data.carriers.find((c) => c.id === "xfinity").promos.find((p) => p.id === "xf-tradein-1300");
-  assert.equal(tierCredit(promo, "iphone-15"), 700);
-  assert.equal(tierCredit(promo, "iphone-15-plus"), 700);
-  for (const id of ["iphone-15-pro", "iphone-15-pro-max", "iphone-16", "iphone-16-plus", "iphone-16-pro", "iphone-16-pro-max", "iphone-air", "iphone-17", "iphone-17-pro", "iphone-17-pro-max"]) {
-    assert.equal(tierCredit(promo, id), 1300, `${id} is at or above iPhone 15 Pro`);
-  }
+  const promo = data.carriers.find((c) => c.id === "xfinity").promos.find((p) => p.id === "xf-tradein-930");
   assert.deepEqual(promo.plans, ["xf-plus"], "credits only kick in on Mobile Plus");
 
-  assert.equal(tierCredit(promo, "iphone-13"), 600);
-  assert.equal(tierCredit(promo, "iphone-12"), 500);
-  // iPhone 11 falls in the observed $450 fallback tier: verified, so the override leaves it alone.
-  const older = find(buildScenarios(data, { ...baseInput, tradeInId: "iphone-11", overrides: { "xf-tradein-1300": 500 } }), "xfinity", "xf-plus", "xf-tradein-1300");
-  assert.equal(older.credits, 450);
-  assert.equal(older.unverified, false);
   // An unverified fallback tier stays editable: the override applies.
   const guessed = withUnverifiedXfinityFallback(data);
-  const unlisted = find(buildScenarios(guessed, { ...baseInput, tradeInId: "iphone-11" }), "xfinity", "xf-plus", "xf-tradein-1300");
+  const unlisted = find(buildScenarios(guessed, { ...baseInput, tradeInId: "iphone-11" }), "xfinity", "xf-plus", "xf-tradein-930");
   assert.equal(unlisted.unverified, true);
-  const overridden = find(buildScenarios(guessed, { ...baseInput, tradeInId: "iphone-11", overrides: { "xf-tradein-1300": 500 } }), "xfinity", "xf-plus", "xf-tradein-1300");
+  const overridden = find(buildScenarios(guessed, { ...baseInput, tradeInId: "iphone-11", overrides: { "xf-tradein-930": 500 } }), "xfinity", "xf-plus", "xf-tradein-930");
   assert.equal(overridden.credits, 500);
   assert.equal(overridden.unverified, true, "an override is still an assumption");
 });
@@ -235,7 +223,7 @@ test("no trade-in: promos that need one drop out, buy-from-Apple pays full retai
   assert.equal(find(rows, "tello", "tello-unl-unl", "byod").phoneNet, 1199);
   assert.equal(find(rows, "tello", "tello-unl-unl", "byod").routeName, "Buy from Apple");
   assert.equal(find(rows, "tmobile", "tmo-beyond-2", "byod").routeName, "Buy from Apple, bring your own");
-  assert.equal(find(rows, "xfinity", "xf-plus", "xf-tradein-1300"), undefined);
+  assert.equal(find(rows, "xfinity", "xf-plus", "xf-tradein-930"), undefined);
 });
 
 test("buying from Apple is SIM unlocked; a carrier-financed promo phone is not", () => {
@@ -243,7 +231,7 @@ test("buying from Apple is SIM unlocked; a carrier-financed promo phone is not",
   assert.equal(find(rows, "tello", "tello-unl-unl", "byod").simUnlocked, true);
   assert.equal(find(rows, "tmobile", "tmo-beyond-2", "byod").simUnlocked, true);
   assert.equal(find(rows, "tmobile", "tmo-beyond-2", "tmo-ID260835").simUnlocked, false);
-  assert.equal(find(rows, "xfinity", "xf-plus", "xf-tradein-1300").simUnlocked, false);
+  assert.equal(find(rows, "xfinity", "xf-plus", "xf-tradein-930").simUnlocked, false);
 });
 
 test("Mint Mobile: 12-month prepaid unlimited, $10 intro 6 months for new customers, phone from Apple", () => {
@@ -389,11 +377,11 @@ test("per-line Xfinity override: only that line's unlisted trade-in uses it", ()
   const input = { ...baseInput, phoneId: undefined, tradeInId: undefined, lines: 2, overrides: {},
     lineItems: [{ phoneId: "iphone-18-pro-256", tradeInId: "iphone-14" }, { phoneId: "iphone-18-pro-256", tradeInId: "iphone-11", xfCredit: 300 }] };
   const guessed = withUnverifiedXfinityFallback(data);
-  const row = find(buildScenarios(guessed, input), "xfinity", "xf-plus", "xf-tradein-1300");
-  assert.deepEqual(row.lineDetails.map((l) => l.credit), [600, 300]);
+  const row = find(buildScenarios(guessed, input), "xfinity", "xf-plus", "xf-tradein-930");
+  assert.deepEqual(row.lineDetails.map((l) => l.credit), [930, 300]);
   assert.equal(row.unverified, true);
-  const noOverride = find(buildScenarios(guessed, { ...input, lineItems: [{ phoneId: "iphone-18-pro-256", tradeInId: "iphone-11" }] }), "xfinity", "xf-plus", "xf-tradein-1300");
-  assert.equal(noOverride.lineDetails[0].credit, 1199, "no override → the published ceiling, capped at the phone");
+  const noOverride = find(buildScenarios(guessed, { ...input, lineItems: [{ phoneId: "iphone-18-pro-256", tradeInId: "iphone-11" }] }), "xfinity", "xf-plus", "xf-tradein-930");
+  assert.equal(noOverride.lineDetails[0].credit, 930, "no override → the published ceiling");
 });
 
 test("Costco: T-Mobile shop card and Visa per line, connection charge waived; AT&T credits replace the online offer", () => {
@@ -513,4 +501,38 @@ test("Verizon multi-line: myPlan is per-line tiers plus a $10/mo account credit 
   assert.equal(find(four, "verizon", "vz-simplicity", "byod").plan, 120 * 36);
   const fourExisting = buildScenarios(data, { ...baseInput, lines: 4, tradeInId: null, switching: false });
   assert.equal(find(fourExisting, "verizon", "vz-ultimate", "byod").plan, 240 * 36);
+});
+
+test("a promo that names its models credits only those phones, and is no route when none qualify", () => {
+  const copy = structuredClone(data);
+  copy.phones.push({ id: "test-fold-256", model: "Test Fold", storageGb: 256, retail: 1999 });
+  const tmo = copy.carriers.find((c) => c.id === "tmobile");
+  for (const p of tmo.promos) p.models = ["iPhone 18 Pro", "iPhone 18 Pro Max"];
+  const only = buildScenarios(copy, { ...baseInput, lineItems: [{ phoneId: "test-fold-256", tradeInId: "iphone-16-pro" }] });
+  assert.equal(only.filter((r) => r.carrierId === "tmobile" && r.route !== "byod").length, 0, "no T-Mobile deal covers the fold");
+
+  const mixed = buildScenarios(copy, {
+    ...baseInput,
+    lines: 2,
+    lineItems: [
+      { phoneId: "iphone-18-pro-256", tradeInId: "iphone-16-pro" },
+      { phoneId: "test-fold-256", tradeInId: "iphone-16-pro" },
+    ],
+  });
+  const row = find(mixed, "tmobile", "tmo-beyond-2", "tmo-ID260835");
+  assert.equal(row.lineDetails[0].credit, 1000, "the 18 Pro line is credited");
+  assert.equal(row.lineDetails[1].credit, 0, "the fold line pays full price");
+  assert.equal(row.lineDetails[1].tradeInValue, 0, "and keeps its old phone");
+});
+
+test("iPhone Duo: AT&T and T-Mobile carry their deals to it, Verizon has none yet, Xfinity's is its own unverified $1,000", () => {
+  const rows = buildScenarios(data, { ...baseInput, lineItems: [{ phoneId: "iphone-duo-256", tradeInId: "iphone-16-pro" }] });
+  assert.equal(find(rows, "att", "att-premium-2", "att-tradein-1200").credits, 1200 + 200, "$1,200 trade-in plus the $200 online credit");
+  assert.equal(find(rows, "tmobile", "tmo-beyond-2", "tmo-ID260835").credits, 1000);
+  assert.equal(find(rows, "tmobile", "tmo-more-2", "tmo-ID260838"), undefined, "Experience More's offer names only the 18 Pro");
+  assert.deepEqual(rows.filter((r) => r.carrierId === "verizon").map((r) => r.route).filter((r) => r !== "byod"), []);
+  const xf = find(rows, "xfinity", "xf-plus", "xf-duo-1000");
+  assert.equal(xf.credits, 1000);
+  assert.equal(xf.unverified, true);
+  assert.equal(find(rows, "xfinity", "xf-plus", "xf-tradein-930"), undefined);
 });

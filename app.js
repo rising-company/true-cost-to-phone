@@ -13,7 +13,7 @@ const usd = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD",
 const usd2 = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
-const XF_PROMO = "xf-tradein-1300";
+const XF_PROMO = "xf-tradein-930";
 // First load prices the headline scenario, so the page agrees with its own social card.
 const DEFAULT_LINE = HEADLINE_SCENARIO.lineItems[0];
 const DEFAULT_PHONE = DEFAULT_LINE.phoneId;
@@ -132,8 +132,8 @@ function renderLineItems(items) {
         </div>
         <div class="field field-xf" id="xf-field-${i}" hidden>
           <label class="field-label" for="xf-${i}">Xfinity trade-in credit for this phone</label>
-          <input class="input" id="xf-${i}" data-role="xf" type="number" inputmode="numeric" min="0" max="1300" step="10" value="${li.xfCredit ?? 1300}">
-          <p class="field-help is-warning">Xfinity has not published a credit for this phone — only "up to $1,300". Set your checkout figure.</p>
+          <input class="input" id="xf-${i}" data-role="xf" type="number" inputmode="numeric" min="0" max="930" step="10" value="${li.xfCredit ?? 930}">
+          <p class="field-help is-warning">Xfinity has not published a credit for this phone — only "up to $930". Set your checkout figure.</p>
         </div>
       </div>`,
     )

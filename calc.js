@@ -68,6 +68,9 @@ function promoEligible(promo, planId, { switching, tradeInId }) {
   return true;
 }
 
+/** Whether a promo credits this new phone: promos that name `models` cover only those. */
+const covers = (promo, phone) => !promo.models || promo.models.includes(phone.model);
+
 function planFits(plan, { minDataGb = 0, minutes = 0 }) {
   return rank(plan.premiumDataGb) >= rank(minDataGb) && rank(plan.minutes) >= rank(minutes);
 }
@@ -199,7 +202,7 @@ export function buildScenarios(data, input) {
             return { phoneName: phoneName(li.phone), tradeInName: li.tradeIn?.name || null, tradeInProgram: li.tradeIn ? tradeInProgram(li.tradeIn) : null, retail, credit: 0, appleTradeIn, tradeInValue: appleTradeIn };
           }
           const needsTrade = !!promo.requires?.tradeIn;
-          const tier = needsTrade ? (li.tradeIn ? tierFor(promo, li.tradeIn.id) : null) : tierFor(promo, null);
+          const tier = !covers(promo, li.phone) ? null : needsTrade ? (li.tradeIn ? tierFor(promo, li.tradeIn.id) : null) : tierFor(promo, null);
           let credit = 0;
           if (tier && credited < maxCredited) {
             credit = Math.min(tier.verified === false ? li.xfCredit ?? overrides[promo.id] ?? tier.credit : tier.credit, retail);
@@ -277,7 +280,8 @@ export function buildScenarios(data, input) {
       // Route 2..n — each promotion the plan qualifies for, when there is a phone to credit.
       if (phones === 0) continue;
       for (const promo of mains) {
-        const unverified = withPhone.some((li) => {
+        if (!withPhone.some((li) => covers(promo, li.phone))) continue;
+        const unverified = withPhone.filter((li) => covers(promo, li.phone)).some((li) => {
           const tier = promo.requires?.tradeIn ? (li.tradeIn ? tierFor(promo, li.tradeIn.id) : null) : tierFor(promo, null);
           return tier?.verified === false;
         });
@@ -297,6 +301,9 @@ export function buildScenarios(data, input) {
 export function comparePlans(data, planIds, input) {
   const termMonths = input.termMonths ?? data.meta.defaultTermMonths ?? 36;
   const lines = input.lines ?? 1;
+  // The new phones being bought, when the input names them: a promo for another model does not count.
+  const ids = input.lineItems ? input.lineItems.map((li) => li?.phoneId) : [input.phoneId];
+  const phones = ids.map((id) => data.phones.find((p) => p.id === id)).filter(Boolean);
   const out = [];
   for (const carrier of data.carriers) {
     for (const plan of carrier.plans) {
@@ -328,7 +335,7 @@ export function comparePlans(data, planIds, input) {
         notes: plan.notes || "",
         requires: carrier.requires || [],
         phoneSource: carrier.phoneSource,
-        promoCount: carrier.promos.filter((p) => promoEligible(p, plan.id, input)).length,
+        promoCount: carrier.promos.filter((p) => promoEligible(p, plan.id, input) && (!phones.length || phones.some((ph) => covers(p, ph)))).length,
         termMonths,
       });
     }
