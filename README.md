@@ -100,14 +100,14 @@ What's in it:
   for anything not listed. `stackable` promos (AT&T's $200 online credit) add on top of a
   main promo and, with `appliesToByod`, on top of a bring-your-own phone.
 - Anything a carrier did not publish is flagged, not guessed. Xfinity's trade-in credits were read at checkout on the crawl date for a
-  new Mobile Plus line: the full $1,300 for iPhone 15 Pro and anything newer or higher (16,
-  16 Plus/Pro/Pro Max, Air, 17 series) · $700 iPhone 15, 15 Plus, 16e, 14 Pro/Pro Max,
-  13 Pro Max and Pixel 9 · $600 iPhone 14, 14 Plus, 13 series and 12 Pro Max · $500 iPhone 12
-  and 12 Pro · $450 every older iPhone. Every Samsung and Google trade-in was quoted the same
-  way; two are turned away (Galaxy S20 FE, Pixel Fold get only a one-time credit), so those
-  lines keep their phone and pay full price. Credits only kick in on Mobile Plus.
-  Every iPhone in Apple's trade-in table has been quoted, so none needs an override; a tier
-  marked `verified: false` is one read nowhere, and the page lets you override it.
+  new Mobile Plus line: every phone in the trade-in table, iPhone 8 Plus through iPhone 17
+  Pro Max and every Galaxy and Pixel, quoted the same $930. Xfinity quotes upgrade
+  trade-ins only to a signed-in account, so its "up to $500" upgrade credit is
+  `verified: false`, as is the "up to $1,000" iPhone Duo credit (the Duo was not in
+  Xfinity's shop before pre-orders). Credits only kick in on Mobile Plus.
+- `promos[].models` — a promo that names models credits only those new phones. Verizon and
+  most T-Mobile offers name the 18 Pro and Pro Max; T-Mobile's Beyond trade-in and port-in
+  offers and every AT&T trade-in offer also cover iPhone Duo; Xfinity runs a separate Duo offer.
 
 Things worth knowing that the marketing copy hides:
 
@@ -116,8 +116,10 @@ Things worth knowing that the marketing copy hides:
 - AT&T's $1,200 takes any iPhone 14 or newer in any condition, but only on Premium 2.0 or
   Elite 2.0; Extra 2.0 gets $930, Value 2.0 gets $500.
 - Xfinity's deals require Xfinity Internet and the Mobile Plus line; Mobile Select is
-  cheaper but unlocks no phone deals. Its "up to $1,300" is $600 for an iPhone 14, $700 for
-  an iPhone 15, and only reaches $1,300 from iPhone 15 Pro up.
+  cheaper but unlocks no phone deals. Its $930 trade-in credit is for a new line only — an
+  existing line upgrading gets up to $500 with a trade-in, or $200 without. All end 11/10.
+- iPhone Duo starts at $1,999. AT&T and T-Mobile carry their 18 Pro trade-in credits over to
+  it ($1,200 and $1,000); Verizon had published no Duo offer on 2026-10-15.
 - Verizon's "up to $1,000" is the new-line credit on Unlimited Ultimate for an iPhone 14
   or newer (any working condition); upgrading an existing line gets $840. Unlimited Plus
   pays $840 / $660, Unlimited Welcome $480 / $300. An older phone gets half on a new line
@@ -135,7 +137,7 @@ Things worth knowing that the marketing copy hides:
 
 The calculator already takes these as inputs; the page just pins them for now.
 
-- More phone models beyond the 18 Pro and Pro Max (`phones[]`).
+- More phone models beyond the 18 Pro, Pro Max and Duo (`phones[]`).
 - Choose the trade-in device — present on the page today, backed by Apple's full table.
 - Monthly data and minutes needed (`minDataGb`, `minutes`) so Tello's smaller plans and
   AT&T Value 2.0 come into play.

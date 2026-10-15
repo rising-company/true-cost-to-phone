@@ -1,6 +1,6 @@
 {
   "meta": {
-    "crawledAt": "2026-10-08",
+    "crawledAt": "2026-10-15",
     "currency": "USD",
     "defaultTermMonths": 36,
     "notes": [
@@ -15,7 +15,8 @@
       "Xfinity's first-year price applies to one line per account; extra lines pay the regular rate. Mint's $10 new-customer 6 months is applied to every line (family lines are priced like single 12-month lines).",
       "T-Mobile promotions cover at most four discounted devices per account; phones beyond that pay full price.",
       "Costco: member benefits read from Costco's AT&T and T-Mobile showcases on 2026-10-08. Shop Cards and prepaid Visa cards are counted at face value against the total. Costco sells no Xfinity, Tello or Mint plans.",
-      "Trade-in values come from each phone maker's own program: Apple Trade In for iPhones, Samsung's standalone trade-in (run by Likewize, pays without a purchase) for Galaxy phones, and the Google Store estimator for Pixels, each at top storage in good condition. Google pays the same for a phone whichever Pixel is bought. Galaxy S26 and Pixel 11 are not in either maker's program yet, so they are not offered as trade-ins. Samsung and Google values were last read on 2026-09-22: neither estimator answered automated requests on 2026-10-08."
+      "Trade-in values come from each phone maker's own program: Apple Trade In for iPhones, Samsung's standalone trade-in (run by Likewize, pays without a purchase) for Galaxy phones, and the Google Store estimator for Pixels, each at top storage in good condition. Google pays the same for a phone whichever Pixel is bought. Galaxy S26 and Pixel 11 are not in either maker's program yet, so they are not offered as trade-ins. Samsung and Google values were last read on 2026-09-22: neither estimator answered automated requests on 2026-10-08.",
+      "iPhone Duo (from $1,999) was added on 2026-10-15, the day before pre-orders. A promo with `models` credits only those new phones: Verizon had no Duo offer; T-Mobile's Experience Beyond trade-in and port-in offers and AT&T's trade-in offers cover it (Apple's carrier offers page); Xfinity's Duo offer is its own, and its per-phone credit is unverified until checkout quotes it."
     ],
     "sources": {
       "tello": "https://tello.com/buy/custom_plans",
@@ -29,7 +30,7 @@
       "xfinity-plans": "https://www.xfinity.com/mobile/plan",
       "apple-tradein": "https://www.apple.com/shop/trade-in",
       "apple-iphone": "https://www.apple.com/shop/buy-iphone/iphone-18-pro",
-      "xfinity-checkout": "https://www.xfinity.com/mobile/shop/phone/apple-iphone-18-pro",
+      "xfinity-checkout": "https://www.xfinity.com/digital/mobile/cell-phones/apple-iphone-18-pro",
       "tmobile-iphone-max": "https://www.t-mobile.com/cell-phone/apple-iphone-18-pro-max",
       "att-iphone-max": "https://www.att.com/buy/phones/apple-iphone-18-pro-max.html",
       "mint": "https://www.mintmobile.com/plans/",
@@ -42,7 +43,10 @@
       "verizon-loyalty-faq": "https://www.verizon.com/support/pro-plus-early-upgrade-faqs/",
       "bestbuy-verizon-tradein": "https://www.bestbuy.com/site/shop-iphone-18-iphone-duo-models/verizon-iphone-18-pro-trade-in/pcmcat1789062925590.c?id=pcmcat1789062925590",
       "samsung-tradein": "https://us-samsung-tradein.likewize.com/",
-      "google-tradein": "https://store.google.com/us/config/pixel_11"
+      "google-tradein": "https://store.google.com/us/config/pixel_11",
+      "apple-iphone-duo": "https://www.apple.com/shop/buy-iphone/iphone-duo",
+      "att-iphone-duo": "https://www.att.com/buy/phones/apple-iphone-duo.html",
+      "apple-carrier-offers": "https://www.apple.com/shop/buy-iphone/carrier-offers"
     }
   },
   "phones": [
@@ -93,6 +97,30 @@
       "model": "iPhone 18 Pro Max",
       "storageGb": 2048,
       "retail": 2499
+    },
+    {
+      "id": "iphone-duo-256",
+      "model": "iPhone Duo",
+      "storageGb": 256,
+      "retail": 1999
+    },
+    {
+      "id": "iphone-duo-512",
+      "model": "iPhone Duo",
+      "storageGb": 512,
+      "retail": 2199
+    },
+    {
+      "id": "iphone-duo-1tb",
+      "model": "iPhone Duo",
+      "storageGb": 1024,
+      "retail": 2599
+    },
+    {
+      "id": "iphone-duo-2tb",
+      "model": "iPhone Duo",
+      "storageGb": 2048,
+      "retail": 3199
     }
   ],
   "tradeIns": [
@@ -1238,7 +1266,13 @@
               "otherwise": true
             }
           ],
-          "maxDevices": 4
+          "maxDevices": 4,
+          "models": [
+            "iPhone 18 Pro",
+            "iPhone 18 Pro Max",
+            "iPhone Duo"
+          ],
+          "note": "Covers iPhone Duo too: Apple's carrier offers page lists a T-Mobile iPhone Duo Special Deal with the same any-condition trade-in terms on Experience Beyond 2.0, Experience Beyond and Go5G Next, up to $1,000 (read 2026-10-15)."
         },
         {
           "id": "tmo-ID260824",
@@ -1260,7 +1294,13 @@
               "otherwise": true
             }
           ],
-          "maxDevices": 4
+          "maxDevices": 4,
+          "models": [
+            "iPhone 18 Pro",
+            "iPhone 18 Pro Max",
+            "iPhone Duo"
+          ],
+          "note": "Covers iPhone Duo too: Apple's carrier offers page lists a T-Mobile iPhone Duo No Trade-in Required Deal with the same port-in terms (max 4 per account), up to $1,000 (read 2026-10-15)."
         },
         {
           "id": "tmo-ID260838",
@@ -1353,7 +1393,11 @@
               "otherwise": true
             }
           ],
-          "maxDevices": 4
+          "maxDevices": 4,
+          "models": [
+            "iPhone 18 Pro",
+            "iPhone 18 Pro Max"
+          ]
         },
         {
           "id": "tmo-more-port",
@@ -1376,7 +1420,11 @@
               "otherwise": true
             }
           ],
-          "maxDevices": 4
+          "maxDevices": 4,
+          "models": [
+            "iPhone 18 Pro",
+            "iPhone 18 Pro Max"
+          ]
         },
         {
           "id": "tmo-ID260832",
@@ -1469,7 +1517,11 @@
               "otherwise": true
             }
           ],
-          "maxDevices": 4
+          "maxDevices": 4,
+          "models": [
+            "iPhone 18 Pro",
+            "iPhone 18 Pro Max"
+          ]
         },
         {
           "id": "tmo-ID260803",
@@ -1553,7 +1605,11 @@
               "otherwise": true
             }
           ],
-          "maxDevices": 4
+          "maxDevices": 4,
+          "models": [
+            "iPhone 18 Pro",
+            "iPhone 18 Pro Max"
+          ]
         }
       ],
       "costco": {
@@ -1758,7 +1814,8 @@
               "credit": 350,
               "otherwise": true
             }
-          ]
+          ],
+          "note": "The same credits apply to iPhone Duo (AT&T iPhone Duo Special Deal, read from Apple's iPhone Duo and carrier offers pages and AT&T's Duo page 2026-10-15)."
         },
         {
           "id": "att-tradein-930",
@@ -1831,7 +1888,8 @@
               "credit": 350,
               "otherwise": true
             }
-          ]
+          ],
+          "note": "The same credits apply to iPhone Duo (AT&T iPhone Duo Special Deal, read from Apple's iPhone Duo and carrier offers pages and AT&T's Duo page 2026-10-15)."
         },
         {
           "id": "att-tradein-500",
@@ -1904,7 +1962,8 @@
               "credit": 350,
               "otherwise": true
             }
-          ]
+          ],
+          "note": "The same credits apply to iPhone Duo (AT&T iPhone Duo Special Deal, read from Apple's iPhone Duo and carrier offers pages and AT&T's Duo page 2026-10-15)."
         },
         {
           "id": "att-online-200",
@@ -2171,7 +2230,11 @@
               "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone."
             }
           ],
-          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen."
+          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen.",
+          "models": [
+            "iPhone 18 Pro",
+            "iPhone 18 Pro Max"
+          ]
         },
         {
           "id": "vz-tradein-ultimate-upgrade",
@@ -2261,7 +2324,11 @@
               "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone. Best Buy lists no tier 2 credit for an upgrade, only for a new line."
             }
           ],
-          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen."
+          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen.",
+          "models": [
+            "iPhone 18 Pro",
+            "iPhone 18 Pro Max"
+          ]
         },
         {
           "id": "vz-tradein-plus-new",
@@ -2350,7 +2417,11 @@
               "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone."
             }
           ],
-          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen."
+          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen.",
+          "models": [
+            "iPhone 18 Pro",
+            "iPhone 18 Pro Max"
+          ]
         },
         {
           "id": "vz-tradein-plus-upgrade",
@@ -2440,7 +2511,11 @@
               "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone. Best Buy lists no tier 2 credit for an upgrade, only for a new line."
             }
           ],
-          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen."
+          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen.",
+          "models": [
+            "iPhone 18 Pro",
+            "iPhone 18 Pro Max"
+          ]
         },
         {
           "id": "vz-tradein-welcome-new",
@@ -2529,7 +2604,11 @@
               "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone."
             }
           ],
-          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen."
+          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen.",
+          "models": [
+            "iPhone 18 Pro",
+            "iPhone 18 Pro Max"
+          ]
         },
         {
           "id": "vz-tradein-welcome-upgrade",
@@ -2619,7 +2698,11 @@
               "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone. Best Buy lists no tier 2 credit for an upgrade, only for a new line."
             }
           ],
-          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen."
+          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen.",
+          "models": [
+            "iPhone 18 Pro",
+            "iPhone 18 Pro Max"
+          ]
         }
       ]
     },
@@ -2696,142 +2779,122 @@
       ],
       "promos": [
         {
-          "id": "xf-tradein-1300",
-          "name": "iPhone on us — trade-in credits up to $1,300",
-          "sourceKey": "xfinity-deals",
+          "id": "xf-tradein-930",
+          "name": "Up to $930 off — new line plus trade-in",
+          "sourceKey": "xfinity-checkout",
           "plans": [
             "xf-plus"
           ],
           "termMonths": 36,
           "stackable": false,
-          "endsOn": "2026-10-08",
+          "endsOn": "2026-11-10",
           "requires": {
             "tradeIn": true,
             "tradeInCondition": "qualifying",
-            "newLine": false,
+            "newLine": true,
             "portIn": false
           },
+          "models": [
+            "iPhone 18 Pro",
+            "iPhone 18 Pro Max"
+          ],
           "tiers": [
             {
-              "credit": 1300,
+              "credit": 930,
               "devices": [
-                "iphone-15-pro",
-                "iphone-15-pro-max",
-                "iphone-16",
-                "iphone-16-plus",
-                "iphone-16-pro",
-                "iphone-16-pro-max",
+                "iphone-17-pro-max",
+                "iphone-17-pro",
                 "iphone-air",
                 "iphone-17",
-                "iphone-17-pro",
-                "iphone-17-pro-max",
-                "galaxy-s24-ultra",
-                "galaxy-s25-plus",
+                "iphone-16-pro-max",
+                "iphone-16-pro",
+                "iphone-16-plus",
+                "iphone-16",
+                "iphone-16e",
+                "iphone-15-pro-max",
+                "iphone-15-pro",
+                "iphone-15-plus",
+                "iphone-15",
+                "iphone-14-pro-max",
+                "iphone-14-pro",
+                "iphone-14-plus",
+                "iphone-14",
+                "iphone-se-3",
+                "iphone-13-pro-max",
+                "iphone-13-pro",
+                "iphone-13",
+                "iphone-13-mini",
+                "iphone-12-pro-max",
+                "iphone-12-pro",
+                "iphone-12",
+                "iphone-12-mini",
+                "iphone-se-2",
+                "iphone-11-pro-max",
+                "iphone-11-pro",
+                "iphone-11",
+                "iphone-xs-max",
+                "iphone-xs",
+                "iphone-xr",
+                "iphone-x",
+                "iphone-8-plus",
                 "galaxy-s25-ultra",
                 "galaxy-s25-edge",
-                "galaxy-z-fold7",
-                "pixel-10-pro-xl",
-                "pixel-10-pro-fold"
-              ],
-              "note": "Full promo credit for iPhone 15 Pro and anything newer or higher. Observed at checkout 2026-09-22 (new Mobile Plus line with trade-in)."
-            },
-            {
-              "credit": 700,
-              "devices": [
-                "iphone-13-pro-max",
-                "iphone-14-pro",
-                "iphone-14-pro-max",
-                "iphone-15",
-                "iphone-15-plus",
-                "iphone-16e",
-                "galaxy-s23-plus",
-                "galaxy-s23-ultra",
-                "galaxy-s24",
-                "galaxy-s24-plus",
+                "galaxy-s25-plus",
                 "galaxy-s25",
-                "galaxy-z-fold6",
-                "galaxy-z-flip7",
-                "pixel-9",
-                "pixel-9-pro",
-                "pixel-9-pro-xl",
-                "pixel-9-pro-fold",
-                "pixel-10",
-                "pixel-10-pro"
-              ],
-              "note": "Observed at checkout 2026-09-22 (new Mobile Plus line with trade-in). Pixel 9 last observed 2026-09-21."
-            },
-            {
-              "credit": 600,
-              "devices": [
-                "iphone-12-pro-max",
-                "iphone-13-mini",
-                "iphone-13",
-                "iphone-13-pro",
-                "iphone-14",
-                "iphone-14-plus",
-                "galaxy-s22-ultra",
-                "galaxy-s23",
+                "galaxy-s25-fe",
+                "galaxy-s24-ultra",
+                "galaxy-s24-plus",
+                "galaxy-s24",
                 "galaxy-s24-fe",
-                "galaxy-z-fold5",
-                "galaxy-z-flip7-fe",
-                "pixel-8",
-                "pixel-8-pro",
-                "pixel-9a",
-                "galaxy-s25-fe"
-              ],
-              "note": "Observed at checkout 2026-09-22 (new Mobile Plus line with trade-in)."
-            },
-            {
-              "credit": 500,
-              "devices": [
-                "iphone-12",
-                "iphone-12-pro",
-                "galaxy-s21-ultra",
-                "galaxy-s23-fe"
-              ],
-              "note": "Observed at checkout 2026-09-22 (new Mobile Plus line with trade-in)."
-            },
-            {
-              "credit": 450,
-              "devices": [
-                "galaxy-s20",
-                "galaxy-s20-plus",
-                "galaxy-s20-ultra",
-                "galaxy-s21",
-                "galaxy-s21-plus",
-                "galaxy-s21-fe",
-                "galaxy-s22",
+                "galaxy-s23-ultra",
+                "galaxy-s23-plus",
+                "galaxy-s23",
+                "galaxy-s23-fe",
+                "galaxy-s22-ultra",
                 "galaxy-s22-plus",
-                "galaxy-note20",
-                "galaxy-note20-ultra",
-                "galaxy-z-fold3",
-                "galaxy-z-fold4",
-                "galaxy-z-flip3",
-                "galaxy-z-flip4",
-                "galaxy-z-flip5",
-                "galaxy-z-flip6",
-                "pixel-6",
-                "pixel-6-pro",
-                "pixel-6a",
-                "pixel-7",
-                "pixel-7-pro",
-                "pixel-7a",
-                "pixel-8a"
-              ],
-              "note": "Observed at checkout 2026-09-22 (new Mobile Plus line with trade-in)."
-            },
-            {
-              "credit": 0,
-              "devices": [
+                "galaxy-s22",
+                "galaxy-s21-ultra",
+                "galaxy-s21-plus",
+                "galaxy-s21",
+                "galaxy-s21-fe",
+                "galaxy-s20-ultra",
+                "galaxy-s20-plus",
+                "galaxy-s20",
                 "galaxy-s20-fe",
-                "pixel-fold"
+                "galaxy-note20-ultra",
+                "galaxy-note20",
+                "galaxy-z-fold7",
+                "galaxy-z-fold6",
+                "galaxy-z-fold5",
+                "galaxy-z-fold4",
+                "galaxy-z-fold3",
+                "galaxy-z-flip7",
+                "galaxy-z-flip7-fe",
+                "galaxy-z-flip6",
+                "galaxy-z-flip5",
+                "galaxy-z-flip4",
+                "galaxy-z-flip3",
+                "pixel-10-pro-fold",
+                "pixel-10-pro-xl",
+                "pixel-10-pro",
+                "pixel-10",
+                "pixel-9-pro-fold",
+                "pixel-9-pro-xl",
+                "pixel-9-pro",
+                "pixel-9",
+                "pixel-9a",
+                "pixel-fold",
+                "pixel-8-pro",
+                "pixel-8",
+                "pixel-8a",
+                "pixel-7-pro",
+                "pixel-7",
+                "pixel-7a",
+                "pixel-6-pro",
+                "pixel-6",
+                "pixel-6a"
               ],
-              "note": "Not taken into the promotion: checkout offers only a one-time trade-in credit ($19 for a Galaxy S20 FE, $45 for a Pixel Fold) instead of bill credits, so the line keeps its phone and pays full price. Observed 2026-09-22."
-            },
-            {
-              "credit": 450,
-              "otherwise": true,
-              "note": "Every older iPhone in the trade-in table (12 mini, 11 series, SE 2 and 3, X, XR, XS, XS Max, 8 Plus) quoted $450. Observed at checkout 2026-09-22 (new Mobile Plus line with trade-in)."
+              "note": "Every phone in the trade-in table quoted $930 at checkout on 2026-10-15 (new Mobile Plus line, good condition), from iPhone 8 Plus to iPhone 17 Pro Max, Galaxy S20 FE and Pixel Fold included. The tiered $1,300 offer it replaced ended 2026-10-08."
             }
           ],
           "note": "Credits are paid only while the line stays on Mobile Plus; Mobile Select does not qualify."
@@ -2845,18 +2908,111 @@
           ],
           "termMonths": 36,
           "stackable": false,
-          "endsOn": "2026-10-08",
+          "endsOn": "2026-11-10",
           "requires": {
             "tradeIn": false,
             "newLine": true,
             "portIn": true
           },
+          "models": [
+            "iPhone 18 Pro",
+            "iPhone 18 Pro Max"
+          ],
           "tiers": [
             {
               "credit": 400,
               "otherwise": true
             }
-          ]
+          ],
+          "note": "Credits are paid only while the line stays on Mobile Plus; Mobile Select does not qualify."
+        },
+        {
+          "id": "xf-upgrade-500",
+          "name": "Up to $500 off — upgrade an existing line with trade-in",
+          "sourceKey": "xfinity-deals",
+          "plans": [
+            "xf-plus"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "endsOn": "2026-11-10",
+          "requires": {
+            "tradeIn": true,
+            "tradeInCondition": "qualifying",
+            "newLine": false,
+            "portIn": false,
+            "existingLine": true
+          },
+          "models": [
+            "iPhone 18 Pro",
+            "iPhone 18 Pro Max"
+          ],
+          "tiers": [
+            {
+              "credit": 500,
+              "otherwise": true,
+              "verified": false,
+              "note": "Xfinity quotes upgrade trade-ins only to a signed-in account, so the per-phone credit was not observed; $500 is the advertised ceiling. Current device must be paid off."
+            }
+          ],
+          "note": "Credits are paid only while the line stays on Mobile Plus; Mobile Select does not qualify."
+        },
+        {
+          "id": "xf-upgrade-200",
+          "name": "$200 off — upgrade an existing line, no trade-in",
+          "sourceKey": "xfinity-deals",
+          "plans": [
+            "xf-plus"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "endsOn": "2026-11-10",
+          "requires": {
+            "tradeIn": false,
+            "newLine": false,
+            "portIn": false,
+            "existingLine": true
+          },
+          "models": [
+            "iPhone 18 Pro",
+            "iPhone 18 Pro Max"
+          ],
+          "tiers": [
+            {
+              "credit": 200,
+              "otherwise": true
+            }
+          ],
+          "note": "Credits are paid only while the line stays on Mobile Plus; Mobile Select does not qualify."
+        },
+        {
+          "id": "xf-duo-1000",
+          "name": "Up to $1,000 off iPhone Duo — new line plus trade-in",
+          "sourceKey": "xfinity-deals",
+          "plans": [
+            "xf-plus"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "endsOn": "2026-11-10",
+          "requires": {
+            "tradeIn": true,
+            "tradeInCondition": "qualifying",
+            "newLine": true,
+            "portIn": false
+          },
+          "models": [
+            "iPhone Duo"
+          ],
+          "tiers": [
+            {
+              "credit": 1000,
+              "otherwise": true,
+              "verified": false,
+              "note": "Advertised ceiling. iPhone Duo was not yet on Xfinity's shop on 2026-10-15 (pre-orders open 10/16), so no checkout quote; the 18 Pro offer paid its ceiling for every trade-in."
+            }
+          ],
+          "note": "Credits are paid only while the line stays on Mobile Plus; Mobile Select does not qualify."
         }
       ]
     }

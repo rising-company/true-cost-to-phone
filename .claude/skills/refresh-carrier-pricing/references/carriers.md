@@ -24,8 +24,15 @@ The tool's value is reading past that, so read past it.
 
 | Source key | What to read |
 |---|---|
-| `apple-iphone` | Retail price per storage tier — the `phones[]` figures |
+| `apple-iphone`, `apple-iphone-duo` | Retail price per storage tier — the `phones[]` figures |
 | `apple-tradein` | The full iPhone trade-in table — `tradeIns[]` |
+| `apple-carrier-offers` | Every AT&T, T-Mobile and Verizon deal Apple sells, **per new model**, with full terms in the footnotes |
+
+Read `apple-carrier-offers` first: it lists which new iPhones each carrier's deal covers,
+which is what a promo's `models` field records, and its footnotes often carry a carrier's
+terms for a model before the carrier's own device page does (T-Mobile's iPhone Duo deals
+appeared there while T-Mobile's Duo page still showed none). A promo without `models`
+covers every phone; give one `models` as soon as it stops covering them all.
 
 Apple's trade-in values are the spine of the whole calculation: a phone handed to a
 carrier is counted as out-of-pocket at what Apple would have paid. If these move,
@@ -144,6 +151,13 @@ Traps:
   has also changed once already. If `xfinity-checkout` 404s or stays blank, find the
   current link from the shop listing.
 - The first-year intro price covers **one line** only.
+- **Upgrade quotes need a signed-in account.** Choosing "Upgrade a line" then "Yes" shows no
+  trade-in picker without one, so upgrade-offer tiers stay `verified: false`.
+- The carrier list in the picker varies by trade-in model: some (Pixel 9a, Galaxy S25 and
+  S25 FE, Z Flip7 FE) have no Verizon entry. Quote those as `GENERIC`.
+- The Yes/No and Add/Upgrade cards ignore element clicks. Click by coordinates: read the
+  label's box with `eval`, wait a second after scrolling it into view, then
+  `mouse move/down/up`. More than two browsers quoting at once makes the carrier step hang.
 
 ## Tello and Mint
 
