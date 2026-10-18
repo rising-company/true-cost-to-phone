@@ -1,5 +1,13 @@
 {
   "outputDirectory": ".",
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/:path(.*)",
+      "has": [{ "type": "host", "value": "true-cost-to-phone.rising.company" }],
+      "destination": "https://true-cost-to-phone.bencao.it/:path",
+      "permanent": true
+    }
+  ]
 }

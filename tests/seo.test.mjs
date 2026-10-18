@@ -169,7 +169,7 @@ test("generated pages carry the design system's landing nav: wordmark, then the 
     const nav = page(`${dir}/${p.slug}.html`).match(/<nav class="nav">[\s\S]*?<\/nav>/)?.[0] ?? "";
     assert.match(
       nav,
-      /<div class="shell nav-inner">\s*<div class="nav-brand">\s*<a class="wordmark" href="\/">True Cost to Phone<\/a>\s*<a class="app-byline" href="https:\/\/rising\.company">/,
+      /<div class="shell nav-inner">\s*<div class="nav-brand">\s*<a class="wordmark" href="\/">True Cost to Phone<\/a>\s*<a class="app-byline" href="https:\/\/www\.bencao\.it">by <span>bencao\.it<\/span><\/a>/,
       `${p.slug} groups the wordmark and byline in .nav-brand`,
     );
   }

@@ -19,7 +19,7 @@ import { dirname, join } from "node:path";
 import { comparePages, carrierPages, sitemap } from "../seo.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const SITE = "https://true-cost-to-phone.rising.company";
+const SITE = "https://true-cost-to-phone.bencao.it";
 const data = JSON.parse(readFileSync(join(ROOT, "data/pricing.json"), "utf8"));
 
 const usd = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
@@ -110,7 +110,7 @@ function shell({ title, description, slug, jsonLd, body }) {
     <div class="shell nav-inner">
       <div class="nav-brand">
         <a class="wordmark" href="/">True Cost to Phone</a>
-        <a class="app-byline" href="https://rising.company">by <span>rising.company</span></a>
+        <a class="app-byline" href="https://www.bencao.it">by <span>bencao.it</span></a>
       </div>
     </div>
   </nav>
@@ -226,7 +226,7 @@ ${related(page.slug, index)}`;
         datePublished: page.crawledAt,
         dateModified: page.crawledAt,
         isBasedOn: `${SITE}/data/pricing.json`,
-        author: { "@type": "Organization", name: "Rising Company", url: "https://rising.company" },
+        author: { "@type": "Person", name: "Ben Cao", url: "https://www.bencao.it" },
         mainEntityOfPage: `${SITE}/${page.slug}`,
       },
     }),
@@ -325,7 +325,7 @@ ${related(page.slug, index)}`;
         datePublished: page.crawledAt,
         dateModified: page.crawledAt,
         isBasedOn: `${SITE}/data/pricing.json`,
-        author: { "@type": "Organization", name: "Rising Company", url: "https://rising.company" },
+        author: { "@type": "Person", name: "Ben Cao", url: "https://www.bencao.it" },
         mainEntityOfPage: `${SITE}/${page.slug}`,
       },
     }),

@@ -75,7 +75,7 @@ const meta = (prop) =>
 
 test("the card is advertised at an absolute URL stamped with the crawl date", () => {
   const image = meta("og:image");
-  assert.equal(image, `https://true-cost-to-phone.rising.company/og.png?v=${cardModel(data).crawledAt}`);
+  assert.equal(image, `https://true-cost-to-phone.bencao.it/og.png?v=${cardModel(data).crawledAt}`);
   assert.equal(meta("twitter:image"), image, "both scrapers get the same stamped URL");
 });
 
@@ -84,7 +84,7 @@ test("the tags a link preview needs are all present", () => {
     assert.ok(meta(prop), `${prop} is set`);
   }
   assert.equal(meta("twitter:card"), "summary_large_image");
-  assert.ok(/<link rel="canonical" href="https:\/\/true-cost-to-phone\.rising\.company\/">/.test(html), "canonical URL is set");
+  assert.ok(/<link rel="canonical" href="https:\/\/true-cost-to-phone\.bencao\.it\/">/.test(html), "canonical URL is set");
 });
 
 test("the declared image dimensions match the committed og.png", () => {

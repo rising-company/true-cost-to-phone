@@ -119,8 +119,8 @@ vercel --prod --yes
 Then confirm production actually serves it:
 
 ```bash
-curl -s https://true-cost-to-phone.rising.company/ | grep -o 'og.png?v=[0-9-]*'
-curl -s -o /dev/null -w '%{http_code}\n' https://true-cost-to-phone.rising.company/sitemap.xml
+curl -s https://true-cost-to-phone.bencao.it/ | grep -o 'og.png?v=[0-9-]*'
+curl -s -o /dev/null -w '%{http_code}\n' https://true-cost-to-phone.bencao.it/sitemap.xml
 ```
 
 ## Two traps worth naming

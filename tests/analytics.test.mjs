@@ -15,7 +15,7 @@ test("local development is not measured; the deployed site is", () => {
   assert.equal(shouldTrack("[::1]"), false);
   assert.equal(shouldTrack("bens-mac.local"), false);
   assert.equal(shouldTrack("true-cost-to-phone.vercel.app"), true);
-  assert.equal(shouldTrack("phone.rising.company"), true);
+  assert.equal(shouldTrack("true-cost-to-phone.bencao.it"), true);
 });
 
 test("a priced situation reports the inputs and what won, never the visitor", () => {
