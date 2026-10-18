@@ -2,6 +2,6 @@ User-agent: *
 Allow: /
 
 # The dataset every page is built from.
-# https://true-cost-to-phone.rising.company/data/pricing.json
+# https://true-cost-to-phone.bencao.it/data/pricing.json
 
-Sitemap: https://true-cost-to-phone.rising.company/sitemap.xml
+Sitemap: https://true-cost-to-phone.bencao.it/sitemap.xml
