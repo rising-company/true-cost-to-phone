@@ -59,7 +59,7 @@ Samsung and Google set the value of their own phones, the way Apple does for iPh
 - A phone missing from its maker's program (today: Galaxy S26, Pixel 11) has no value to
   count, so it is left out rather than priced from a reseller.
 - Each carrier lists Samsung and Google phones per tier, alongside the iPhones: T-Mobile in
-  every promotion's "Eligible trade-in phones", AT&T by minimum trade-in value ($180 /
+  every promotion's "Eligible trade-in phones", AT&T by minimum trade-in value ($230 /
   $130 / $35–129) in the offer terms, Verizon in Best Buy's tier table, Xfinity only at
   checkout. Xfinity turns some phones away with a one-time credit instead of bill credits;
   those go in its `$0` tier.
@@ -102,6 +102,9 @@ Traps:
 - The headline $1,200 only exists on Premium 2.0 and Elite 2.0. Extra 2.0 gets $930,
   Value 2.0 $500. The tier depends on the plan, not just the phone.
 - Value 2.0 does not meet the site's usage floor, so it is priced but never shown.
+- The minimum trade-in value for each tier moves (the $1,200 bar went from $180 to $230 on
+  2026-10-19). The device page's "See offer details" lists every phone per tier by name;
+  rebuild the tier lists from it each crawl rather than trusting the last one.
 
 ## Verizon
 
@@ -121,6 +124,9 @@ Traps:
 - Credits differ between a **new line** and an **upgrade** — $1,200 vs $1,020 on
   Unlimited Ultimate. Record both.
 - Simplicity Pro is a lease (the phone goes back every year), so it is not a route.
+- Verizon's own device pages show no offers to automation. Apple's carrier offers page is
+  where its terms are readable, including a no-trade-in deal for new lines sold only
+  through Apple ($840 / $660 / $360, the `vz-notradein-*` promos).
 - Verizon does not publish the tier membership clearly; Best Buy's page does, which is
   why that source exists. Anything still unclear is `verified: false`.
 
@@ -146,11 +152,14 @@ Traps:
   reader override those. The credit depends only on the phone traded in, not on which
   new iPhone is bought, but it is capped at retail (a 256 GB Pro shows $1,200).
 - Xfinity's page stops taking clicks after a few reloads in one browser. Restart the
-  browser (`close`, then `--headed open`) before each quote rather than debugging it.
+  browser (`close`, then `open`) before each quote rather than debugging it.
 - The shop page is sometimes down ("Check back soon to view this item"). The product URL
   has also changed once already. If `xfinity-checkout` 404s or stays blank, find the
   current link from the shop listing.
 - The first-year intro price covers **one line** only.
+- iPhone Duo has its own trade-in offer, and unlike the 18 Pro's it is tiered by the phone
+  traded in ($1,000 down to $500; a Pixel Fold gets only a one-time $50). Quote every
+  trade-in on the Duo page too. The picker works headless, so run it headless.
 - **Upgrade quotes need a signed-in account.** Choosing "Upgrade a line" then "Yes" shows no
   trade-in picker without one, so upgrade-offer tiers stay `verified: false`.
 - The carrier list in the picker varies by trade-in model: some (Pixel 9a, Galaxy S25 and

@@ -93,9 +93,11 @@ test("Xfinity's $930 pays the same for every trade-in, phones it used to turn aw
   for (const t of data.tradeIns) assert.equal(tierCredit(promo, t.id), 930, `${t.id} quoted $930`);
 });
 
-test("AT&T Premium 2.0: a Galaxy S24 is under AT&T's $180 bar, so it gets the $930 offer", () => {
+test("AT&T Premium 2.0: a Galaxy S24 or an iPhone 14 is under AT&T's $230 bar, so it gets the $930 offer", () => {
   const promo = data.carriers.find((c) => c.id === "att").promos.find((p) => p.id === "att-tradein-1200");
   assert.equal(tierCredit(promo, "galaxy-s24"), 930);
+  assert.equal(tierCredit(promo, "iphone-14"), 930, "AT&T raised the $1,200 bar from $180 to $230 on 2026-10-19");
+  assert.equal(tierCredit(promo, "iphone-14-pro-max"), 1200);
   assert.equal(tierCredit(promo, "galaxy-s24-ultra"), 1200);
   assert.equal(tierCredit(promo, "pixel-7"), 350);
 });
@@ -132,7 +134,7 @@ test("switching off hides port-in promos and AT&T's stackable online credit", ()
   const off = buildScenarios(data, { ...baseInput, switching: false });
   assert.ok(find(on, "tmobile", "tmo-beyond-2", "tmo-ID260824"));
   assert.equal(find(off, "tmobile", "tmo-beyond-2", "tmo-ID260824"), undefined);
-  assert.equal(find(on, "att", "att-premium-2", "att-tradein-1200").credits, 1199 + 200, "trade-in credit capped at the phone, plus the line credit");
+  assert.equal(find(on, "att", "att-premium-2", "att-tradein-1200").credits, 930 + 200, "the iPhone 14's $930 tier, plus the line credit");
   assert.equal(find(on, "att", "att-premium-2", "att-tradein-1200").stacked, 200);
   assert.equal(find(off, "att", "att-premium-2", "att-tradein-1200").stacked, 0);
   assert.equal(find(on, "att", "att-premium-2", "byod").credits, 200);
@@ -291,7 +293,8 @@ test("multi-line: plan priced for the line count, fees per line, phone/credits/t
   assert.equal(onePhone.tradeInValue, 195);
   assert.equal(onePhone.fees, 105, "connection charge is per line, not per phone");
 
-  const att = find(three, "att", "att-premium-2", "att-tradein-1200");
+  // An iPhone 16 reaches AT&T's $1,200 tier, so each phone is fully covered.
+  const att = find(buildScenarios(data, { ...baseInput, tradeInId: "iphone-16", lines: 3, phones: 3 }), "att", "att-premium-2", "att-tradein-1200");
   assert.equal(att.planMonthly, 65 * 3, "AT&T Premium 2.0 is $65/line at 3 lines");
   assert.equal(att.planCredit, 3 * 200, "each phone is fully covered, so the online credits come off the plan");
   assert.equal(att.plan, 65 * 3 * 36 - 3 * 200);
@@ -525,14 +528,28 @@ test("a promo that names its models credits only those phones, and is no route w
   assert.equal(row.lineDetails[1].tradeInValue, 0, "and keeps its old phone");
 });
 
-test("iPhone Duo: AT&T and T-Mobile carry their deals to it, Verizon has none yet, Xfinity's is its own unverified $1,000", () => {
-  const rows = buildScenarios(data, { ...baseInput, lineItems: [{ phoneId: "iphone-duo-256", tradeInId: "iphone-16-pro" }] });
+test("iPhone Duo: AT&T, T-Mobile and Verizon carry their deals to it; Xfinity's own Duo credit depends on the trade-in", () => {
+  const duo = (tradeInId) => buildScenarios(data, { ...baseInput, lineItems: [{ phoneId: "iphone-duo-256", tradeInId }] });
+  const rows = duo("iphone-16-pro");
   assert.equal(find(rows, "att", "att-premium-2", "att-tradein-1200").credits, 1200 + 200, "$1,200 trade-in plus the $200 online credit");
   assert.equal(find(rows, "tmobile", "tmo-beyond-2", "tmo-ID260835").credits, 1000);
   assert.equal(find(rows, "tmobile", "tmo-more-2", "tmo-ID260838"), undefined, "Experience More's offer names only the 18 Pro");
-  assert.deepEqual(rows.filter((r) => r.carrierId === "verizon").map((r) => r.route).filter((r) => r !== "byod"), []);
+  assert.equal(find(rows, "verizon", "vz-ultimate", "vz-tradein-ultimate-new").credits, 1000, "Verizon covers Duo since its 10/16 announcement");
+  assert.equal(find(rows, "verizon", "vz-ultimate", "vz-notradein-ultimate-new").credits, 840, "the no-trade-in deal sold through Apple");
   const xf = find(rows, "xfinity", "xf-plus", "xf-duo-1000");
   assert.equal(xf.credits, 1000);
-  assert.equal(xf.unverified, true);
+  assert.equal(xf.unverified, false, "quoted at checkout for every trade-in");
   assert.equal(find(rows, "xfinity", "xf-plus", "xf-tradein-930"), undefined);
+  assert.equal(find(duo("iphone-13-pro-max"), "xfinity", "xf-plus", "xf-duo-1000").credits, 700);
+  assert.equal(find(duo("iphone-11"), "xfinity", "xf-plus", "xf-duo-1000").credits, 500, "unlike the flat $930 on the 18 Pro");
+  const promo = data.carriers.find((c) => c.id === "xfinity").promos.find((p) => p.id === "xf-duo-1000");
+  assert.equal(tierCredit(promo, "pixel-fold"), 0, "Xfinity offers a one-time $50 for a Pixel Fold instead of Duo credits");
+});
+
+test("Verizon's no-trade-in deal through Apple needs a new line and keeps the old phone", () => {
+  const on = buildScenarios(data, { ...baseInput, tradeInId: "iphone-16-pro" });
+  const row = find(on, "verizon", "vz-plus", "vz-notradein-plus-new");
+  assert.equal(row.credits, 660);
+  assert.equal(row.tradeInValue, 0, "nothing handed over");
+  assert.equal(find(buildScenarios(data, { ...baseInput, switching: false }), "verizon", "vz-plus", "vz-notradein-plus-new"), undefined, "new lines only");
 });

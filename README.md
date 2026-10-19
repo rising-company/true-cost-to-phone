@@ -103,27 +103,33 @@ What's in it:
   new Mobile Plus line: every phone in the trade-in table, iPhone 8 Plus through iPhone 17
   Pro Max and every Galaxy and Pixel, quoted the same $930. Xfinity quotes upgrade
   trade-ins only to a signed-in account, so its "up to $500" upgrade credit is
-  `verified: false`, as is the "up to $1,000" iPhone Duo credit (the Duo was not in
-  Xfinity's shop before pre-orders). Credits only kick in on Mobile Plus.
-- `promos[].models` — a promo that names models credits only those new phones. Verizon and
-  most T-Mobile offers name the 18 Pro and Pro Max; T-Mobile's Beyond trade-in and port-in
-  offers and every AT&T trade-in offer also cover iPhone Duo; Xfinity runs a separate Duo offer.
+  `verified: false`. Xfinity's separate iPhone Duo credit was quoted at checkout for every
+  trade-in too: $1,000 for an iPhone 14 or newer and the newest Galaxy and Pixel flagships,
+  $500–$700 for older phones, and nothing for a Pixel Fold (a one-time $50 instead). Credits
+  only kick in on Mobile Plus.
+- `promos[].models` — a promo that names models credits only those new phones. Most
+  T-Mobile offers name the 18 Pro and Pro Max; T-Mobile's Beyond trade-in and port-in offers,
+  every AT&T and Verizon offer, and Xfinity's no-trade-in and upgrade offers also cover iPhone
+  Duo; Xfinity's trade-in credit for a new line has a separate Duo offer.
 
 Things worth knowing that the marketing copy hides:
 
 - T-Mobile's "up to $1,000 off" needs an iPhone 15 Pro or newer. An iPhone 14 lands in
   the $730 tier on Beyond 2.0, $630 on Experience More 2.0, $300 on Essentials 2.0.
-- AT&T's $1,200 takes any iPhone 14 or newer in any condition, but only on Premium 2.0 or
-  Elite 2.0; Extra 2.0 gets $930, Value 2.0 gets $500.
+- AT&T's $1,200 needs a trade-in AT&T values at $230 or more — iPhone 14 Pro Max, 15 or
+  newer — and only on Premium 2.0 or Elite 2.0. An iPhone 14, 14 Plus or 14 Pro gets $930
+  there; Extra 2.0 tops out at $930, Value 2.0 at $500.
 - Xfinity's deals require Xfinity Internet and the Mobile Plus line; Mobile Select is
   cheaper but unlocks no phone deals. Its $930 trade-in credit is for a new line only — an
   existing line upgrading gets up to $500 with a trade-in, or $200 without. All end 11/10.
-- iPhone Duo starts at $1,999. AT&T and T-Mobile carry their 18 Pro trade-in credits over to
-  it ($1,200 and $1,000); Verizon had published no Duo offer on 2026-10-15.
+- iPhone Duo starts at $1,999. AT&T, T-Mobile and Verizon carry their 18 Pro trade-in credits
+  over to it ($1,200, $1,000 and $1,000). Xfinity's "up to $1,000" Duo credit drops to
+  $500–$700 for an iPhone 13 or older.
 - Verizon's "up to $1,000" is the new-line credit on Unlimited Ultimate for an iPhone 14
   or newer (any working condition); upgrading an existing line gets $840. Unlimited Plus
   pays $840 / $660, Unlimited Welcome $480 / $300. An older phone gets half on a new line
-  and nothing on an upgrade. Simplicity has no phone deals at all — its pitch is the flat $30/line
+  and nothing on an upgrade. Through Apple, a new Verizon line can skip the trade-in and
+  still get $840 / $660 / $360 on Ultimate / Plus / Welcome. Simplicity has no phone deals at all — its pitch is the flat $30/line
   switcher price with the phone bought from Apple. Simplicity Pro ($50/mo on top, phone
   returned every year) is a lease, so it is not a route.
 - Mint Mobile is priced on its 12-month prepaid plans; new customers get any 6-month plan
