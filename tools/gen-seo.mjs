@@ -68,37 +68,39 @@ function shell({ title, description, slug, jsonLd, body }) {
 <link rel="icon" type="image/svg+xml" href="https://design-system.rising.company/branding/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Share+Tech+Mono&family=Rajdhani:wght@500;700&display=swap">
 <link rel="stylesheet" href="https://design-system.rising.company/rising.css">
 <style>
   body { display: flex; flex-direction: column; min-height: 100vh; }
   .shell { max-width: 820px; margin: 0 auto; padding: 0 24px; width: 100%; box-sizing: border-box; }
   .page { padding-top: 48px; padding-bottom: 64px; }
+  /* Titles are Rajdhani (design system → Fonts); the body face is IBM Plex Sans. */
+  h1, h2 { font-family: var(--font-display); font-weight: 700; }
   h1 { max-width: 20ch; margin-bottom: 16px; }
-  .lede { font-size: 20px; line-height: 1.55; color: var(--text-muted); max-width: 58ch; margin: 0 0 8px; }
-  .stamp { font-family: "Share Tech Mono", monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-label); margin: 20px 0 36px; }
-  h2 { font-size: 24px; margin: 44px 0 12px; color: var(--text-heading); }
+  .lede { font-size: 1.25rem; line-height: 1.55; color: var(--text-muted); max-width: 58ch; margin: 0 0 8px; }
+  .stamp { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin: 20px 0 36px; }
+  h2 { font-size: 1.25rem; margin: 44px 0 12px; color: var(--text-heading); }
   p { line-height: 1.7; margin: 0 0 16px; max-width: 68ch; }
   .answer { border-left: 3px solid var(--accent-ink); background: var(--accent-wash); padding: 18px 22px; border-radius: 0 6px 6px 0; margin: 0 0 28px; }
-  .answer p { margin: 0; font-size: 18px; }
+  .answer p { margin: 0; font-size: 1rem; }
   .answer b { color: var(--accent-ink); font-weight: 500; }
   table { width: 100%; border-collapse: collapse; margin: 0 0 24px; }
-  th { text-align: left; font-family: "Share Tech Mono", monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-label); font-weight: normal; padding: 8px 12px 8px 0; border-bottom: 1px solid var(--border); }
-  td { padding: 12px 12px 12px 0; border-bottom: 1px solid var(--border-subtle); vertical-align: top; font-size: 15px; line-height: 1.5; }
-  td.num, th.num { text-align: right; padding-right: 0; font-family: "Share Tech Mono", monospace; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  th { text-align: left; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); font-weight: normal; padding: 8px 12px 8px 0; border-bottom: 1px solid var(--border); }
+  td { padding: 12px 12px 12px 0; border-bottom: 1px solid var(--border-subtle); vertical-align: top; font-size: 0.875rem; line-height: 1.5; }
+  td.num, th.num { text-align: right; padding-right: 0; font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
   tr.is-best td { color: var(--accent-ink); }
-  .sub { display: block; font-size: 13px; color: var(--text-label); margin-top: 3px; }
+  .sub { display: block; font-size: 0.75rem; color: var(--text-dim); margin-top: 3px; }
   .cta { margin: 32px 0 8px; }
   .related { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); }
   .related ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 20px; }
-  .related a { font-size: 15px; }
-  .sources { font-family: "Share Tech Mono", monospace; font-size: 12px; line-height: 1.8; }
-  .sources a { color: var(--text-subtle); word-break: break-all; }
+  .related a { font-size: 0.875rem; }
+  .sources { font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.8; }
+  .sources a { color: var(--text-muted); word-break: break-all; }
   @media (max-width: 640px) {
     .page { padding-top: 28px; padding-bottom: 48px; }
-    h1 { font-size: 28px; }
-    .lede { font-size: 17px; }
-    td, th { font-size: 14px; }
+    h1 { font-size: 1.75rem; }
+    .lede { font-size: 1rem; }
+    td, th { font-size: 0.875rem; }
     th.num { white-space: normal; }
     .cta .btn { white-space: normal; text-align: center; }
   }

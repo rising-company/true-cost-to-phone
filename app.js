@@ -267,7 +267,7 @@ function renderRows(allRows) {
       if (r.creditCapped) notes.push(`Credits stop at ${r.creditedPhones} phones (carrier limit); the rest pay full price.`);
       if (r.costcoValue > 0) {
         const src = data.meta.sources[r.costcoSourceKey];
-        notes.push(`Costco: ${r.costcoItems.map((c) => `${esc(c.name)}${c.count > 1 ? ` ×${c.count}` : ""}`).join(" + ")} = ${usd.format(r.costcoValue)}, counted at face value${r.feesWaived ? "; " + esc(r.feesLabel.replace(/\s*\(.*\)$/, "")) + " waived" : ""}.${src ? ` <a href="${esc(src)}" target="_blank" rel="noopener noreferrer">Costco terms ↗</a>` : ""}`);
+        notes.push(`Costco: ${r.costcoItems.map((c) => `${esc(c.name)}${c.count > 1 ? ` ×${c.count}` : ""}`).join(" + ")} = ${usd.format(r.costcoValue)}, counted at face value${r.feesWaived ? "; " + esc(r.feesLabel.replace(/\s*\(.*\)$/, "")) + " waived" : ""}.${src ? ` <a href="${esc(src)}" target="_blank" rel="noopener noreferrer">Costco terms <svg class="icon icon-sm" aria-hidden="true"><use href="/icons.svg#external-link"/></svg></a>` : ""}`);
       }
       if (r.planNotes) notes.push(esc(r.planNotes));
       const src = r.sourceKey && data.meta.sources[r.sourceKey];
