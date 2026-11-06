@@ -4,6 +4,7 @@
 // No build step here, so it is written in rather than injected from the environment.
 
 import { heroSummary } from "./calc.js";
+import { scrubPostHogEvent } from "./analytics-privacy.js";
 
 const TOKEN = "phc_BjJenex2UjxsZ7NTyQBxiNWCEr6AW3vuAMtm3EairtxT";
 const HOST = "https://us.posthog.com";
@@ -71,6 +72,10 @@ export function init() {
     api_host: HOST,
     defaults: "2025-05-24",
     person_profiles: "identified_only", // nobody signs in here; these are anonymous readers
+    mask_all_text: true,
+    mask_all_element_attributes: true,
+    disable_session_recording: true,
+    before_send: scrubPostHogEvent,
   });
   on = true;
   return true;
