@@ -264,7 +264,9 @@ function renderRows(allRows) {
       if (r.lines > 1 && r.phones > 0) notes.push(r.lineDetails.map((l, i) => `Line ${i + 1}: ${l.phoneName ? esc(l.phoneName) + (l.credit ? ` − ${usd.format(l.credit)}` : "") + (l.appleTradeIn ? ` − ${usd.format(l.appleTradeIn)} ${esc(l.tradeInProgram)}` : "") : "no new phone"}`).join(" · "));
       if (r.simUnlocked) notes.push("Apple sells it unlocked — switch carriers any time, no payoff to leave.");
       if (r.stacked > 0) notes.push(`Includes the ${usd.format(r.stacked)} online new-line credit${r.lines > 1 ? ` (${r.lines} lines)` : ""}${r.planCredit > 0 ? ` — a bill credit on the line, so the ${usd.format(r.planCredit)} the phone cannot absorb comes off the plan` : ""}.`);
-      if (r.creditCapped) notes.push(`Credits stop at ${r.creditedPhones} phones (carrier limit); the rest pay full price.`);
+      if (r.creditCapped) notes.push(r.capReason === "picks"
+        ? `Credits stop at ${r.creditedPhones} ${r.creditedPhones === 1 ? "phone" : "phones"}: that uses ${r.picksUsed} of the account's ${r.picksAvailable} Picks, so the rest pay full price.`
+        : `Credits stop at ${r.creditedPhones} phones (carrier limit); the rest pay full price.`);
       if (r.costcoValue > 0) {
         const src = data.meta.sources[r.costcoSourceKey];
         notes.push(`Costco: ${r.costcoItems.map((c) => `${esc(c.name)}${c.count > 1 ? ` ×${c.count}` : ""}`).join(" + ")} = ${usd.format(r.costcoValue)}, counted at face value${r.feesWaived ? "; " + esc(r.feesLabel.replace(/\s*\(.*\)$/, "")) + " waived" : ""}.${src ? ` <a href="${esc(src)}" target="_blank" rel="noopener noreferrer">Costco terms <svg class="icon icon-sm" aria-hidden="true"><use href="/icons.svg#external-link"/></svg></a>` : ""}`);

@@ -29,18 +29,19 @@ cheapest first.
 **Lines** (1–5) prices the plan as an account total for that many lines. Each line picks its
 own new phone (or none) and its own trade-in (or none). Promotions credit each line on its
 own trade-in; a line without a qualifying trade-in pays full price on that route. One-time
-fees are per line regardless. T-Mobile promotions credit at most four devices per account.
-Xfinity's first-year price covers one line; Mint's $10 intro 6 months applies per line. Verizon's
+fees are per line regardless. T-Mobile's T-Mix promotions spend Picks from an allotment set by
+the plan and line count; a phone whose promotion needs more Picks than the account has left
+pays full price. Xfinity's first-year price covers one line; Mint's $15 first year applies per line. Verizon's
 myPlan gives new 3+-line accounts a $10/mo account credit for 36 months; Simplicity is one
 flat price per line.
 
 The **Extra savings** card holds account-level toggles:
 
 - **Switching carriers** — new line + port-in, which unlocks port-in deals and intro prices.
-- **Costco member** — buy through Costco. T-Mobile: $150 Shop Card + $250 prepaid Visa
-  per financed phone when switching to Experience Beyond with a port-in (Visa max 4), $75
-  Shop Card per new line without a financed phone, $100 Shop Card per financed phone when
-  upgrading an existing line, device connection charge waived.
+- **Costco member** — buy through Costco. T-Mobile: $150 + $50 Shop Cards and a $250 prepaid
+  Visa per financed phone when switching to T-Mix Loaded with a port-in (Visa max 4; More
+  gets the two Shop Cards), $75 Shop Card per new line without a financed phone, $100 Shop
+  Card per financed phone when upgrading an existing line, device connection charge waived.
   AT&T: $250 bill credits + $100 Shop Card per ported line with a financed phone (replaces
   the $200 online credit), activation waived; bring-your-own does not qualify. Cards are
   counted at face value. Costco sells no Verizon, Xfinity, Tello or Mint plans.
@@ -114,26 +115,29 @@ What's in it:
 
 Things worth knowing that the marketing copy hides:
 
-- T-Mobile's "up to $1,000 off" needs an iPhone 15 Pro or newer. An iPhone 14 lands in
-  the $730 tier on Beyond 2.0, $630 on Experience More 2.0, $300 on Essentials 2.0.
+- T-Mobile's plans are now T-Mix, and every phone deal costs Picks: Loaded has 3 at one line
+  (13 at five), More 2 (8), Standard 1 (4). "Up to $1,200 off" takes 3 Picks, so it is a
+  Loaded deal, and needs an iPhone 15 Pro or newer: an iPhone 14 gets $930. Four lines on
+  Loaded have 11 Picks, enough for three $1,200 phones, not four. Picks spent on a phone
+  are Picks not spent on the streaming and travel benefits T-Mobile also sells them for.
 - AT&T's $1,200 needs a trade-in AT&T values at $230 or more — iPhone 14 Pro Max, 15 or
   newer — and only on Premium 2.0 or Elite 2.0. An iPhone 14, 14 Plus or 14 Pro gets $930
   there; Extra 2.0 tops out at $930, Value 2.0 at $500.
 - Xfinity's deals require Xfinity Internet and the Mobile Plus line; Mobile Select is
   cheaper but unlocks no phone deals. Its $930 trade-in credit is for a new line only — an
-  existing line upgrading gets up to $500 with a trade-in, or $200 without. All end 11/10.
+  existing line upgrading gets up to $500 with a trade-in, or $200 without. All say they end 11/10.
 - iPhone Duo starts at $1,999. AT&T, T-Mobile and Verizon carry their 18 Pro trade-in credits
-  over to it ($1,200, $1,000 and $1,000). Xfinity's "up to $1,000" Duo credit drops to
+  over to it ($1,200 each), and T-Mobile adds a Duo-only $2,100 deal that takes 7 Picks. Xfinity's "up to $1,000" Duo credit drops to
   $500–$700 for an iPhone 13 or older.
-- Verizon's "up to $1,000" is the new-line credit on Unlimited Ultimate for an iPhone 14
-  or newer (any working condition); upgrading an existing line gets $840. Unlimited Plus
-  pays $840 / $660, Unlimited Welcome $480 / $300. An older phone gets half on a new line
-  and nothing on an upgrade. Through Apple, a new Verizon line can skip the trade-in and
-  still get $840 / $660 / $360 on Ultimate / Plus / Welcome. Simplicity has no phone deals at all — its pitch is the flat $30/line
+- Verizon's "up to $1,200" is the new-line credit on Unlimited Ultimate for an iPhone 14
+  or newer (any working condition); upgrading an existing line gets $1,020. Unlimited Plus
+  pays $930 / $750, Unlimited Welcome $480 / $300. An older phone gets half. Through Apple,
+  a new Verizon line can skip the trade-in and still get $1,200 / $930 / $360 on Ultimate /
+  Plus / Welcome with a number transfer, $840 / $660 / $360 without. Simplicity has no phone deals at all — its pitch is the flat $30/line
   switcher price with the phone bought from Apple. Simplicity Pro ($50/mo on top, phone
   returned every year) is a lease, so it is not a route.
-- Mint Mobile is priced on its 12-month prepaid plans; new customers get any 6-month plan
-  for $10/mo for the first 6 months, then $30/mo for Unlimited on a 12-month plan. 3-month
+- Mint Mobile is priced on its 12-month prepaid plans; new customers pay $15/mo for their
+  first term on any plan, so Unlimited is $15/mo for a year, then $30/mo. 3- and 6-month
   terms cost more.
 - Taxes are excluded everywhere. T-Mobile, AT&T and Verizon prices are with AutoPay (AT&T
   and Verizon also paperless); Xfinity prices include the $10 internet-customer discount.
@@ -147,8 +151,10 @@ The calculator already takes these as inputs; the page just pins them for now.
 - Choose the trade-in device — present on the page today, backed by Apple's full table.
 - Monthly data and minutes needed (`minDataGb`, `minutes`) so Tello's smaller plans and
   AT&T Value 2.0 come into play.
-- T-Mobile Essentials 2.0 at 2 lines and Essentials Saver beyond 2 lines are not published
-  on the plan page (4 and 5 lines are priced from its "Essentials 4 Line Offer").
+- T-Mix Saver beyond 1 line is not published on the plan page. T-Mix Standard at 4 and 5
+  lines is priced from its 4-for-$25 offer, which needs a number transfer.
+- A route applies one T-Mobile promotion to every phone; an account mixing 1- and 3-Pick
+  deals across lines is not priced yet.
 
 ## The social card
 

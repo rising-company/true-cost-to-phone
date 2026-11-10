@@ -68,23 +68,33 @@ Samsung and Google set the value of their own phones, the way Apple does for iPh
 
 | Source key | What to read |
 |---|---|
-| `tmobile-plans` | Plan prices **by line count** — an account total, not per-line |
-| `tmobile-iphone`, `tmobile-iphone-max` | Device pages and current promotions |
+| `tmobile-plans` | T-Mix plan prices **and Picks** by line count — an account total, not per-line |
+| `tmobile-picks` | How Picks work: allotment rules, what a promotion holds |
+| `tmobile-iphone`, `tmobile-iphone-max`, `tmobile-iphone-duo` | Device pages: "See N promotions", then each promotion's terms |
 | `tmobile-press` | Launch-day promotion terms, usually clearer than the device page |
 
 Traps:
 
-- Prices include the $5/line AutoPay discount. Keep that convention and note it.
-- Promotions credit **at most four devices per account** (`maxDevices: 4`).
-- "iPhone 18 Pro on Us" needs an iPhone 15 Pro or newer. Older phones land in much
-  smaller tiers that differ per plan — read every tier, not the headline.
-- The plan cards, not the "Monthly Price" tables, carry the AutoPay and 3rd-line-free
-  prices, and they only render for the line count selected at the top of the page.
-  Step through 1–5 lines and read each card. Essentials 2.0's 4- and 5-line prices come
-  from a separate "Essentials 4 Line Offer" card.
-- Essentials 2.0 at 2 lines, and Essentials Saver above 2 lines, are not published.
-  Leave them out rather than interpolating; the calculator skips a plan with no price
-  for the requested count.
+- **T-Mix (since November 2026).** The Experience and Essentials plans are gone. Loaded, More
+  and Standard come with **Picks**, and every phone promotion spends some ("Use 3 of your
+  Picks"). Record `picks` per line count on each plan and on each promo. Picks do not scale
+  per line (Loaded 3/6/9/11/13), so read the card at every line count. Saver has none.
+- The plan cards carry the AutoPay price and the Picks, and only for the line count selected
+  at the top of the page. Step through 1–5 lines (decrement first: it opens on 3) and read each
+  card. The "Monthly Price" tables are **before** AutoPay ($10/line off). A "sale price"
+  below the AutoPay price is a switcher deal ("when you transfer your number"): Standard's
+  4-for-$25 at 4–5 lines and Saver's $30 single line. With no end date shown, model it the
+  way Verizon Simplicity's switch discount is modeled, as a 36-month `intro` with
+  `requires.newLine`, and keep the regular AutoPay price in `monthly`.
+- Each promotion's terms state a plan floor. $95+ / $75+ / $55+ is the single-line price of
+  Loaded / More / Standard, so it becomes the promo's `plans`. The 5- and 7-Pick Smartphone
+  promos say $155+ / $180+, which no single line reaches: those are `requires.minAccountMonthly`.
+- The promo list is the same on each device page, but each page's "Buy a new phone" list names
+  only some models. Open the 18 Pro, Pro Max and Duo pages and union what they say for `models`.
+- Tier lists name every eligible phone, so map them exactly with no `otherwise` tier. A phone
+  T-Mobile does not list (Galaxy Z Flip7 FE in 2026-11) earns nothing.
+- Promotions open in a dialog: click "See N promotions", click one, `read`, then Escape.
+  The terms end with the promo ID, which is the promo's `id`.
 
 ## AT&T
 
@@ -127,6 +137,9 @@ Traps:
 - Verizon's own device pages show no offers to automation. Apple's carrier offers page is
   where its terms are readable, including a no-trade-in deal for new lines sold only
   through Apple ($840 / $660 / $360, the `vz-notradein-*` promos).
+- Best Buy's disclosure says new Verizon accounts must take Simplicity and only Add-a-Line or
+  upgrade gets the myPlan trade-in credits, while Apple's footnotes give the same credits to
+  new customers. The data follows Apple (where the deal is bought); recheck both each crawl.
 - Verizon does not publish the tier membership clearly; Best Buy's page does, which is
   why that source exists. Anything still unclear is `verified: false`.
 
@@ -175,6 +188,10 @@ Traps:
 | `tello` | The plan builder — same price per line |
 | `mint` | 12-month prepaid plans |
 
+Mint's site sits behind Cloudflare and serves a challenge page to headless Chrome: read it
+in a headed session (say so first), and close the window straight after. Its new-customer
+offer changes shape (2026-11: $15/mo for the first term of any plan).
+
 Neither runs phone promotions, which is the point of including them: they are the
 "buy the phone, bring it" baseline the big carriers are measured against. Mint's
 $15/mo intro year is per line and applies to new customers on any plan; its 3- and
@@ -189,7 +206,8 @@ Most of Tello's plans sit below the usage floor and are priced but never shown.
 | `costco-tmobile`, `costco-att` | Member benefits per carrier |
 
 Costco sells no Verizon, Xfinity, Tello or Mint plans. Shop Cards and prepaid Visa
-cards are counted at face value. The rules are fiddly and change often — re-read both
+cards are counted at face value. Costco's `minPlanMonthly` is compared with the plan's
+single-line price. The rules are fiddly and change often — re-read both
 showcases rather than assuming last crawl's terms still hold, and check whether the
 device connection charge or activation fee is still waived.
 

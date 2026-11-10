@@ -1,22 +1,23 @@
 {
   "meta": {
-    "crawledAt": "2026-10-19",
+    "crawledAt": "2026-11-10",
     "currency": "USD",
     "defaultTermMonths": 36,
     "notes": [
       "Taxes and regulatory fees are excluded everywhere; every carrier bills them on top.",
       "One retail price per phone. Apple, T-Mobile, AT&T and Verizon list the same figure (carriers show it as $x.99); Xfinity does not publish one, so Apple's is used everywhere.",
-      "T-Mobile prices include the $5/line AutoPay discount. AT&T prices are after the AutoPay + paperless billing discount. Xfinity prices include the $10/mo Xfinity Internet customer discount and require residential Xfinity Internet.",
+      "T-Mobile prices include the AutoPay discount. AT&T prices are after the AutoPay + paperless billing discount. Xfinity prices include the $10/mo Xfinity Internet customer discount and require residential Xfinity Internet.",
       "Verizon prices are after the Auto Pay + paper-free billing discount ($10/line more without). myPlan 1- and 2-line figures follow the May 2026 Unlimited Ultimate increase (+$5); 3- and 4+-line standard rates are from Verizon's plan page, and the $10/mo account credit it gives new 3+-line accounts for 36 months is applied when switching. Simplicity is one flat price per line; its $15/line switch discount has no published end date and is applied for the whole term. Simplicity Pro ($50/mo on top, phone installment credited, phone returned every year) is a lease, not a purchase, so it is not a route. Verizon's $40 activation/upgrade fee is waived with the free Loyalty opt-in and is counted as $0. Costco sells no Verizon plans.",
       "Bill-credit promotions pay out monthly over the term. Leaving early forfeits the remaining credits and the device balance is due.",
       "Trade-in value counts as a cost: when a promotion takes your old phone, its Apple Trade In estimate is added to the total so every route is compared on the same footing.",
-      "Mint Mobile is priced on its 12-month prepaid plans (the cheapest regular term). New customers can take any 6-month plan for $10/mo for the first 6 months ($60 upfront), then move to the regular 12-month rate; that is modeled as a 6-month intro on each plan. The 12-month plans no longer carry a new-customer discount. 3-month terms cost more per month and are not modeled. Mint's site counts the $10 offer down to 2026-10-22; after that a new customer pays the regular 12-month rate from the start.",
-      "Multi-line: plan prices are account totals per line count with AutoPay. T-Mobile and AT&T were read from their plan pages for 1–5 lines (T-Mobile Beyond to 8; Essentials 2.0 at 1–5 lines — the 4- and 5-line prices are its 4 Line Offer; Essentials Saver only at 1 and 2). Xfinity, Tello and Mint charge the same per line, so those totals are per-line price × lines.",
-      "Xfinity's first-year price applies to one line per account; extra lines pay the regular rate. Mint's $10 new-customer 6 months is applied to every line (family lines are priced like single 12-month lines).",
-      "T-Mobile promotions cover at most four discounted devices per account; phones beyond that pay full price.",
-      "Costco: member benefits read from Costco's AT&T and T-Mobile showcases on 2026-10-19 (unchanged since 2026-10-08). Shop Cards and prepaid Visa cards are counted at face value against the total. Costco sells no Xfinity, Tello or Mint plans.",
+      "Mint Mobile is priced on its 12-month prepaid plans (the cheapest regular term). New customers pay $15/mo for the first plan term on any plan (Mint's 'All plans are $15/mo' offer, read 2026-11-10), so a 12-month plan is modeled as 12 intro months at $15/line, then the regular 12-month rate. It replaced the $10-for-6-months offer that ended 2026-10-22. 3- and 6-month terms cost more per month and are not modeled.",
+      "Multi-line: plan prices are account totals per line count with AutoPay. T-Mobile's T-Mix and AT&T's plans were read for 1–5 lines (T-Mix Saver only at 1 line; T-Mix Standard's 5-line price without a number transfer is its $180 list price less the $10/line AutoPay discount, which every other T-Mix price follows). Xfinity, Tello and Mint charge the same per line, so those totals are per-line price × lines.",
+      "Xfinity's first-year price applies to one line per account; extra lines pay the regular rate. Mint's $15 new-customer year is applied to every line (family lines are priced like single 12-month lines).",
+      "T-Mobile replaced its Experience and Essentials plans with T-Mix (Loaded, More, Standard, Saver) by 2026-11-10. Every T-Mix phone promotion spends Picks, a per-account allotment that depends on the plan and line count (Loaded 3/6/9/11/13, More 2/4/6/7/8, Standard 1/2/3/4/4 at 1–5 lines; Saver none). A phone whose promotion needs more Picks than the account has left earns no credit. Picks are counted as a budget with no dollar cost, but Picks spent on a phone are not available for the streaming, travel and other benefits they could otherwise buy. A promotion's $95+ / $75+ / $55+ plan floor is read as the plan's single-line price, as for T-Mobile's earlier offers: $95+ is Loaded, $75+ is More or Loaded, $55+ is any plan with Picks. The $155+ and $180+ floors of the 5- and 7-Pick Smartphone promos are read as the account's monthly total, since no single line reaches them. T-Mix Standard's 4-for-$25 price ($100 at 4 lines, $115 at 5) and Saver's $30 single line need a number transfer and show no end date, so, like Verizon Simplicity's switch discount, they are applied for the whole term to a switcher only. Apple's carrier offers page still describes T-Mobile's deals in terms of the Experience plans (read 2026-11-10); T-Mobile's own pages, which sell only T-Mix, are used instead.",
+      "Costco: member benefits read from Costco's AT&T and T-Mobile showcases on 2026-11-10. T-Mobile's switch bundle moved to T-Mix Loaded and adds a $50 Shop Card; AT&T's $350 is unchanged and ends 2026-11-15. Shop Cards and prepaid Visa cards are counted at face value against the total. Costco sells no Xfinity, Tello or Mint plans.",
       "Trade-in values come from each phone maker's own program: Apple Trade In for iPhones, Samsung's standalone trade-in (run by Likewize, pays without a purchase) for Galaxy phones, and the Google Store estimator for Pixels, each at top storage in good condition. Google pays the same for a phone whichever Pixel is bought. Galaxy S26 and Pixel 11 are not in either maker's program yet, so they are not offered as trade-ins. Samsung and Google values were last read on 2026-09-22: neither estimator answered automated requests on 2026-10-08, and Samsung's still did not on 2026-10-19.",
-      "iPhone Duo (from $1,999) was added on 2026-10-15, the day before pre-orders. A promo with `models` credits only those new phones. As of 2026-10-19: T-Mobile's Experience Beyond trade-in and port-in offers and AT&T's trade-in offers cover it (Apple's carrier offers page); Verizon's trade-in offers cover it with the same credits (Verizon's 10/16 Duo announcement and Apple's page), as does Verizon's no-trade-in new-line deal sold through Apple; Xfinity's $400 new-line and $500/$200 upgrade offers cover it, and its own Duo trade-in offer pays $500–$1,000 depending on the phone, quoted at checkout for every trade-in."
+      "iPhone Duo (from $1,999) was added on 2026-10-15. A promo with `models` credits only those new phones. As of 2026-11-10: every T-Mix promotion covers it except the $1,400 5-Pick deal, and it has its own $2,100 7-Pick deal; AT&T's trade-in offers and Verizon's trade-in and no-trade-in deals cover it with the same credits; Xfinity's $400 new-line and $500/$200 upgrade offers cover it, and its own Duo trade-in offer pays $500–$1,000 depending on the phone (quoted at checkout 2026-10-19).",
+      "Re-read on 2026-11-10: every carrier's promotions (T-Mobile, AT&T and Verizon from their own pages, Apple's carrier offers page and Best Buy's Verizon tiers; Xfinity's deals page), T-Mobile's plans, Verizon's myPlan prices, Mint's plans, Apple's trade-in table and both Costco showcases. AT&T, Xfinity and Tello plan prices were last read on 2026-10-19 (their pages did not render prices to automation on 2026-11-10). Xfinity's offers say they end 2026-11-10 and its checkout credits were last quoted on 2026-10-15 (18 Pro) and 2026-10-19 (Duo)."
     ],
     "sources": {
       "tello": "https://tello.com/buy/custom_plans",
@@ -48,7 +49,9 @@
       "att-iphone-duo": "https://www.att.com/buy/phones/apple-iphone-duo.html",
       "apple-carrier-offers": "https://www.apple.com/shop/buy-iphone/carrier-offers",
       "verizon-press-duo": "https://www.verizon.com/about/news/iphone-duo-verizon-offers",
-      "xfinity-checkout-duo": "https://www.xfinity.com/digital/mobile/cell-phones/apple-iphone-duo"
+      "xfinity-checkout-duo": "https://www.xfinity.com/digital/mobile/cell-phones/apple-iphone-duo",
+      "tmobile-picks": "https://www.t-mobile.com/picks",
+      "tmobile-iphone-duo": "https://www.t-mobile.com/cell-phone/apple-iphone-duo"
     }
   },
   "phones": [
@@ -1002,19 +1005,6 @@
             "4": 60,
             "5": 75
           },
-          "intro": {
-            "months": 6,
-            "monthly": {
-              "1": 10,
-              "2": 20,
-              "3": 30,
-              "4": 40,
-              "5": 50
-            },
-            "requires": {
-              "newLine": true
-            }
-          },
           "notes": "Prepaid 12 months ($180) · hotspot from plan data"
         },
         {
@@ -1031,13 +1021,13 @@
             "5": 100
           },
           "intro": {
-            "months": 6,
+            "months": 12,
             "monthly": {
-              "1": 10,
-              "2": 20,
-              "3": 30,
-              "4": 40,
-              "5": 50
+              "1": 15,
+              "2": 30,
+              "3": 45,
+              "4": 60,
+              "5": 75
             },
             "requires": {
               "newLine": true
@@ -1059,13 +1049,13 @@
             "5": 125
           },
           "intro": {
-            "months": 6,
+            "months": 12,
             "monthly": {
-              "1": 10,
-              "2": 20,
-              "3": 30,
-              "4": 40,
-              "5": 50
+              "1": 15,
+              "2": 30,
+              "3": 45,
+              "4": 60,
+              "5": 75
             },
             "requires": {
               "newLine": true
@@ -1087,13 +1077,13 @@
             "5": 150
           },
           "intro": {
-            "months": 6,
+            "months": 12,
             "monthly": {
-              "1": 10,
-              "2": 20,
-              "3": 30,
-              "4": 40,
-              "5": 50
+              "1": 15,
+              "2": 30,
+              "3": 45,
+              "4": 60,
+              "5": 75
             },
             "requires": {
               "newLine": true
@@ -1117,76 +1107,113 @@
       },
       "plans": [
         {
-          "id": "tmo-beyond-2",
-          "name": "Experience Beyond 2.0",
+          "id": "tmo-mix-loaded",
+          "name": "T-Mix Loaded",
           "dataGb": "unlimited",
           "premiumDataGb": "unlimited",
           "minutes": "unlimited",
           "monthly": {
-            "1": 100,
-            "2": 170,
-            "3": 170,
-            "4": 215,
-            "5": 260,
-            "6": 305,
-            "7": 350,
-            "8": 395
+            "1": 95,
+            "2": 160,
+            "3": 200,
+            "4": 240,
+            "5": 280
           },
-          "notes": "Unlimited premium data · unlimited hotspot · Netflix, Hulu on Us · 5-year price guarantee"
+          "picks": {
+            "1": 3,
+            "2": 6,
+            "3": 9,
+            "4": 11,
+            "5": 13
+          },
+          "notes": "Unlimited premium data · 250 GB hotspot · 3/6/9/11/13 Picks at 1–5 lines"
         },
         {
-          "id": "tmo-more-2",
-          "name": "Experience More 2.0",
+          "id": "tmo-mix-more",
+          "name": "T-Mix More",
           "dataGb": "unlimited",
           "premiumDataGb": "unlimited",
           "minutes": "unlimited",
           "monthly": {
-            "1": 85,
-            "2": 140,
-            "3": 140,
-            "4": 170,
-            "5": 200
+            "1": 75,
+            "2": 130,
+            "3": 155,
+            "4": 180,
+            "5": 205
           },
-          "notes": "Unlimited premium data · 60 GB hotspot · Netflix on Us"
+          "picks": {
+            "1": 2,
+            "2": 4,
+            "3": 6,
+            "4": 7,
+            "5": 8
+          },
+          "notes": "Unlimited premium data · 60 GB hotspot · 2/4/6/7/8 Picks at 1–5 lines"
         },
         {
-          "id": "tmo-essentials-2",
-          "name": "Essentials 2.0",
+          "id": "tmo-mix-standard",
+          "name": "T-Mix Standard",
           "dataGb": "unlimited",
           "premiumDataGb": 50,
           "minutes": "unlimited",
           "monthly": {
-            "1": 60,
-            "2": 90,
-            "3": 90,
-            "4": 100,
-            "5": 125
+            "1": 55,
+            "2": 85,
+            "3": 100,
+            "4": 115,
+            "5": 130
           },
-          "notes": "50 GB premium data, then deprioritized · SD video"
+          "picks": {
+            "1": 1,
+            "2": 2,
+            "3": 3,
+            "4": 4,
+            "5": 4
+          },
+          "notes": "50 GB premium data, then deprioritized · SD video · 1/2/3/4/4 Picks at 1–5 lines · $100 (4 lines) and $115 (5 lines) with a number transfer (4 for $25/line), otherwise $115 and $130",
+          "intro": {
+            "months": 36,
+            "monthly": {
+              "4": 100,
+              "5": 115
+            },
+            "requires": {
+              "newLine": true
+            }
+          }
         },
         {
-          "id": "tmo-essentials-saver-2",
-          "name": "Essentials Saver 2.0",
+          "id": "tmo-mix-saver",
+          "name": "T-Mix Saver",
           "dataGb": "unlimited",
           "premiumDataGb": 50,
           "minutes": "unlimited",
           "monthly": {
-            "1": 50,
-            "2": 80
+            "1": 45
           },
-          "notes": "50 GB premium data · not eligible for iPhone 18 Pro promotions"
+          "notes": "50 GB premium data · no Picks, so no phone promotions · $30/mo for a new line with a number transfer, $45 otherwise",
+          "intro": {
+            "months": 36,
+            "monthly": {
+              "1": 30
+            },
+            "requires": {
+              "newLine": true
+            }
+          }
         }
       ],
       "promos": [
         {
-          "id": "tmo-ID260835",
-          "name": "Up to $1,000 off — any-condition trade-in, Experience Beyond",
+          "id": "tmo-ID261065",
+          "name": "Up to $1,200 off — trade-in, 3 Picks",
           "sourceKey": "tmobile-iphone",
           "plans": [
-            "tmo-beyond-2"
+            "tmo-mix-loaded"
           ],
           "termMonths": 36,
           "stackable": false,
+          "picks": 3,
           "requires": {
             "tradeIn": true,
             "tradeInCondition": "any",
@@ -1195,96 +1222,128 @@
           },
           "tiers": [
             {
-              "credit": 1000,
+              "credit": 1200,
               "devices": [
-                "iphone-17",
-                "iphone-17-pro",
-                "iphone-17-pro-max",
-                "iphone-air",
+                "iphone-15-pro",
+                "iphone-15-pro-max",
                 "iphone-16",
                 "iphone-16-plus",
                 "iphone-16-pro",
                 "iphone-16-pro-max",
                 "iphone-16e",
-                "iphone-15-pro",
-                "iphone-15-pro-max",
+                "iphone-17",
+                "iphone-17-pro",
+                "iphone-17-pro-max",
+                "iphone-air",
+                "galaxy-s24-ultra",
+                "galaxy-s24-plus",
                 "galaxy-s25",
-                "galaxy-s25-plus",
-                "galaxy-s25-ultra",
                 "galaxy-s25-edge",
                 "galaxy-s25-fe",
-                "galaxy-s24-plus",
-                "galaxy-s24-ultra",
-                "galaxy-z-fold7",
-                "galaxy-z-fold6",
-                "galaxy-z-fold5",
-                "galaxy-z-flip7",
+                "galaxy-s25-ultra",
+                "galaxy-s25-plus",
+                "galaxy-z-flip5",
                 "galaxy-z-flip6",
-                "galaxy-z-flip5"
+                "galaxy-z-flip7",
+                "galaxy-z-fold5",
+                "galaxy-z-fold6",
+                "galaxy-z-fold7"
               ]
             },
             {
-              "credit": 730,
+              "credit": 930,
               "devices": [
-                "iphone-15",
-                "iphone-15-plus",
+                "iphone-13-pro",
+                "iphone-13-pro-max",
                 "iphone-14",
                 "iphone-14-plus",
                 "iphone-14-pro",
                 "iphone-14-pro-max",
-                "iphone-13-pro",
-                "iphone-13-pro-max",
-                "galaxy-z-fold4",
-                "galaxy-z-fold3",
-                "galaxy-z-flip4",
-                "galaxy-z-flip3",
-                "galaxy-s24",
-                "galaxy-s24-fe",
-                "galaxy-s23",
-                "galaxy-s23-plus",
-                "galaxy-s23-ultra",
-                "galaxy-s23-fe",
-                "galaxy-s22-plus",
-                "galaxy-s22-ultra",
-                "galaxy-note20",
-                "galaxy-note20-ultra",
+                "iphone-15",
+                "iphone-15-plus",
                 "pixel-10",
                 "pixel-10-pro",
                 "pixel-10-pro-fold",
                 "pixel-10-pro-xl",
+                "pixel-6-pro",
+                "pixel-7",
+                "pixel-7-pro",
+                "pixel-8",
+                "pixel-8-pro",
                 "pixel-9",
                 "pixel-9-pro",
                 "pixel-9-pro-fold",
                 "pixel-9-pro-xl",
-                "pixel-8",
-                "pixel-8-pro",
-                "pixel-7-pro",
-                "pixel-6-pro",
-                "pixel-fold"
+                "pixel-fold",
+                "galaxy-note20",
+                "galaxy-note20-ultra",
+                "galaxy-s22-ultra",
+                "galaxy-s22-plus",
+                "galaxy-s23",
+                "galaxy-s23-fe",
+                "galaxy-s23-ultra",
+                "galaxy-s23-plus",
+                "galaxy-s24",
+                "galaxy-s24-fe",
+                "galaxy-z-flip3",
+                "galaxy-z-flip4",
+                "galaxy-z-fold3",
+                "galaxy-z-fold4"
               ]
             },
             {
               "credit": 500,
-              "otherwise": true
+              "devices": [
+                "iphone-11",
+                "iphone-11-pro",
+                "iphone-11-pro-max",
+                "iphone-12",
+                "iphone-12-mini",
+                "iphone-12-pro",
+                "iphone-12-pro-max",
+                "iphone-13",
+                "iphone-13-mini",
+                "iphone-8-plus",
+                "iphone-se-2",
+                "iphone-se-3",
+                "iphone-x",
+                "iphone-xr",
+                "iphone-xs",
+                "iphone-xs-max",
+                "pixel-6",
+                "pixel-6a",
+                "pixel-7a",
+                "pixel-8a",
+                "pixel-9a",
+                "galaxy-s20",
+                "galaxy-s20-fe",
+                "galaxy-s20-ultra",
+                "galaxy-s20-plus",
+                "galaxy-s21",
+                "galaxy-s21-fe",
+                "galaxy-s21-ultra",
+                "galaxy-s21-plus",
+                "galaxy-s22"
+              ]
             }
           ],
-          "maxDevices": 4,
           "models": [
             "iPhone 18 Pro",
             "iPhone 18 Pro Max",
             "iPhone Duo"
           ],
-          "note": "Covers iPhone Duo too: Apple's carrier offers page lists a T-Mobile iPhone Duo Special Deal with the same any-condition trade-in terms on Experience Beyond 2.0, Experience Beyond and Go5G Next, up to $1,000 (read 2026-10-15)."
+          "note": "$95+/mo. plan with AutoPay, which is T-Mix Loaded. Any-condition trade-in (T-Mobile's T-Mix terms, 2026-11-10). Phones T-Mobile does not list (Galaxy Z Flip7 FE) earn nothing."
         },
         {
-          "id": "tmo-ID260824",
-          "name": "Up to $1,000 off — new line and port-in, no trade-in",
+          "id": "tmo-ID261049",
+          "name": "Up to $1,200 off — new line and port-in, 3 Picks",
           "sourceKey": "tmobile-iphone",
           "plans": [
-            "tmo-beyond-2"
+            "tmo-mix-loaded"
           ],
           "termMonths": 36,
           "stackable": false,
+          "picks": 3,
           "requires": {
             "tradeIn": false,
             "newLine": true,
@@ -1292,28 +1351,86 @@
           },
           "tiers": [
             {
-              "credit": 1000,
+              "credit": 1200,
               "otherwise": true
             }
           ],
-          "maxDevices": 4,
           "models": [
             "iPhone 18 Pro",
             "iPhone 18 Pro Max",
             "iPhone Duo"
-          ],
-          "note": "Covers iPhone Duo too: Apple's carrier offers page lists a T-Mobile iPhone Duo No Trade-in Required Deal with the same port-in terms (max 4 per account), up to $1,000 (read 2026-10-15)."
+          ]
         },
         {
-          "id": "tmo-ID260838",
-          "name": "Up to $830 off — trade-in, Experience More or Beyond",
+          "id": "tmo-ID261114",
+          "name": "Up to $1,400 off — new line, 5 Picks",
           "sourceKey": "tmobile-iphone",
           "plans": [
-            "tmo-more-2",
-            "tmo-beyond-2"
+            "tmo-mix-loaded",
+            "tmo-mix-more",
+            "tmo-mix-standard"
           ],
           "termMonths": 36,
           "stackable": false,
+          "picks": 5,
+          "requires": {
+            "tradeIn": false,
+            "newLine": true,
+            "portIn": false,
+            "minAccountMonthly": 155
+          },
+          "tiers": [
+            {
+              "credit": 1400,
+              "otherwise": true
+            }
+          ],
+          "models": [
+            "iPhone 18 Pro",
+            "iPhone 18 Pro Max"
+          ],
+          "note": "T-Mix Smartphone Promo: $155+/mo. account with AutoPay, new voice line, no trade-in or port-in. Capped at the phone's price."
+        },
+        {
+          "id": "tmo-ID261061",
+          "name": "Up to $2,100 off iPhone Duo — 7 Picks",
+          "sourceKey": "tmobile-iphone-duo",
+          "plans": [
+            "tmo-mix-loaded",
+            "tmo-mix-more",
+            "tmo-mix-standard"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "picks": 7,
+          "requires": {
+            "tradeIn": false,
+            "newLine": false,
+            "portIn": false,
+            "minAccountMonthly": 180
+          },
+          "tiers": [
+            {
+              "credit": 2100,
+              "otherwise": true
+            }
+          ],
+          "models": [
+            "iPhone Duo"
+          ],
+          "note": "T-Mix Smartphone Promo for iPhone Duo: $180+/mo. account with AutoPay; terms name no new-line, port-in or trade-in requirement. Capped at the phone's price."
+        },
+        {
+          "id": "tmo-ID261064",
+          "name": "Up to $930 off — trade-in, 2 Picks",
+          "sourceKey": "tmobile-iphone",
+          "plans": [
+            "tmo-mix-loaded",
+            "tmo-mix-more"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "picks": 2,
           "requires": {
             "tradeIn": true,
             "tradeInCondition": "good",
@@ -1322,95 +1439,128 @@
           },
           "tiers": [
             {
-              "credit": 830,
+              "credit": 930,
               "devices": [
-                "iphone-17-pro-max",
-                "iphone-17-pro",
-                "iphone-17",
-                "iphone-air",
-                "iphone-16-pro-max",
-                "iphone-16-pro",
-                "iphone-16-plus",
-                "iphone-16e",
-                "iphone-16",
-                "iphone-15-pro-max",
                 "iphone-15-pro",
+                "iphone-15-pro-max",
+                "iphone-16",
+                "iphone-16-plus",
+                "iphone-16-pro",
+                "iphone-16-pro-max",
+                "iphone-16e",
+                "iphone-17",
+                "iphone-17-pro",
+                "iphone-17-pro-max",
+                "iphone-air",
+                "galaxy-s24-ultra",
+                "galaxy-s24-plus",
                 "galaxy-s25",
-                "galaxy-s25-plus",
-                "galaxy-s25-ultra",
                 "galaxy-s25-edge",
                 "galaxy-s25-fe",
-                "galaxy-s24-plus",
-                "galaxy-s24-ultra",
-                "galaxy-z-fold7",
-                "galaxy-z-fold6",
-                "galaxy-z-fold5",
-                "galaxy-z-flip7",
+                "galaxy-s25-ultra",
+                "galaxy-s25-plus",
+                "galaxy-z-flip5",
                 "galaxy-z-flip6",
-                "galaxy-z-flip5"
+                "galaxy-z-flip7",
+                "galaxy-z-fold5",
+                "galaxy-z-fold6",
+                "galaxy-z-fold7"
               ]
             },
             {
-              "credit": 630,
+              "credit": 730,
               "devices": [
-                "iphone-15-plus",
-                "iphone-15",
-                "iphone-14-pro-max",
-                "iphone-14-pro",
-                "iphone-14-plus",
-                "iphone-14",
-                "iphone-13-pro-max",
                 "iphone-13-pro",
-                "galaxy-z-fold4",
-                "galaxy-z-fold3",
-                "galaxy-z-flip4",
-                "galaxy-z-flip3",
-                "galaxy-s24",
-                "galaxy-s24-fe",
-                "galaxy-s23",
-                "galaxy-s23-plus",
-                "galaxy-s23-ultra",
-                "galaxy-s23-fe",
-                "galaxy-s22-plus",
-                "galaxy-s22-ultra",
-                "galaxy-note20",
-                "galaxy-note20-ultra",
+                "iphone-13-pro-max",
+                "iphone-14",
+                "iphone-14-plus",
+                "iphone-14-pro",
+                "iphone-14-pro-max",
+                "iphone-15",
+                "iphone-15-plus",
                 "pixel-10",
                 "pixel-10-pro",
                 "pixel-10-pro-fold",
                 "pixel-10-pro-xl",
+                "pixel-6-pro",
+                "pixel-7",
+                "pixel-7-pro",
+                "pixel-8",
+                "pixel-8-pro",
                 "pixel-9",
                 "pixel-9-pro",
                 "pixel-9-pro-fold",
                 "pixel-9-pro-xl",
-                "pixel-8",
-                "pixel-8-pro",
-                "pixel-7-pro",
-                "pixel-6-pro",
-                "pixel-fold"
+                "pixel-fold",
+                "galaxy-note20",
+                "galaxy-note20-ultra",
+                "galaxy-s22-ultra",
+                "galaxy-s22-plus",
+                "galaxy-s23",
+                "galaxy-s23-fe",
+                "galaxy-s23-ultra",
+                "galaxy-s23-plus",
+                "galaxy-s24",
+                "galaxy-s24-fe",
+                "galaxy-z-flip3",
+                "galaxy-z-flip4",
+                "galaxy-z-fold3",
+                "galaxy-z-fold4"
               ]
             },
             {
               "credit": 400,
-              "otherwise": true
+              "devices": [
+                "iphone-11",
+                "iphone-11-pro",
+                "iphone-11-pro-max",
+                "iphone-12",
+                "iphone-12-mini",
+                "iphone-12-pro",
+                "iphone-12-pro-max",
+                "iphone-13",
+                "iphone-13-mini",
+                "iphone-8-plus",
+                "iphone-se-2",
+                "iphone-se-3",
+                "iphone-x",
+                "iphone-xr",
+                "iphone-xs",
+                "iphone-xs-max",
+                "pixel-6",
+                "pixel-6a",
+                "pixel-7a",
+                "pixel-8a",
+                "pixel-9a",
+                "galaxy-s20",
+                "galaxy-s20-fe",
+                "galaxy-s20-ultra",
+                "galaxy-s20-plus",
+                "galaxy-s21",
+                "galaxy-s21-fe",
+                "galaxy-s21-ultra",
+                "galaxy-s21-plus",
+                "galaxy-s22"
+              ]
             }
           ],
-          "maxDevices": 4,
           "models": [
             "iPhone 18 Pro",
-            "iPhone 18 Pro Max"
+            "iPhone 18 Pro Max",
+            "iPhone Duo"
           ]
         },
         {
-          "id": "tmo-more-port",
-          "name": "Up to $830 off — new line and port-in, no trade-in",
+          "id": "tmo-ID261050",
+          "name": "Up to $930 off — new line and port-in, 2 Picks",
           "sourceKey": "tmobile-iphone",
           "plans": [
-            "tmo-more-2",
-            "tmo-beyond-2"
+            "tmo-mix-loaded",
+            "tmo-mix-more"
           ],
           "termMonths": 36,
           "stackable": false,
+          "picks": 2,
           "requires": {
             "tradeIn": false,
             "newLine": true,
@@ -1418,27 +1568,28 @@
           },
           "tiers": [
             {
-              "credit": 830,
+              "credit": 930,
               "otherwise": true
             }
           ],
-          "maxDevices": 4,
           "models": [
             "iPhone 18 Pro",
-            "iPhone 18 Pro Max"
+            "iPhone 18 Pro Max",
+            "iPhone Duo"
           ]
         },
         {
-          "id": "tmo-ID260832",
-          "name": "Up to $730 off — new line plus trade-in, most plans",
+          "id": "tmo-ID261015",
+          "name": "Up to $830 off — new line plus trade-in, 1 Pick",
           "sourceKey": "tmobile-iphone",
           "plans": [
-            "tmo-beyond-2",
-            "tmo-more-2",
-            "tmo-essentials-2"
+            "tmo-mix-loaded",
+            "tmo-mix-more",
+            "tmo-mix-standard"
           ],
           "termMonths": 36,
           "stackable": false,
+          "picks": 1,
           "requires": {
             "tradeIn": true,
             "tradeInCondition": "good",
@@ -1447,7 +1598,7 @@
           },
           "tiers": [
             {
-              "credit": 730,
+              "credit": 830,
               "devices": [
                 "iphone-15-pro",
                 "iphone-15-pro-max",
@@ -1460,23 +1611,23 @@
                 "iphone-17-pro",
                 "iphone-17-pro-max",
                 "iphone-air",
+                "galaxy-s24-ultra",
+                "galaxy-s24-plus",
                 "galaxy-s25",
-                "galaxy-s25-plus",
-                "galaxy-s25-ultra",
                 "galaxy-s25-edge",
                 "galaxy-s25-fe",
-                "galaxy-s24-plus",
-                "galaxy-s24-ultra",
-                "galaxy-z-fold7",
-                "galaxy-z-fold6",
-                "galaxy-z-fold5",
-                "galaxy-z-flip7",
+                "galaxy-s25-ultra",
+                "galaxy-s25-plus",
+                "galaxy-z-flip5",
                 "galaxy-z-flip6",
-                "galaxy-z-flip5"
+                "galaxy-z-flip7",
+                "galaxy-z-fold5",
+                "galaxy-z-fold6",
+                "galaxy-z-fold7"
               ]
             },
             {
-              "credit": 530,
+              "credit": 630,
               "devices": [
                 "iphone-13-pro",
                 "iphone-13-pro-max",
@@ -1486,56 +1637,148 @@
                 "iphone-14-pro-max",
                 "iphone-15",
                 "iphone-15-plus",
-                "galaxy-z-fold4",
-                "galaxy-z-fold3",
-                "galaxy-z-flip4",
-                "galaxy-z-flip3",
-                "galaxy-s24",
-                "galaxy-s24-fe",
-                "galaxy-s23",
-                "galaxy-s23-plus",
-                "galaxy-s23-ultra",
-                "galaxy-s23-fe",
-                "galaxy-s22-plus",
-                "galaxy-s22-ultra",
-                "galaxy-note20",
-                "galaxy-note20-ultra",
                 "pixel-10",
                 "pixel-10-pro",
                 "pixel-10-pro-fold",
                 "pixel-10-pro-xl",
+                "pixel-6-pro",
+                "pixel-7-pro",
+                "pixel-8",
+                "pixel-8-pro",
                 "pixel-9",
                 "pixel-9-pro",
                 "pixel-9-pro-fold",
                 "pixel-9-pro-xl",
-                "pixel-8",
-                "pixel-8-pro",
-                "pixel-7-pro",
-                "pixel-6-pro"
+                "pixel-fold",
+                "galaxy-note20",
+                "galaxy-note20-ultra",
+                "galaxy-s22-ultra",
+                "galaxy-s22-plus",
+                "galaxy-s23",
+                "galaxy-s23-fe",
+                "galaxy-s23-ultra",
+                "galaxy-s23-plus",
+                "galaxy-s24",
+                "galaxy-s24-fe",
+                "galaxy-z-flip3",
+                "galaxy-z-flip4",
+                "galaxy-z-fold3",
+                "galaxy-z-fold4"
               ]
             },
             {
-              "credit": 300,
-              "otherwise": true
+              "credit": 400,
+              "devices": [
+                "iphone-11",
+                "iphone-11-pro",
+                "iphone-11-pro-max",
+                "iphone-12",
+                "iphone-12-mini",
+                "iphone-12-pro",
+                "iphone-12-pro-max",
+                "iphone-13",
+                "iphone-13-mini",
+                "iphone-8-plus",
+                "iphone-se-2",
+                "iphone-se-3",
+                "iphone-x",
+                "iphone-xr",
+                "iphone-xs",
+                "iphone-xs-max",
+                "pixel-6",
+                "pixel-6a",
+                "pixel-7",
+                "pixel-7a",
+                "pixel-8a",
+                "pixel-9a",
+                "galaxy-s20",
+                "galaxy-s20-fe",
+                "galaxy-s20-ultra",
+                "galaxy-s20-plus",
+                "galaxy-s21",
+                "galaxy-s21-fe",
+                "galaxy-s21-ultra",
+                "galaxy-s21-plus",
+                "galaxy-s22"
+              ]
             }
           ],
-          "maxDevices": 4,
           "models": [
             "iPhone 18 Pro",
-            "iPhone 18 Pro Max"
+            "iPhone 18 Pro Max",
+            "iPhone Duo"
           ]
         },
         {
-          "id": "tmo-ID260803",
-          "name": "Up to $300 off — trade-in, most plans",
+          "id": "tmo-ID261079",
+          "name": "Up to $700 off — new line and port-in, 1 Pick",
           "sourceKey": "tmobile-iphone",
           "plans": [
-            "tmo-beyond-2",
-            "tmo-more-2",
-            "tmo-essentials-2"
+            "tmo-mix-loaded",
+            "tmo-mix-more",
+            "tmo-mix-standard"
           ],
           "termMonths": 36,
           "stackable": false,
+          "picks": 1,
+          "requires": {
+            "tradeIn": false,
+            "newLine": true,
+            "portIn": true
+          },
+          "tiers": [
+            {
+              "credit": 700,
+              "otherwise": true
+            }
+          ],
+          "models": [
+            "iPhone 18 Pro",
+            "iPhone 18 Pro Max",
+            "iPhone Duo"
+          ]
+        },
+        {
+          "id": "tmo-ID261143",
+          "name": "$350 off — new line, 1 Pick",
+          "sourceKey": "tmobile-iphone",
+          "plans": [
+            "tmo-mix-loaded",
+            "tmo-mix-more",
+            "tmo-mix-standard"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "picks": 1,
+          "requires": {
+            "tradeIn": false,
+            "newLine": true,
+            "portIn": false
+          },
+          "tiers": [
+            {
+              "credit": 350,
+              "otherwise": true
+            }
+          ],
+          "models": [
+            "iPhone 18 Pro",
+            "iPhone 18 Pro Max",
+            "iPhone Duo"
+          ]
+        },
+        {
+          "id": "tmo-ID261087",
+          "name": "Up to $300 off — trade-in, 1 Pick",
+          "sourceKey": "tmobile-iphone",
+          "plans": [
+            "tmo-mix-loaded",
+            "tmo-mix-more",
+            "tmo-mix-standard"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "picks": 1,
           "requires": {
             "tradeIn": true,
             "tradeInCondition": "good",
@@ -1564,19 +1807,11 @@
                 "pixel-8-pro",
                 "pixel-9",
                 "pixel-9-pro",
+                "pixel-9-pro-fold",
                 "pixel-9-pro-xl",
                 "pixel-fold",
                 "galaxy-note20",
                 "galaxy-note20-ultra",
-                "galaxy-s20",
-                "galaxy-s20-fe",
-                "galaxy-s20-ultra",
-                "galaxy-s20-plus",
-                "galaxy-s21",
-                "galaxy-s21-fe",
-                "galaxy-s21-ultra",
-                "galaxy-s21-plus",
-                "galaxy-s22",
                 "galaxy-s22-ultra",
                 "galaxy-s22-plus",
                 "galaxy-s23",
@@ -1599,25 +1834,57 @@
                 "galaxy-z-fold3",
                 "galaxy-z-fold4",
                 "galaxy-z-fold5",
-                "galaxy-z-fold6"
+                "galaxy-z-fold6",
+                "galaxy-z-fold7"
               ]
             },
             {
               "credit": 150,
-              "otherwise": true
+              "devices": [
+                "iphone-11",
+                "iphone-11-pro",
+                "iphone-11-pro-max",
+                "iphone-12",
+                "iphone-12-mini",
+                "iphone-12-pro",
+                "iphone-12-pro-max",
+                "iphone-13",
+                "iphone-13-mini",
+                "iphone-8-plus",
+                "iphone-se-2",
+                "iphone-se-3",
+                "iphone-x",
+                "iphone-xr",
+                "iphone-xs",
+                "iphone-xs-max",
+                "pixel-6",
+                "pixel-6a",
+                "pixel-7a",
+                "pixel-8a",
+                "pixel-9a",
+                "galaxy-s20",
+                "galaxy-s20-fe",
+                "galaxy-s20-ultra",
+                "galaxy-s20-plus",
+                "galaxy-s21",
+                "galaxy-s21-fe",
+                "galaxy-s21-ultra",
+                "galaxy-s21-plus",
+                "galaxy-s22"
+              ]
             }
           ],
-          "maxDevices": 4,
           "models": [
             "iPhone 18 Pro",
-            "iPhone 18 Pro Max"
+            "iPhone 18 Pro Max",
+            "iPhone Duo"
           ]
         }
       ],
       "costco": {
         "sourceKey": "costco-tmobile",
         "feeWaivedWithFinancedPhone": true,
-        "note": "Costco member benefits stack on T-Mobile's own promotions. Switching to Experience Beyond with a financed phone and a port-in earns a $150 Shop Card plus a $250 prepaid Visa; upgrading an existing line earns a $100 Shop Card. Device connection charge is waived on financed phones bought through Costco.",
+        "note": "Costco's holiday bundle for switching to T-Mix Loaded with a financed phone and a port-in: a $150 Shop Card (new line, $75+ plan), a $250 prepaid Visa (port-in, $95+ plan, max 4) and a $50 Shop Card (financed phone, $75+ plan). A $75 card for a new line without a financed phone and a $100 upgrade card need an $85+ plan. Device connection charge is waived on financed phones bought through Costco.",
         "offers": [
           {
             "id": "tmo-costco-shopcard-150",
@@ -1626,8 +1893,8 @@
             "perLine": "financed",
             "maxPerAccount": 12,
             "requires": {
-              "minPlanMonthly": 100,
-              "portIn": true
+              "minPlanMonthly": 75,
+              "newLine": true
             }
           },
           {
@@ -1637,8 +1904,18 @@
             "perLine": "financed",
             "maxPerAccount": 4,
             "requires": {
-              "minPlanMonthly": 100,
+              "minPlanMonthly": 95,
               "portIn": true
+            }
+          },
+          {
+            "id": "tmo-costco-shopcard-50",
+            "name": "$50 Costco Shop Card",
+            "value": 50,
+            "perLine": "financed",
+            "maxPerAccount": 12,
+            "requires": {
+              "minPlanMonthly": 75
             }
           },
           {
@@ -1658,6 +1935,7 @@
             "value": 100,
             "perLine": "financed",
             "requires": {
+              "minPlanMonthly": 85,
               "existingLine": true
             }
           }
@@ -2148,7 +2426,7 @@
       "promos": [
         {
           "id": "vz-tradein-ultimate-new",
-          "name": "Up to $1,000 off — tier 1 trade-in, new line",
+          "name": "Up to $1,200 off — tier 1 trade-in, new line",
           "sourceKey": "bestbuy-verizon-tradein",
           "plans": [
             "vz-ultimate"
@@ -2163,7 +2441,7 @@
           },
           "tiers": [
             {
-              "credit": 1000,
+              "credit": 1200,
               "devices": [
                 "iphone-14",
                 "iphone-14-plus",
@@ -2225,15 +2503,15 @@
                 "pixel-7",
                 "pixel-7-pro"
               ],
-              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, Galaxy S22 and newer, Z Flip4/Fold4 and newer, Pixel 6a, 7 and newer, as listed by Best Buy on 2026-10-08."
+              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, Galaxy S22 and newer, Z Flip4/Fold4 and newer, Pixel 6a, 7 and newer, as listed by Best Buy on 2026-11-10."
             },
             {
-              "credit": 500,
+              "credit": 600,
               "otherwise": true,
               "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone."
             }
           ],
-          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen. Covers iPhone Duo with the same credits since 2026-10-16 (Verizon's Duo announcement; Apple's carrier offers page, read 2026-10-19).",
+          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen. Covers iPhone Duo with the same credits since 2026-10-16 (Verizon's Duo announcement; Apple's carrier offers page, read 2026-11-10).",
           "models": [
             "iPhone 18 Pro",
             "iPhone 18 Pro Max",
@@ -2242,7 +2520,7 @@
         },
         {
           "id": "vz-tradein-ultimate-upgrade",
-          "name": "Up to $840 off — tier 1 trade-in, upgrade an existing line",
+          "name": "Up to $1,020 off — tier 1 trade-in, upgrade an existing line",
           "sourceKey": "bestbuy-verizon-tradein",
           "plans": [
             "vz-ultimate"
@@ -2258,7 +2536,7 @@
           },
           "tiers": [
             {
-              "credit": 840,
+              "credit": 1020,
               "devices": [
                 "iphone-14",
                 "iphone-14-plus",
@@ -2320,15 +2598,15 @@
                 "pixel-7",
                 "pixel-7-pro"
               ],
-              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, Galaxy S22 and newer, Z Flip4/Fold4 and newer, Pixel 6a, 7 and newer, as listed by Best Buy on 2026-10-08."
+              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, Galaxy S22 and newer, Z Flip4/Fold4 and newer, Pixel 6a, 7 and newer, as listed by Best Buy on 2026-11-10."
             },
             {
-              "credit": 0,
+              "credit": 510,
               "otherwise": true,
-              "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone. Best Buy lists no tier 2 credit for an upgrade, only for a new line."
+              "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone."
             }
           ],
-          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen. Covers iPhone Duo with the same credits since 2026-10-16 (Verizon's Duo announcement; Apple's carrier offers page, read 2026-10-19).",
+          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen. Covers iPhone Duo with the same credits since 2026-10-16 (Verizon's Duo announcement; Apple's carrier offers page, read 2026-11-10).",
           "models": [
             "iPhone 18 Pro",
             "iPhone 18 Pro Max",
@@ -2337,7 +2615,7 @@
         },
         {
           "id": "vz-tradein-plus-new",
-          "name": "Up to $840 off — tier 1 trade-in, new line",
+          "name": "Up to $930 off — tier 1 trade-in, new line",
           "sourceKey": "bestbuy-verizon-tradein",
           "plans": [
             "vz-plus"
@@ -2352,7 +2630,7 @@
           },
           "tiers": [
             {
-              "credit": 840,
+              "credit": 930,
               "devices": [
                 "iphone-14",
                 "iphone-14-plus",
@@ -2414,15 +2692,15 @@
                 "pixel-7",
                 "pixel-7-pro"
               ],
-              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, Galaxy S22 and newer, Z Flip4/Fold4 and newer, Pixel 6a, 7 and newer, as listed by Best Buy on 2026-10-08."
+              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, Galaxy S22 and newer, Z Flip4/Fold4 and newer, Pixel 6a, 7 and newer, as listed by Best Buy on 2026-11-10."
             },
             {
-              "credit": 420,
+              "credit": 465,
               "otherwise": true,
               "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone."
             }
           ],
-          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen. Covers iPhone Duo with the same credits since 2026-10-16 (Verizon's Duo announcement; Apple's carrier offers page, read 2026-10-19).",
+          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen. Covers iPhone Duo with the same credits since 2026-10-16 (Verizon's Duo announcement; Apple's carrier offers page, read 2026-11-10).",
           "models": [
             "iPhone 18 Pro",
             "iPhone 18 Pro Max",
@@ -2431,7 +2709,7 @@
         },
         {
           "id": "vz-tradein-plus-upgrade",
-          "name": "Up to $660 off — tier 1 trade-in, upgrade an existing line",
+          "name": "Up to $750 off — tier 1 trade-in, upgrade an existing line",
           "sourceKey": "bestbuy-verizon-tradein",
           "plans": [
             "vz-plus"
@@ -2447,7 +2725,7 @@
           },
           "tiers": [
             {
-              "credit": 660,
+              "credit": 750,
               "devices": [
                 "iphone-14",
                 "iphone-14-plus",
@@ -2509,15 +2787,15 @@
                 "pixel-7",
                 "pixel-7-pro"
               ],
-              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, Galaxy S22 and newer, Z Flip4/Fold4 and newer, Pixel 6a, 7 and newer, as listed by Best Buy on 2026-10-08."
+              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, Galaxy S22 and newer, Z Flip4/Fold4 and newer, Pixel 6a, 7 and newer, as listed by Best Buy on 2026-11-10."
             },
             {
-              "credit": 0,
+              "credit": 375,
               "otherwise": true,
-              "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone. Best Buy lists no tier 2 credit for an upgrade, only for a new line."
+              "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone."
             }
           ],
-          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen. Covers iPhone Duo with the same credits since 2026-10-16 (Verizon's Duo announcement; Apple's carrier offers page, read 2026-10-19).",
+          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen. Covers iPhone Duo with the same credits since 2026-10-16 (Verizon's Duo announcement; Apple's carrier offers page, read 2026-11-10).",
           "models": [
             "iPhone 18 Pro",
             "iPhone 18 Pro Max",
@@ -2603,7 +2881,7 @@
                 "pixel-7",
                 "pixel-7-pro"
               ],
-              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, Galaxy S22 and newer, Z Flip4/Fold4 and newer, Pixel 6a, 7 and newer, as listed by Best Buy on 2026-10-08."
+              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, Galaxy S22 and newer, Z Flip4/Fold4 and newer, Pixel 6a, 7 and newer, as listed by Best Buy on 2026-11-10."
             },
             {
               "credit": 240,
@@ -2611,7 +2889,7 @@
               "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone."
             }
           ],
-          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen. Covers iPhone Duo with the same credits since 2026-10-16 (Verizon's Duo announcement; Apple's carrier offers page, read 2026-10-19).",
+          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen. Covers iPhone Duo with the same credits since 2026-10-16 (Verizon's Duo announcement; Apple's carrier offers page, read 2026-11-10).",
           "models": [
             "iPhone 18 Pro",
             "iPhone 18 Pro Max",
@@ -2698,20 +2976,47 @@
                 "pixel-7",
                 "pixel-7-pro"
               ],
-              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, Galaxy S22 and newer, Z Flip4/Fold4 and newer, Pixel 6a, 7 and newer, as listed by Best Buy on 2026-10-08."
+              "note": "Tier 1: iPhone 14 through 17 series, Air and 16e, Galaxy S22 and newer, Z Flip4/Fold4 and newer, Pixel 6a, 7 and newer, as listed by Best Buy on 2026-11-10."
             },
             {
-              "credit": 0,
+              "credit": 150,
               "otherwise": true,
-              "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone. Best Buy lists no tier 2 credit for an upgrade, only for a new line."
+              "note": "Tier 2: every other Apple, Google, Motorola or Samsung phone."
             }
           ],
-          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen. Covers iPhone Duo with the same credits since 2026-10-16 (Verizon's Duo announcement; Apple's carrier offers page, read 2026-10-19).",
+          "note": "36-month device payment plan required. Trade-in phone active on an account for at least 60 days; any working condition except swollen battery, activation lock or lost/stolen. Covers iPhone Duo with the same credits since 2026-10-16 (Verizon's Duo announcement; Apple's carrier offers page, read 2026-11-10).",
           "models": [
             "iPhone 18 Pro",
             "iPhone 18 Pro Max",
             "iPhone Duo"
           ]
+        },
+        {
+          "id": "vz-notradein-ultimate-port",
+          "name": "$1,200 off — new line with number transfer, no trade-in (through Apple)",
+          "sourceKey": "apple-carrier-offers",
+          "plans": [
+            "vz-ultimate"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "requires": {
+            "tradeIn": false,
+            "newLine": true,
+            "portIn": true
+          },
+          "tiers": [
+            {
+              "credit": 1200,
+              "otherwise": true
+            }
+          ],
+          "models": [
+            "iPhone 18 Pro",
+            "iPhone 18 Pro Max",
+            "iPhone Duo"
+          ],
+          "note": "Verizon's No Trade-in Required Deal, sold through Apple (online or Apple Store) for a new Verizon customer or a new line: with a number transfer $1,200 / $930 / $360 on Unlimited Ultimate / Plus / Welcome, without one $840 / $660 / $360, over 36 months on Device Payment (Apple's carrier offers page, 2026-11-10)."
         },
         {
           "id": "vz-notradein-ultimate-new",
@@ -2738,7 +3043,34 @@
             "iPhone 18 Pro Max",
             "iPhone Duo"
           ],
-          "note": "Verizon's No Trade-in Required Deal, sold through Apple (online or Apple Store) for a new Verizon customer or a new line on an existing account: $840 on Unlimited Ultimate, $660 on Unlimited Plus, $360 on Unlimited Welcome, over 36 months on Device Payment (read from Apple's carrier offers page 2026-10-19)."
+          "note": "Verizon's No Trade-in Required Deal, sold through Apple (online or Apple Store) for a new Verizon customer or a new line: with a number transfer $1,200 / $930 / $360 on Unlimited Ultimate / Plus / Welcome, without one $840 / $660 / $360, over 36 months on Device Payment (Apple's carrier offers page, 2026-11-10)."
+        },
+        {
+          "id": "vz-notradein-plus-port",
+          "name": "$930 off — new line with number transfer, no trade-in (through Apple)",
+          "sourceKey": "apple-carrier-offers",
+          "plans": [
+            "vz-plus"
+          ],
+          "termMonths": 36,
+          "stackable": false,
+          "requires": {
+            "tradeIn": false,
+            "newLine": true,
+            "portIn": true
+          },
+          "tiers": [
+            {
+              "credit": 930,
+              "otherwise": true
+            }
+          ],
+          "models": [
+            "iPhone 18 Pro",
+            "iPhone 18 Pro Max",
+            "iPhone Duo"
+          ],
+          "note": "Verizon's No Trade-in Required Deal, sold through Apple (online or Apple Store) for a new Verizon customer or a new line: with a number transfer $1,200 / $930 / $360 on Unlimited Ultimate / Plus / Welcome, without one $840 / $660 / $360, over 36 months on Device Payment (Apple's carrier offers page, 2026-11-10)."
         },
         {
           "id": "vz-notradein-plus-new",
@@ -2765,7 +3097,7 @@
             "iPhone 18 Pro Max",
             "iPhone Duo"
           ],
-          "note": "Verizon's No Trade-in Required Deal, sold through Apple (online or Apple Store) for a new Verizon customer or a new line on an existing account: $840 on Unlimited Ultimate, $660 on Unlimited Plus, $360 on Unlimited Welcome, over 36 months on Device Payment (read from Apple's carrier offers page 2026-10-19)."
+          "note": "Verizon's No Trade-in Required Deal, sold through Apple (online or Apple Store) for a new Verizon customer or a new line: with a number transfer $1,200 / $930 / $360 on Unlimited Ultimate / Plus / Welcome, without one $840 / $660 / $360, over 36 months on Device Payment (Apple's carrier offers page, 2026-11-10)."
         },
         {
           "id": "vz-notradein-welcome-new",
@@ -2792,7 +3124,7 @@
             "iPhone 18 Pro Max",
             "iPhone Duo"
           ],
-          "note": "Verizon's No Trade-in Required Deal, sold through Apple (online or Apple Store) for a new Verizon customer or a new line on an existing account: $840 on Unlimited Ultimate, $660 on Unlimited Plus, $360 on Unlimited Welcome, over 36 months on Device Payment (read from Apple's carrier offers page 2026-10-19)."
+          "note": "Verizon's No Trade-in Required Deal, sold through Apple (online or Apple Store) for a new Verizon customer or a new line: with a number transfer $1,200 / $930 / $360 on Unlimited Ultimate / Plus / Welcome, without one $840 / $660 / $360, over 36 months on Device Payment (Apple's carrier offers page, 2026-11-10)."
         }
       ]
     },
