@@ -12,6 +12,8 @@ test("the banner announces iPhone Duo is in the calculator, not coming soon", ()
   assert.match(text, /iPhone Duo/);
   assert.doesNotMatch(text, /coming soon/i);
   assert.match(text, /pick it as the new phone/i);
+  assert.doesNotMatch(text, /pre-orders? open/i, "Duo shipped after 10/16 pre-orders; the banner must not read as upcoming");
+  assert.doesNotMatch(text, /still announcing/i, "every carrier now prices Duo");
 });
 
 test("every Buy me a coffee link goes to buymeacoffee.com/risingben", () => {
