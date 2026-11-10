@@ -59,9 +59,11 @@ function tierFor(promo, tradeInId) {
   return promo.tiers.find((t) => t.devices?.includes(tradeInId)) || promo.tiers.find((t) => t.otherwise) || null;
 }
 
-function promoEligible(promo, planId, { switching, tradeInId }) {
-  if (!promo.plans.includes(planId)) return false;
+function promoEligible(promo, plan, { switching, tradeInId, lines = 1 }) {
+  if (!promo.plans.includes(plan.id)) return false;
   const r = promo.requires || {};
+  if (r.minAccountMonthly && (plan.monthly?.[String(lines)] ?? 0) < r.minAccountMonthly) return false;
+  if (promo.picks && promo.picks > (plan.picks?.[String(lines)] ?? 0)) return false;
   if ((r.newLine || r.portIn) && !switching) return false;
   if (r.existingLine && switching) return false; // an upgrade offer: the line is already on the account
   if (r.tradeIn && !tradeInId) return false;
@@ -183,15 +185,20 @@ export function buildScenarios(data, input) {
       if (plan$ == null) continue;
       const intro = planIntro(plan, { lines, termMonths, switching: input.switching });
 
-      const eligible = carrier.promos.filter((p) => promoEligible(p, plan.id, { ...input, tradeInId: anyTradeIn ? "any" : null }));
+      const eligible = carrier.promos.filter((p) => promoEligible(p, plan, { ...input, tradeInId: anyTradeIn ? "any" : null }));
       const stackables = eligible.filter((p) => p.stackable);
       const mains = eligible.filter((p) => !p.stackable);
 
       const push = ({ route, routeName, promo, unverified }) => {
         const byod = route === "byod";
         const maxCredited = promo?.maxDevices ?? Infinity;
+        // T-Mix: each credited phone spends the promo's Picks from the plan's allotment.
+        const picksEach = promo?.picks || 0;
+        const picksAvailable = plan.picks?.[String(lines)] ?? 0;
+        let picksUsed = 0;
         let credited = 0;
         let creditCapped = false;
+        let capReason = null;
         const lineDetails = items.map((li) => {
           if (!li.phone) return { phoneName: null, tradeInName: null, retail: 0, credit: 0, appleTradeIn: 0, tradeInValue: 0 };
           const retail = li.phone.retail;
@@ -204,16 +211,19 @@ export function buildScenarios(data, input) {
           const needsTrade = !!promo.requires?.tradeIn;
           const tier = !covers(promo, li.phone) ? null : needsTrade ? (li.tradeIn ? tierFor(promo, li.tradeIn.id) : null) : tierFor(promo, null);
           let credit = 0;
-          if (tier && credited < maxCredited) {
+          if (tier && credited < maxCredited && picksUsed + picksEach <= picksAvailable) {
             credit = Math.min(tier.verified === false ? li.xfCredit ?? overrides[promo.id] ?? tier.credit : tier.credit, retail);
             credited++;
+            picksUsed += picksEach;
           } else if (tier) {
             creditCapped = true;
+            capReason = credited >= maxCredited ? "devices" : "picks";
           }
           // The phone only goes to the carrier when the promo actually takes it.
           const surrendered = needsTrade && credit > 0;
           return { phoneName: phoneName(li.phone), tradeInName: surrendered ? li.tradeIn.name : null, tradeInProgram: surrendered ? tradeInProgram(li.tradeIn) : null, retail, credit, appleTradeIn: 0, tradeInValue: surrendered ? tradeInValue : 0 };
         });
+        if (promo && credited === 0 && !creditCapped) return; // no phone this promo lists: not a route
         const phoneCost = round2(lineDetails.reduce((s, l) => s + l.retail, 0));
         const appleTradeIn = round2(lineDetails.reduce((s, l) => s + l.appleTradeIn, 0));
         const costco = costcoFor(carrier, plan, { byod, financed: byod ? 0 : phones, lines, input });
@@ -248,6 +258,9 @@ export function buildScenarios(data, input) {
           phones,
           creditedPhones: credited,
           creditCapped,
+          capReason,
+          picksUsed,
+          picksAvailable: plan.picks ? picksAvailable : null,
           lineDetails,
           plan: round2(plan$ - planCredit),
           planCredit,
@@ -267,7 +280,7 @@ export function buildScenarios(data, input) {
           tradeInCondition: promo?.requires?.tradeInCondition || null,
           unverified: !!unverified,
           endsOn: promo?.endsOn || null,
-          requires: requirementsFor(carrier, plan, promo, { ...input, tradeInPrograms }),
+          requires: [...requirementsFor(carrier, plan, promo, { ...input, tradeInPrograms }), ...(picksUsed ? [`Uses ${picksUsed} of ${picksAvailable} Picks`] : [])],
           total,
           perMonth: round2(total / termMonths),
         });
@@ -335,7 +348,7 @@ export function comparePlans(data, planIds, input) {
         notes: plan.notes || "",
         requires: carrier.requires || [],
         phoneSource: carrier.phoneSource,
-        promoCount: carrier.promos.filter((p) => promoEligible(p, plan.id, input) && (!phones.length || phones.some((ph) => covers(p, ph)))).length,
+        promoCount: carrier.promos.filter((p) => promoEligible(p, plan, input) && (!phones.length || phones.some((ph) => covers(p, ph)))).length,
         termMonths,
       });
     }
