@@ -81,9 +81,11 @@ Traps:
   per line (Loaded 3/6/9/11/13), so read the card at every line count. Saver has none.
 - The plan cards carry the AutoPay price and the Picks, and only for the line count selected
   at the top of the page. Step through 1–5 lines (decrement first: it opens on 3) and read each
-  card. The "Monthly Price" tables are **before** AutoPay. Standard's 4- and 5-line prices are
-  its 4-for-$25 offer, which needs a number transfer. Saver showed a $30 sale under its $45
-  AutoPay price on 2026-11-10; the data uses $45.
+  card. The "Monthly Price" tables are **before** AutoPay ($10/line off). A "sale price"
+  below the AutoPay price is a switcher deal ("when you transfer your number"): Standard's
+  4-for-$25 at 4–5 lines and Saver's $30 single line. With no end date shown, model it the
+  way Verizon Simplicity's switch discount is modeled, as a 36-month `intro` with
+  `requires.newLine`, and keep the regular AutoPay price in `monthly`.
 - Each promotion's terms state a plan floor. $95+ / $75+ / $55+ is the single-line price of
   Loaded / More / Standard, so it becomes the promo's `plans`. The 5- and 7-Pick Smartphone
   promos say $155+ / $180+, which no single line reaches: those are `requires.minAccountMonthly`.
@@ -135,6 +137,9 @@ Traps:
 - Verizon's own device pages show no offers to automation. Apple's carrier offers page is
   where its terms are readable, including a no-trade-in deal for new lines sold only
   through Apple ($840 / $660 / $360, the `vz-notradein-*` promos).
+- Best Buy's disclosure says new Verizon accounts must take Simplicity and only Add-a-Line or
+  upgrade gets the myPlan trade-in credits, while Apple's footnotes give the same credits to
+  new customers. The data follows Apple (where the deal is bought); recheck both each crawl.
 - Verizon does not publish the tier membership clearly; Best Buy's page does, which is
   why that source exists. Anything still unclear is `verified: false`.
 

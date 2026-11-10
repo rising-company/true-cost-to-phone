@@ -197,6 +197,8 @@ test("plans below the data / minutes floor and plans without a price for the lin
   assert.equal(find(four, "tmobile", "tmo-mix-loaded", "byod").plan, 240 * 36);
   assert.equal(find(four, "tmobile", "tmo-mix-more", "byod").plan, 180 * 36);
   assert.equal(find(four, "tmobile", "tmo-mix-saver", "byod"), undefined, "Saver is only priced at 1 line");
+  assert.equal(find(four, "tmobile", "tmo-mix-standard", "byod").plan, 100 * 36, "4 for $25/line when switching with a number transfer");
+  assert.equal(find(buildScenarios(data, { ...baseInput, lines: 4, switching: false }), "tmobile", "tmo-mix-standard", "byod").plan, 115 * 36, "staying put pays the regular $115");
   assert.equal(planTotal({ monthly: { "1": 10 } }, { lines: 2, termMonths: 36, switching: false }), null);
 });
 

@@ -11,9 +11,9 @@
       "Bill-credit promotions pay out monthly over the term. Leaving early forfeits the remaining credits and the device balance is due.",
       "Trade-in value counts as a cost: when a promotion takes your old phone, its Apple Trade In estimate is added to the total so every route is compared on the same footing.",
       "Mint Mobile is priced on its 12-month prepaid plans (the cheapest regular term). New customers pay $15/mo for the first plan term on any plan (Mint's 'All plans are $15/mo' offer, read 2026-11-10), so a 12-month plan is modeled as 12 intro months at $15/line, then the regular 12-month rate. It replaced the $10-for-6-months offer that ended 2026-10-22. 3- and 6-month terms cost more per month and are not modeled.",
-      "Multi-line: plan prices are account totals per line count with AutoPay. T-Mobile's T-Mix and AT&T's plans were read for 1–5 lines (T-Mix Standard at 4 and 5 lines is its 4-for-$25 offer, which needs a number transfer; T-Mix Saver only at 1 line). Xfinity, Tello and Mint charge the same per line, so those totals are per-line price × lines.",
+      "Multi-line: plan prices are account totals per line count with AutoPay. T-Mobile's T-Mix and AT&T's plans were read for 1–5 lines (T-Mix Saver only at 1 line; T-Mix Standard's 5-line price without a number transfer is its $180 list price less the $10/line AutoPay discount, which every other T-Mix price follows). Xfinity, Tello and Mint charge the same per line, so those totals are per-line price × lines.",
       "Xfinity's first-year price applies to one line per account; extra lines pay the regular rate. Mint's $15 new-customer year is applied to every line (family lines are priced like single 12-month lines).",
-      "T-Mobile replaced its Experience and Essentials plans with T-Mix (Loaded, More, Standard, Saver) by 2026-11-10. Every T-Mix phone promotion spends Picks, a per-account allotment that depends on the plan and line count (Loaded 3/6/9/11/13, More 2/4/6/7/8, Standard 1/2/3/4/4 at 1–5 lines; Saver none). A phone whose promotion needs more Picks than the account has left earns no credit. Picks are counted as a budget with no dollar cost, but Picks spent on a phone are not available for the streaming, travel and other benefits they could otherwise buy. A promotion's $95+ / $75+ / $55+ plan floor is read as the plan's single-line price, as for T-Mobile's earlier offers: $95+ is Loaded, $75+ is More or Loaded, $55+ is any plan with Picks. The $155+ and $180+ floors of the 5- and 7-Pick Smartphone promos are read as the account's monthly total, since no single line reaches them.",
+      "T-Mobile replaced its Experience and Essentials plans with T-Mix (Loaded, More, Standard, Saver) by 2026-11-10. Every T-Mix phone promotion spends Picks, a per-account allotment that depends on the plan and line count (Loaded 3/6/9/11/13, More 2/4/6/7/8, Standard 1/2/3/4/4 at 1–5 lines; Saver none). A phone whose promotion needs more Picks than the account has left earns no credit. Picks are counted as a budget with no dollar cost, but Picks spent on a phone are not available for the streaming, travel and other benefits they could otherwise buy. A promotion's $95+ / $75+ / $55+ plan floor is read as the plan's single-line price, as for T-Mobile's earlier offers: $95+ is Loaded, $75+ is More or Loaded, $55+ is any plan with Picks. The $155+ and $180+ floors of the 5- and 7-Pick Smartphone promos are read as the account's monthly total, since no single line reaches them. T-Mix Standard's 4-for-$25 price ($100 at 4 lines, $115 at 5) and Saver's $30 single line need a number transfer and show no end date, so, like Verizon Simplicity's switch discount, they are applied for the whole term to a switcher only. Apple's carrier offers page still describes T-Mobile's deals in terms of the Experience plans (read 2026-11-10); T-Mobile's own pages, which sell only T-Mix, are used instead.",
       "Costco: member benefits read from Costco's AT&T and T-Mobile showcases on 2026-11-10. T-Mobile's switch bundle moved to T-Mix Loaded and adds a $50 Shop Card; AT&T's $350 is unchanged and ends 2026-11-15. Shop Cards and prepaid Visa cards are counted at face value against the total. Costco sells no Xfinity, Tello or Mint plans.",
       "Trade-in values come from each phone maker's own program: Apple Trade In for iPhones, Samsung's standalone trade-in (run by Likewize, pays without a purchase) for Galaxy phones, and the Google Store estimator for Pixels, each at top storage in good condition. Google pays the same for a phone whichever Pixel is bought. Galaxy S26 and Pixel 11 are not in either maker's program yet, so they are not offered as trade-ins. Samsung and Google values were last read on 2026-09-22: neither estimator answered automated requests on 2026-10-08, and Samsung's still did not on 2026-10-19.",
       "iPhone Duo (from $1,999) was added on 2026-10-15. A promo with `models` credits only those new phones. As of 2026-11-10: every T-Mix promotion covers it except the $1,400 5-Pick deal, and it has its own $2,100 7-Pick deal; AT&T's trade-in offers and Verizon's trade-in and no-trade-in deals cover it with the same credits; Xfinity's $400 new-line and $500/$200 upgrade offers cover it, and its own Duo trade-in offer pays $500–$1,000 depending on the phone (quoted at checkout 2026-10-19).",
@@ -1160,8 +1160,8 @@
             "1": 55,
             "2": 85,
             "3": 100,
-            "4": 100,
-            "5": 115
+            "4": 115,
+            "5": 130
           },
           "picks": {
             "1": 1,
@@ -1170,7 +1170,17 @@
             "4": 4,
             "5": 4
           },
-          "notes": "50 GB premium data, then deprioritized · SD video · 1/2/3/4/4 Picks at 1–5 lines · 4 and 5 lines are the 4-for-$25 offer, which needs a number transfer"
+          "notes": "50 GB premium data, then deprioritized · SD video · 1/2/3/4/4 Picks at 1–5 lines · $100 (4 lines) and $115 (5 lines) with a number transfer (4 for $25/line), otherwise $115 and $130",
+          "intro": {
+            "months": 36,
+            "monthly": {
+              "4": 100,
+              "5": 115
+            },
+            "requires": {
+              "newLine": true
+            }
+          }
         },
         {
           "id": "tmo-mix-saver",
@@ -1181,7 +1191,16 @@
           "monthly": {
             "1": 45
           },
-          "notes": "50 GB premium data · no Picks, so no phone promotions · priced at its $45 AutoPay rate, not the $30 sale shown on 2026-11-10"
+          "notes": "50 GB premium data · no Picks, so no phone promotions · $30/mo for a new line with a number transfer, $45 otherwise",
+          "intro": {
+            "months": 36,
+            "monthly": {
+              "1": 30
+            },
+            "requires": {
+              "newLine": true
+            }
+          }
         }
       ],
       "promos": [
@@ -1313,7 +1332,7 @@
             "iPhone 18 Pro Max",
             "iPhone Duo"
           ],
-          "note": "$95+/mo. plan with AutoPay, which is T-Mix Loaded. Phones T-Mobile does not list (Galaxy Z Flip7 FE) earn nothing. Any-condition trade-in accepted on T-Mix Loaded (Apple's T-Mobile footnotes and the T-Mix terms, 2026-11-10)."
+          "note": "$95+/mo. plan with AutoPay, which is T-Mix Loaded. Any-condition trade-in (T-Mobile's T-Mix terms, 2026-11-10). Phones T-Mobile does not list (Galaxy Z Flip7 FE) earn nothing."
         },
         {
           "id": "tmo-ID261049",
@@ -1375,7 +1394,7 @@
         {
           "id": "tmo-ID261061",
           "name": "Up to $2,100 off iPhone Duo — 7 Picks",
-          "sourceKey": "tmobile-iphone",
+          "sourceKey": "tmobile-iphone-duo",
           "plans": [
             "tmo-mix-loaded",
             "tmo-mix-more",
