@@ -208,7 +208,7 @@ function renderSummary(rows) {
   const best = new Map();
   for (const r of rows) if (!best.has(r.carrierId)) best.set(r.carrierId, r);
   const cheapest = rows[0];
-  const order = [...data.carriers].sort((a, b) => (best.get(a.id)?.total ?? Infinity) - (best.get(b.id)?.total ?? Infinity)); // cheapest first
+  const order = data.carriers.toSorted((a, b) => (best.get(a.id)?.total ?? Infinity) - (best.get(b.id)?.total ?? Infinity)); // cheapest first
   $("#summary").innerHTML = order
     .map((c) => {
       const r = best.get(c.id);
