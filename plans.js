@@ -62,7 +62,7 @@ export function renderComparison(data, selected, input) {
   const host = $("#plan-compare");
   if (cmp.length === 0) {
     host.innerHTML = `<div class="empty-state"><div class="eyebrow">// Nothing to compare yet</div><p class="body">Pick two or more plans above to see them side by side.</p></div>`;
-    $("#plan-chart").innerHTML = "";
+    $("#plan-chart").replaceChildren();
     return;
   }
   const cheapest = Math.min(...cmp.map((c) => c.total));

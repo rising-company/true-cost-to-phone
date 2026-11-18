@@ -24,7 +24,7 @@ export function renderCompare(rows, keys) {
     : `Nothing selected yet — use the Compare button on routes in the Routes tab (up to ${MAX_ROUTES}).`;
   if (picked.length === 0) {
     host.innerHTML = `<div class="empty-state"><div class="eyebrow">// Nothing to compare yet</div><p class="body">Pick two or more routes from the Routes tab to see them side by side.</p></div>`;
-    $("#route-chart").innerHTML = "";
+    $("#route-chart").replaceChildren();
     return;
   }
   const cheapest = Math.min(...picked.map((r) => r.total));

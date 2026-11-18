@@ -103,7 +103,7 @@ export function comparePages(data) {
       const sides = [data.carriers[i], data.carriers[j]]
         .map((c) => sideFor(rows, c))
         .sort((a, b) => slugFor(a.carrierId).localeCompare(slugFor(b.carrierId)));
-      const [cheaper, pricier] = [...sides].sort((a, b) => a.best.total - b.best.total).map((s) => s.best);
+      const [cheaper, pricier] = sides.toSorted((a, b) => a.best.total - b.best.total).map((s) => s.best);
       // Someone comparing two carriers is usually about to switch, so the page answers
       // that version too rather than making them re-derive it.
       const swSides = [data.carriers[i], data.carriers[j]]
